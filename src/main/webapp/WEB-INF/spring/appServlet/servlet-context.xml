@@ -1,0 +1,23 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+<!--       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">-->
+
+<!--</beans>-->
+
+<!--<beans:bean id="loginInterceptor" class="net.skhu.commons.interceptor.LoginInterceptor"/>-->
+<!--<beans:bean id="authInterceptor" class="net.skhu.commons.interceptor.AuthInterceptor"/>-->
+
+<!--<interceptors>-->
+<!--<interceptor>-->
+<!--    <mapping path="/user/loginPost"/>-->
+<!--    <beans:ref bean="loginInterceptor"/>-->
+<!--</interceptor>-->
+<!--<interceptor>-->
+<!--    <mapping path="/article/paging/search/write"/>-->
+<!--    <mapping path="/article/paging/search/modify"/>-->
+<!--    <mapping path="/article/paging/search/remove"/>-->
+<!--    <mapping path="/user/info"/>-->
+<!--    <beans:ref bean="authInterceptor"/>-->
+<!--</interceptor>-->
+<!--</interceptors>-->

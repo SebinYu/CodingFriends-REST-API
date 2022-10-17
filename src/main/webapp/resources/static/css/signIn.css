@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    width: 540px;
+    height: 960px;
+    border: 1px solid #aae1ff;
+    box-shadow: 7px 7px 39px rgba(42, 214, 255, 0.73);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.error {
+    color: red;
+    height: 10px;
+    font-size: 11px;
+}
+
+h3 {
+    font-size: 32px;
+    color: #00b0d9;
+    font-weight: bold;
+    width: 380px;
+    margin-bottom: 40px;
+}
+
+.inputbox {
+    width: 380px;
+    height: 60px;
+    background-color: white;
+    border-radius: 7px;
+    border: 1px solid #D2D2D2;
+    padding: 18px;
+    margin-top: 20px;
+}
+
+.inputbox::marker {
+    border: 1px solid #00b0d9;
+}
+
+.inputbox::placeholder {
+    color: #797979;
+    font-size: 16px;
+}
+
+.phone__wrapper {
+    width: 380px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.phoneNum {
+    width: 100px;
+    height: 40px;
+    border: 1px solid #D2D2D2;
+    border-radius: 7px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.token__wrapper {
+    width: 380px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.token, .token__timer {
+    color: #00b0d9;
+    font-size: 18px;
+}
+
+#token__button, #token__timer__confirm__button {
+    width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    margin-left: 20px;
+    border: 1px solid #D2D2D2;
+    font-size: 16px;
+}
+
+
+.location {
+    margin-top: 20px;
+    width: 380px;
+    height: 60px;
+    border: 1px solid #D2D2D2;
+    border-radius: 7px;
+    font-size: 16px;
+    padding: 18px;
+    color: #797979;
+}
+
+
+.gender__wrapper {
+    width: 380px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.gender {
+    width: 70px;
+    text-align: center;
+}
+
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+    width: 380px;
+}
+
+#signup__button {
+    width: 380px;
+    height: 75px;
+    border: 1px solid #D2D2D2;
+    border-radius: 10px;
+    font-size: 18px;
+}

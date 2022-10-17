@@ -1,0 +1,8 @@
+<beans:bean id="loginInterceptor" class="net.skhu.commons.interceptor.LoginInterceptor"/>
+
+<interceptors>
+<interceptor>
+    <mapping path="/user/loginPost"/>
+    <beans:ref bean="loginInterceptor"/>
+</interceptor>
+</interceptors>

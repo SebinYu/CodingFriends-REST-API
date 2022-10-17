@@ -1,0 +1,39 @@
+/* ANCHOR 기본설정 */
+/* REVIEW  * -> box-sizing: border-box; */
+* {
+	box-sizing: border-box;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+	margin: 0px;
+}
+
+input {
+	float: right;
+}
+
+
+a:hover {
+	text-decoration: none;
+}
+
+.black {
+	background: black;
+	color: white;
+}
+
+.banner {
+	height: 50vh;
+	width: 100vw;
+	text-align: center;
+	color: white;
+	/* background:black; */
+	background-image: url('../imgs/bannerImg.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.list {
+	padding:20px;
+}
