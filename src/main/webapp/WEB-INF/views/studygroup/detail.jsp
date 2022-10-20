@@ -38,14 +38,14 @@
               <a href="delete?studyGroup_id=${ studygroup.studyGroup_id }" style="text-decoration: none;">삭제</a>
           </div>
           <div>
-              ${ studygroup.startDate }
+              기간: ${ studygroup.startDate } ~ ${ studygroup.endDate }
           </div>
       </div>
 
 
 
       <hr><br>
-      <div class="content">${ studygroup.content }</div>
+      <div class="content" style="height: 200px">${ studygroup.content }</div>
       <br><br>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -61,19 +61,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="modal-body">
-                        <p>스터디 아이디 <textarea class="form-control" name="studygroupId" value=" ${apply.studygroupId }" readonly>${studygroup.studyGroup_id }</textarea></p>
-                        <p>사용자 아이디<textarea class="form-control" name="userId" value=" ${apply.userId }"> ${students.student_id }</textarea></p>
-                        <p>스터디 이름<textarea class="form-control" value=" ${studygroup.title }" readonly disabled> </textarea></p>
+                    <div class="modal-body" style="padding: 35px">
+                        <h1>${studygroup.title }</h1>
+                        <p>스터디 아이디 <textarea class="form-control" name="studygroupId" style="height: 20px" value=" ${apply.studygroupId }" readonly>${studygroup.studyGroup_id }</textarea></p>
+                        <p>사용자 이메일<textarea class="form-control" name="userId" style="height: 20px" value=" ${apply.userId }"> ${students.student_id }</textarea></p>
+                        <hr style="margin-bottom: 30px">
 
 
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label"><h2>참여 포부</h2></label>
-                            <textarea class="form-control" name="application"  id="exampleFormControlTextarea1"  value="${ apply.application }" rows="3"></textarea>
+                            <textarea class="form-control" name="application"  id="exampleFormControlTextarea1"  style="height: 200px" value="${ apply.application }" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                         <button type="submit" class="btn btn-primary">제출</button>
                     </div>
                 </div>
@@ -90,6 +91,7 @@
                 <div class="card-body">
                     <h5 class="card-title" style="color: black; text-align: center">
                             ${ apply.name }
+                                <br>★★★★
 <%--                        <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }"--%>
 <%--                           style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>--%>
                     </h5>

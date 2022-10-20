@@ -11,7 +11,7 @@ import java.util.List;
 @CacheNamespace(flushInterval=10000)
 public interface StudygroupMapper {
 
-//    @Cacheable
+    @Cacheable("list")
     @Select("SELECT * FROM studygroup")
     List<Studygroup> findAll();
 
