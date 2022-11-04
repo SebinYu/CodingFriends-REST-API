@@ -2,6 +2,8 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<c:url var="R" value="/" />
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +30,14 @@
         <a class="navbar-brand" href="/studygroup/list"
            style="color: white; font-weight: bold; margin-left: 10px; font-size: 30px">Coding Study Friends</a>
         <div class="buttons" style="padding:10px">
-            <a href="/user/login" class="btn btn-secondary">로그인</a>
-            <a href="/user/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
+            <sec:authorize access="not authenticated">
+                <a href="/login" class="btn btn-secondary">로그인</a>
+                <a href="/user/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
+            </sec:authorize>
+            <sec:authorize access="authenticated">
+                <a class="btn" href="${R}user/index">사용자 페이지</a>
+                <a class="btn btn-secondary" href="${R}logout_processing" style="margin-right:15px;" >로그아웃</a>
+            </sec:authorize>
             <button class="navbar-toggler" type="button" style="float: right;"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                     aria-controls="offcanvasNavbar">
