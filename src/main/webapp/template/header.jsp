@@ -32,7 +32,7 @@
         <div class="buttons" style="padding:10px">
             <sec:authorize access="not authenticated">
                 <a href="/login" class="btn btn-secondary">로그인</a>
-                <a href="/user/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
+                <a href="/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
             </sec:authorize>
             <sec:authorize access="authenticated">
                 <a class="btn" href="${R}user/index">사용자 페이지</a>
