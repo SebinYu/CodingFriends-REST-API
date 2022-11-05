@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 public class Studygroup implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -16,7 +19,7 @@ public class Studygroup implements Serializable {
     String writer;
     int totalNum;
     int currentNum;
-    private Timestamp updateDate;
-    Date startDate;
-    Date endDate;
+    private LocalDateTime updateDate;
+    LocalDate startDate;
+    LocalDate endDate;
 }
