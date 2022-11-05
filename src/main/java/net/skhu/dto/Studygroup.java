@@ -16,7 +16,7 @@ public class Studygroup implements Serializable {
     String writer;
     int totalNum;
     int currentNum;
-    private Timestamp regDate;
+    private Timestamp updateDate;
     Date startDate;
     Date endDate;
 }

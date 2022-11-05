@@ -44,16 +44,16 @@
                 <form:input path="email" />
                 <form:errors path="email" class="error" />
             </div>
-            <div>
-                <div class="label">주소:</div>
-                <form:input path="email" id="address_kakao" />
-                <form:errors path="email" class="error" />
-            </div>
-            <div>
-                <div class="label">상세주소:</div>
-                <form:input path="email" />
-                <form:errors path="email" class="error" />
-            </div>
+<%--            <div>--%>
+<%--                <div class="label">주소:</div>--%>
+<%--                <form:input path="email" id="address_kakao" />--%>
+<%--                <form:errors path="email" class="error" />--%>
+<%--            </div>--%>
+<%--            <div>--%>
+<%--                <div class="label">상세주소:</div>--%>
+<%--                <form:input path="email" />--%>
+<%--                <form:errors path="email" class="error" />--%>
+<%--            </div>--%>
             <button type="submit" class="btn">회원가입</button>
             <a href="${R}studygroup/list" class="btn">취소</a>
         </form:form>
