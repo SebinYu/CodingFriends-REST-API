@@ -85,7 +85,7 @@
         <!-- Button trigger modal -->
         <c:forEach var="apply" items="${ applyList }">
             <button type="button" id ="request" class="btn btn-light" data-toggle="modal" data-target="#exampleModal" style="width: 10rem; margin: 10px">
-                ${ apply.name }
+                ${ apply.name }${ apply.application }
             <br>★★★★
             </button>
 

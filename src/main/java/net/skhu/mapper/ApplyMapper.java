@@ -1,8 +1,6 @@
 package net.skhu.mapper;
 
 import net.skhu.dto.Apply;
-import net.skhu.dto.Studygroup;
-import net.skhu.dto.UserVO;
 import org.apache.ibatis.annotations.*;
 
 import java.math.BigInteger;

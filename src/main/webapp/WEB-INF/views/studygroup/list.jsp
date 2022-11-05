@@ -46,7 +46,7 @@
 	background-image: url('../imgs/bannerImg.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;">
-    <br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br>
 
     <a href="create" class="btn btn-info" style="margin-top: 115px; color: white;">스터디 만들기</a>
 
