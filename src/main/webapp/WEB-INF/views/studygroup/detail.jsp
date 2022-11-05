@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -42,8 +43,6 @@
           </div>
       </div>
 
-
-
       <hr><br>
       <div class="content" style="height: 200px">${ studygroup.content }</div>
       <br><br>
@@ -52,7 +51,7 @@
             스터디 신청하기
         </button>
 
-        <!-- Modal -->
+        <%--스터디 신청하기 모달창--%>
         <form class="modal fade" id="staticBackdrop" method="post" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -75,34 +74,63 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary">제출</button>
+                        <button type="submit" id="request" class="btn btn-primary">제출</button>
                     </div>
                 </div>
             </div>
         </form>
 
 <%--        참여자 명단--%>
-<%--        <c:forEach var="apply" items="${ applyList }">--%>
-<%--                <div style="background: #0dc9ef; width:20px; margin-right: 10px">${ apply.name }</div>--%>
-<%--        </c:forEach>--%>
+        <div style="height: 20px"></div>
+        <!-- Button trigger modal -->
         <c:forEach var="apply" items="${ applyList }">
-        <div class="" style="display: inline-block; margin: 20px;">
-            <div class="card" style="width: 10rem;">
-                <div class="card-body">
-                    <h5 class="card-title" style="color: black; text-align: center">
-                            ${ apply.name }
-                                <br>★★★★
-<%--                        <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }"--%>
-<%--                           style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>--%>
-                    </h5>
+            <button type="button" id ="request" class="btn btn-light" data-toggle="modal" data-target="#exampleModal" style="width: 10rem; margin: 10px">
+                ${ apply.name }
+            <br>★★★★
+            </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-secondary" style="color: white">
+                        <h5 class="modal-title-second" id="exampleModalLabel">참여 포부</h5>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            ${ apply.application }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
         </c:forEach>
 
 
-<jsp:include page="/template/footer.jsp"></jsp:include>
 
+
+
+<jsp:include page="/template/footer.jsp"></jsp:include>
+        <script>
+
+            // 'request'라는 id를 가진 버튼 클릭 시 실행.
+            $('#request').click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/studygroup/detail?studyGroup_id=${studygroup.studyGroup_id }",
+                    data: { param: 'string' },
+                    success: function (data) {
+                        console.log(data);
+                        alert('성공');
+                    }
+                }).done(function (data) {
+                    alert(data);
+                });
+            });
+
+        </script>
 </body>
 
 </html>

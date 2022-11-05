@@ -19,6 +19,7 @@ public class MyUserDetails implements UserDetails {
     final String password;
     final String username;
     final boolean isEnabled;
+    final int userId;
     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
     final String name;
@@ -36,6 +37,7 @@ public class MyUserDetails implements UserDetails {
         this.password = user.getPassword();
         this.isEnabled = user.isEnabled();
 
+        this.userId = user.getUser_id();
         this.name = user.getName();
         this.email = user.getEmail();
         this.userType = user.getUserType();

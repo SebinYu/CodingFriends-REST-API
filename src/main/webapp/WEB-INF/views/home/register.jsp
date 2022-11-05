@@ -44,10 +44,38 @@
                 <form:input path="email" />
                 <form:errors path="email" class="error" />
             </div>
+            <div>
+                <div class="label">주소:</div>
+                <form:input path="email" id="address_kakao" />
+                <form:errors path="email" class="error" />
+            </div>
+            <div>
+                <div class="label">상세주소:</div>
+                <form:input path="email" />
+                <form:errors path="email" class="error" />
+            </div>
             <button type="submit" class="btn">회원가입</button>
             <a href="${R}studygroup/list" class="btn">취소</a>
         </form:form>
     </div>
 </div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function chk_form() {
+        document.getElementById('frm').submit();
+    }
+
+    window.onload = function(){
+        document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function(data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                }
+            }).open();
+        });
+    }
+</script>
 </body>
 </html>
