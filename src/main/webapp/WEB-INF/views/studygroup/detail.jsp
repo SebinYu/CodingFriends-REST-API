@@ -31,7 +31,7 @@
 
     <div class = "container" style="margin-top: 100px; clear: both; text-decoration: none;">
       <h1>${ studygroup.title }</h1>
-      <div>${ studygroup.regDate }</div>
+      <div>${ studygroup.updateDate }</div>
       <div>
           신청인원: ${ studygroup.currentNum }/${ studygroup.totalNum }
           <div style="float:right;">

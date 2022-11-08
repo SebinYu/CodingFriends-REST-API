@@ -1,6 +1,7 @@
 package net.skhu.dto;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -20,6 +21,9 @@ public class Studygroup implements Serializable {
     int totalNum;
     int currentNum;
     private LocalDateTime updateDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate endDate;
 }
