@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface LearningMaterialMapper {
 
-    @Select("SELECT * FROM learningmaterial")
+    @Select("SELECT learningMaterial_id, materialType FROM learningmaterial")
     List<LearningMaterial> findAll();
 
-    @Select("SELECT * FROM learningmaterial WHERE learningMaterial_id = #{learningMaterial_id}")
+    @Select("SELECT learningMaterial_id, materialType FROM learningmaterial WHERE learningMaterial_id = #{learningMaterial_id}")
     LearningMaterial findOne(int learningMaterial_id);
 
     @Insert("INSERT learningmaterial (learningMaterial_id) VALUES (#{learningMaterial_id})")

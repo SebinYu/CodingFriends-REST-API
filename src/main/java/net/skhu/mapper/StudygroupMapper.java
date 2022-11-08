@@ -12,12 +12,15 @@ import java.util.List;
 @CacheNamespace(flushInterval=10000)
 public interface StudygroupMapper {
 
+//   조회 쿼리를 작성시, *지양__ 유지보수, 필요한 칼럼만 찾도록하는 효율성 고려 목적
     @Cacheable(value= "NoticeList")
-    @Select("SELECT * FROM studygroup")
+    @Select("SELECT title,content,writer,totalNum,startDate,endDate" +
+            " FROM studygroup")
     List<Studygroup> findAll();
 
 
-    @Select("SELECT * FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
+    @Select("SELECT title,content,writer,totalNum,startDate,endDate" +
+            " FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
     Studygroup findOne(BigInteger studyGroup_id);
 
 
