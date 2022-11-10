@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -19,7 +20,6 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
-
     public boolean hasErrors(UserRegistration userRegistration, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return true;
@@ -34,6 +34,8 @@ public class UserService {
         }
         return false;
     }
+
+
 
     public User createEntity(UserRegistration userRegistration) {
         User user = new User();

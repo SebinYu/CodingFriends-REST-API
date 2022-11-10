@@ -11,7 +11,7 @@ import net.skhu.entity.User;
 
 @Data
 public class MyUserDetails implements UserDetails {
-    private static final long serialVersionUID = 1L;
+     static final long serialVersionUID = 1L;
 
     final boolean accountNonExpired = true;
     final boolean accountNonLocked = true;
@@ -42,5 +42,8 @@ public class MyUserDetails implements UserDetails {
         this.email = user.getEmail();
         this.userType = user.getUserType();
         this.admin = user.isAdmin();
+
+
     }
+
 }

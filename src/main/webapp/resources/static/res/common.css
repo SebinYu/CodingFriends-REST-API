@@ -1,34 +1,5 @@
-div.container { width: 800px; margin: 10px auto; font-size: 10pt; }
 
-.btn { padding: 0.4em 1em; border: 1px solid gray;
-    border-radius: 0.5em; background: linear-gradient(#fff, #ddd);
-    text-decoration: none; color: black;
-    display: inline-block; }
+body {
+    background: #f3f3f3;
+}
 
-.btn:active, .btn-mini:active {
-    -ms-transform: translateY(2px);
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    background: #ccc; }
-
-.btn-mini { padding: 0.1em 0.3em; border: 1px solid gray;
-    border-radius: 0.4em; background: linear-gradient(#fff, #ddd);
-    text-decoration: none; color: black;
-    display: inline-block; font-size: 10pt; }
-
-table.list { border-collapse: collapse; width: 100%; }
-table.list td { padding: 6px; border: 1px solid #ccc; }
-table.list th { padding: 6px; border: 1px solid #ccc;  background-color: #eee; }
-
-input { padding: 4px; }
-select { padding: 4px; }
-
-tr[data-url]:hover { cursor: pointer; background-color: #ffe; }
-.box { box-shadow: 0 0 4px lightgray, 2px 2px 4px gray; }
-
-table.pagination { border-collapse: collapse; margin-top: 1em; }
-table.pagination td { border: 1px solid #ccc; text-align: center; }
-table.pagination td.active { background-color: #48f; }
-table.pagination a { text-decoration: none; color: blue; display: inline-block;
-    width: 25px; padding: 6px; }
-table.pagination td.active a { color: white; }

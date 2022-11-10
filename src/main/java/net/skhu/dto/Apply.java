@@ -8,6 +8,7 @@ public class Apply {
     BigInteger apply_id;
     String userId;
     String studygroupId;
+    String title;
     String application;
     String name;
 }

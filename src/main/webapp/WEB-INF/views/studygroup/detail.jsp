@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ page session="false"%>
+<c:url var="R" value="/" />
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +30,7 @@
 <jsp:include page="/template/header.jsp"></jsp:include>
 
 
+
     <div class = "container" style="margin-top: 100px; clear: both; text-decoration: none;">
       <h1>${ studygroup.title }</h1>
       <div>${ studygroup.updateDate }</div>
@@ -47,9 +49,17 @@
       <div class="content" style="height: 200px">${ studygroup.content }</div>
       <br><br>
         <!-- Button trigger modal -->
+        <sec:authorize access="not authenticated">
+        <a type="button" class="btn btn-primary w-100" href="/login">
+            <스터디 신청><br>로그인 하러가기
+        </a>
+        </sec:authorize>
+        <sec:authorize access="authenticated">
         <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             스터디 신청하기
         </button>
+        </sec:authorize>
+
 
         <%--스터디 신청하기 모달창--%>
         <form class="modal fade" id="staticBackdrop" method="post" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -61,9 +71,13 @@
                     </div>
 
                     <div class="modal-body" style="padding: 35px">
-                        <h1>${studygroup.title }</h1>
-                        <p>스터디 아이디 <textarea class="form-control" name="studygroupId" style="height: 20px" value=" ${apply.studygroupId }" readonly>${studygroup.studyGroup_id }</textarea></p>
-                        <p>사용자 이메일<textarea class="form-control" name="userId" style="height: 20px" value=" ${apply.userId }"> ${students.student_id }</textarea></p>
+                        <p>스터디 번호 <textarea class="form-control" name="studygroupId" style="height: 20px" value=" ${apply.studygroupId }" readonly>${studygroup.studyGroup_id }</textarea></p>
+                        <p>스터디 명칭 <textarea class="form-control" name="title" style="height: 20px" value=" ${apply.title }" readonly>${studygroup.title }</textarea></p>
+
+                        <sec:authorize access="authenticated">
+                            <p>사용자 번호<textarea class="form-control" name="userId" style="height: 20px" value=" ${apply.userId }" readonly><sec:authentication property="principal.userId"/></textarea></p>
+                        </sec:authorize>
+
                         <hr style="margin-bottom: 30px">
 
 
@@ -85,8 +99,9 @@
         <!-- Button trigger modal -->
         <c:forEach var="apply" items="${ applyList }">
             <button type="button" id ="request" class="btn btn-light" data-toggle="modal" data-target="#exampleModal" style="width: 10rem; margin: 10px">
-                ${ apply.name }${ apply.application }
-            <br>★★★★
+                ${ apply.name }
+            <br>⭐⭐⭐⭐
+                    <br><hr>${ apply.application }
             </button>
 
         <!-- Modal -->
