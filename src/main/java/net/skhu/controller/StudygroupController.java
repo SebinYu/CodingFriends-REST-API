@@ -92,7 +92,6 @@ public class StudygroupController {
         model.addAttribute("applys", applys);
         List<Apply> applyList = applyMapper.findApplyList(studyGroup_id);
         model.addAttribute("applyList", applyList);
-        System.out.println(applyList);
 
 
         return "studygroup/detail";

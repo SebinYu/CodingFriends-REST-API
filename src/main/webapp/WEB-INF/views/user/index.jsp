@@ -59,7 +59,6 @@
         </a>
         <c:forEach var="userApply" items="${ userApplyList }">
             <a href="#" class="list-group-item list-group-item-action">${ userApply.title }</a>
-
         </c:forEach>
     </div>
 

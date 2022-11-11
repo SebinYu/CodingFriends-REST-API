@@ -30,6 +30,7 @@ public interface ApplyMapper {
     List<Apply> findUserApplyList(String userName);
 
 
+
     @Insert("INSERT apply (userId,studygroupId, title, application)"
             + " VALUES (#{userId},#{studygroupId},#{title},#{application})")
     @Options(useGeneratedKeys=true, keyProperty="apply_id")
