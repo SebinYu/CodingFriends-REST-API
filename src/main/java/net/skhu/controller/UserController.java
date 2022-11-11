@@ -3,6 +3,7 @@ package net.skhu.controller;
 
 import net.skhu.config.MyUserDetails;
 import net.skhu.dto.Apply;
+import net.skhu.dto.Participation;
 import net.skhu.dto.Studygroup;
 import net.skhu.entity.User;
 import net.skhu.mapper.ParticipationMapper;
@@ -15,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigInteger;
@@ -35,7 +38,7 @@ public class UserController {
 
     @Autowired UserRepository userRepository;
 
-    @RequestMapping("user/index")
+    @GetMapping("user/index")
     public String index(Model model,Principal principal) {
 
         String name = principal.getName();
@@ -46,7 +49,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("user/leader")
+    @GetMapping("user/leader")
     public String leader(Model model,Principal principal) {
 
         String name = principal.getName();
@@ -55,10 +58,17 @@ public class UserController {
         System.out.println(StudygroupTitleList);
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
-        List<Apply> findApplierIDs = participationMapper.findApplierID("Do it! 점프 투 파이썬");
-        System.out.println(findApplierIDs.get(2));
 
-
+        List<Apply> ApplierList = participationMapper.findApplier("Do it! 점프 투 파이썬");
+        System.out.println(StudygroupTitleList);
+        model.addAttribute("ApplierList", ApplierList);
         return "user/leader";
     }
+
+    @PostMapping("user/leader")
+    public String leader(Model model, Participation Participation) {
+        participationMapper.Insert(Participation);
+        return "studygroup/appliedMember";
+    }
+
 }
