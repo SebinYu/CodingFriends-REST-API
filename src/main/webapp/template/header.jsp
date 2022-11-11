@@ -35,7 +35,8 @@
                 <a href="/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
             </sec:authorize>
             <sec:authorize access="authenticated">
-                <a class="btn btn-success" href="${R}user/index">사용자 페이지</a>
+                <a class="btn btn-warning" href="${R}user/leader">조직장 페이지</a>
+                <a class="btn btn-success" href="${R}user/index">내 정보</a>
                 <a class="btn btn-secondary" href="${R}logout_processing" style="margin-right:15px;" >로그아웃</a>
             </sec:authorize>
             <button class="navbar-toggler" type="button" style="float: right;"

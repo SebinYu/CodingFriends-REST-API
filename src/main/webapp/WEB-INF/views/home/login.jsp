@@ -31,7 +31,10 @@
     <button type="submit" class="btn btn-secondary" style="margin-top:10px; width: 100%">로그인</button>
     <hr>
   </form>
-
-    </div>
+  <a type="button" class="btn btn-primary w-100" href="/register">
+    첫 방문이신가요?<br>
+    회원가입
+  </a>
+</div>
 </body>
 </html>

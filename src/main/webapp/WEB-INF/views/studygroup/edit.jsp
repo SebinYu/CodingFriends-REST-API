@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<c:url var="R" value="/" />
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,9 +49,9 @@
                               value="${ studygroup.content }" required></textarea></td>
             </tr>
             <tr>
-                <td>조직장 이름</td>
-                <td><input type="text" name="writer" class="form-control"
-                           value="${ studygroup.writer }" required/></td>
+                <td>조직장</td>
+                <td><textarea type="text" name="writer" class="form-control" style="height: 20px"
+                           value="${ studygroup.writer }" readonly/> <sec:authentication property="name"/></textarea></td>
             </tr>
             <tr>
                 <td>최대 모집인원</td>

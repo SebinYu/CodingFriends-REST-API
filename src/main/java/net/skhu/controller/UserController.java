@@ -35,4 +35,15 @@ public class UserController {
         model.addAttribute("userApplyList", userApplyList);
         return "user/index";
     }
+
+
+    @RequestMapping("user/leader")
+    public String leader(Model model,Principal principal) {
+
+        String name = principal.getName();
+        List<Apply> userApplyList = applyMapper.findUserApplyList(name);
+        System.out.println(userApplyList);
+        model.addAttribute("userApplyList", userApplyList);
+        return "user/leader";
+    }
 }

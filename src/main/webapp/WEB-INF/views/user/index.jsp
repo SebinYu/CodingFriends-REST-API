@@ -7,7 +7,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
-
         .profile {
             width:30%; background: #ffffff; padding: 50px 50px 50px 50px; border: 1px solid rgba(128,128,128,0.35); border-radius: 20px; float:left;
             margin:10px
@@ -21,7 +20,11 @@
 <jsp:include page="/template/header.jsp"></jsp:include>
 <jsp:include page="/template/footer.jsp"></jsp:include>
 
-<div class="container" style="margin-top: 130px">
+<div class="nav-container" style="margin-top: 130px;">
+    <div style="background:black; width: 50%; height: 50px; margin-left:370px">sss</div>
+</div>
+
+<div class="container" style="margin-top: 7px">
 <div style="clear:both"></div>
 <div class="profile" style="width:25%;">
     <div class="container-p">
