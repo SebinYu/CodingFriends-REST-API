@@ -7,14 +7,15 @@ import org.apache.ibatis.annotations.*;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ParticipationMapper {
 
 
     //   로그인 사용자가 등록한 스터디 이름 조회
-    @Select("SELECT * FROM studygroup WHERE writer = #{writer}")
-    List<Studygroup> findStudygroupTitle(String writer);
+    @Select("SELECT title FROM studygroup WHERE writer = #{writer}")
+    List<Map<String, Studygroup>> findStudygroupTitle(String writer);
 
 
     @Select("SELECT a.userId, u.name " +

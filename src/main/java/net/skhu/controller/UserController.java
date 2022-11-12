@@ -1,31 +1,25 @@
 package net.skhu.controller;
 
 
-import net.skhu.config.MyUserDetails;
 import net.skhu.dto.Apply;
 import net.skhu.dto.Participation;
 import net.skhu.dto.Studygroup;
-import net.skhu.entity.User;
 import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
-import net.skhu.model.Form5;
-import net.skhu.repository.ParticipationRepository;
 import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -42,9 +36,8 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    ParticipationRepository ParticipationRepository;
 
+//  회원 프로필 페이지
     @GetMapping("user/index")
     public String index(Model model, Principal principal) {
 
@@ -56,56 +49,58 @@ public class UserController {
     }
 
 
-    @GetMapping("user/leader")
+    //    조직장 페이지: 지원자 관리페이지_첫 화면
+    @GetMapping("user/leader/applicationManage/index")
     public String leader(Model model, Principal principal) {
 
         String name = principal.getName();
         System.out.println(name);
-        List<Studygroup> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
-        System.out.println(StudygroupTitleList);
+        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        System.out.println(StudygroupTitleList.size());
+        model.addAttribute("StudygroupTitleList", StudygroupTitleList);
+
+        return "user/leader/applicationManage/index";
+    }
+
+
+
+    //    조직장 페이지: 지원자 관리페이지_지원 수락
+    @GetMapping("user/leader/applicationManage/detail")
+    public String leaderAppliers(Model model, Principal principal, @RequestParam("StudygroupTitle") String StudygroupTitle) {
+
+        String name = principal.getName();
+        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        System.out.println(StudygroupTitleList.size());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
 
-        List<Apply> ApplierList = participationMapper.findApplier("Do it! 점프 투 파이썬");
-        System.out.println(StudygroupTitleList);
-        model.addAttribute("ApplierList", ApplierList);
-        return "user/leader";
+            List<Apply> ApplierList = participationMapper.findApplier(StudygroupTitle);
+            model.addAttribute("ApplierList", ApplierList);
+
+        return "user/leader/applicationManage/detail";
     }
 
-    @PostMapping("user/leader")
-    public String leader(Model model, Participation Participation) {
-        participationMapper.Insert(Participation);
-        return "user/leader";
+    //    조직장 페이지: 지원자 관리페이지_지원 수락
+    @PostMapping("user/leader/applicationManage/detail")
+    public String leader(Model model,
+                         HttpServletRequest request, Participation participation) {
+
+        String[] studentId = request.getParameterValues("studentId");
+        String[] studygroupId = request.getParameterValues("studygroupId");
+        String[] studyGroup_Leader = request.getParameterValues("studyGroup_Leader");
+
+        for (int i = 0; i < studentId.length; i++) {
+            int OneStudentId = Integer.parseInt(studentId[i]);
+            int OneStudygroupId = Integer.parseInt(studygroupId[i]);
+            String OneStudyGroup_Leader = studyGroup_Leader[i];
+
+            participation.setStudentId(OneStudentId);
+            participation.setStudygroupId(OneStudygroupId);
+            participation.setStudyGroup_Leader(OneStudyGroup_Leader);
+            participationMapper.Insert(participation);
+        }
+        return "user/leader/applicationManage/index";
     }
 
-//    @RequestMapping(value = "process", method = RequestMethod.POST, params = "cmd=save")
-//    public String save(Model model, Form5 form5) {
-//        for (int i = 0; i < form5.getStudentId().length; ++i) {
-//            Participation participation = new Participation();
-//            participation.setStudentId(form5.getStudentId()[i]);
-//            participation.setStudygroupId(form5.getStudygroupId()[i]);
-//            participation.setStudyGroup_Leader(form5.getStudyGroup_Leader()[i]);
-//            if (participation.getStudyGroup_Leader().trim().length() > 0)
-//                ParticipationRepository.save(participation);
-//        }
-//        System.out.println(ParticipationRepository);
-//        return "user/index";
-//
-//    }
 
-
-//    @GetMapping("user/leader")
-//    public String leader_Manage(Model model, Principal principal) {
-//
-//        String name = principal.getName();
-//        List<Studygroup> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
-//        System.out.println(StudygroupTitleList);
-//        model.addAttribute("StudygroupTitleList", StudygroupTitleList);
-//
-//
-//        List<Apply> ApplierList = participationMapper.findApplier("Do it! 점프 투 파이썬");
-//        System.out.println(StudygroupTitleList);
-//        model.addAttribute("ApplierList", ApplierList);
-//        return "user/leader";
-//    }
 }

@@ -67,22 +67,17 @@
 </div>
 <div class="container" style="margin-top: 100px;width: 70%; float:left; padding: 50px 50px 50px 50px;">
   <div><h1>스터디 지원자</h1>
-    <h3>Do it! 점프 투 파이썬</h3>
-
-    <div style="margin-top: 30px">
-      <form method="post">
-        <c:forEach var="Applier" items="${ ApplierList }">
-          <h2>${ Applier.name }</h2>
-          <p>지원자 번호 <textarea class="form-control" name="studentId" value=" ${participationrate.studentId }" readonly>${Applier.userId }</textarea></p>
-        </c:forEach>
-        <p>스터디 번호 <textarea class="form-control" name="studygroupId" value=" ${participationrate.studygroupId }" readonly>54</textarea></p>
-        <p>스터디 조직장 이름 <textarea class="form-control" name="studyGroup_Leader" value=" ${participationrate.studyGroup_Leader}" readonly> <sec:authentication property="name"/> </textarea></p>
-        <button type="submit" id="request" class="btn btn-primary">신청수락</button>
-        <hr>
-      </form>
-
+    <c:forEach var="StudygroupTitle" items="${ StudygroupTitleList }">
+    <div class="" style="display: inline-block; margin: 20px;">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title" style="color: black">
+            <a href="detail?StudygroupTitle=${StudygroupTitle.title}" style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${StudygroupTitle.title}</a>
+          </h5>
+        </div>
+      </div>
     </div>
-
+    </c:forEach>
 
 </body>
 </html>
