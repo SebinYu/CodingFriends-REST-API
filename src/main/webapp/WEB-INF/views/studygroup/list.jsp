@@ -46,9 +46,9 @@
 	background-image: url('../imgs/bannerImg.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;">
-    <br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br>
 
-    <a href="create" class="btn btn-info" style="margin-top: 250px; color: white;">스터디 만들기</a>
+    <a href="create" class="btn btn-info" style="margin-top: 115px; color: white;">스터디 만들기</a>
 
 </div>
 
@@ -70,7 +70,7 @@
 </div>
 
 <%--스터디 리스트 조회--%>
-<div class="list" style="margin-left: 50px">
+<div class="list" style="margin-left: 85px">
 
     <c:forEach var="studygroup" items="${ studygroups }">
         <div class="" style="display: inline-block; margin: 20px;">
