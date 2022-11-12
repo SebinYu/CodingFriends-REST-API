@@ -40,13 +40,47 @@
             font-size: 25px;
         }
 
+        table {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
 
         table.list { display: inline-block; }
-        td:nth-child(1) { text-align: center; }
-        td:nth-child(2) { text-align: center; min-width: 30px; }
-        input[name=name] { width: 250px; }
-        input[name=shortName] { width: 80px; }
-        input[name=phonename] { width: 120px; }
+        td { text-align: center; min-width: 190px; }
+        td:nth-child(1) { text-align: center; min-width: 180px; }
+        th:nth-child(1) {
+            height: 55px;
+            padding: 20px 10px 20px 18px;
+            border-radius: 25px 0px 0px 25px;
+        }
+
+        th:nth-child(4) {
+            height: 55px;
+            border-radius: 0px 25px 25px 0px;
+        }
+
+        thead{
+            background: #93e7f8;
+            border-radius: 20px;
+            text-align: center;
+            border-radius: 20px;
+            min-width: 300px;
+            color: white;
+            font-size: 22px;
+        }
+
+        tbody {
+            font-size: 20px;
+
+        }
+
+        td:nth-child(1) { background: white;}
+        td:nth-child(2) { background: white;}
+        td:nth-child(3) { background: white;}
+        td:nth-child(4) { background: white;}
+
+
+
     </style>
 </head>
 <body style="background: rgba(243,243,243,0.22);">
@@ -83,33 +117,40 @@
 
 
 <%--        스터디 지원자_ 신청 허가창--%>
-        <div class="container">
-            <form method="post">
-                <table class="list">
-                    <thead>
+        <div class="container" style="text-align: center">
+            <form method="post" style="width: 50%">
+                <table class="list" >
+                    <thead style="">
                     <tr>
-                        <th><button type="submit" class="btn-mini" name="cmd" value="delete"
-                                    data-confirm-delete>삭제</button></th>
-                        <th>지원자 이름</th>
-                        <th>지원자 ID번호</th>
-                        <th>스터디 번호</th>
-                        <th>스터디 조직장 이름</th>
+                        <th>
+                            <button type="submit" class="btn btn-info" style="color: white" name="cmd" value="save">수락</button>
+                            <button type="submit" class="btn btn-danger"  name="cmd" value="delete" >거절</button>
+                        </th>
+                        <th>지원자</th>
+                        <th>후기평점</th>
+                        <th>지원일자</th>
+                    <%--                        <th>지원자 ID번호</th>--%>
+<%--                        <th>스터디 번호</th>--%>
+<%--                        <th>스터디 조직장 이름</th>--%>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="Applier" items="${ ApplierList }">
                         <tr>
                             <td><input type="checkbox" name="idChecked" value="${ department.id }" /></td>
-                            <td><h2>${ Applier.name }</h2></td>
-                            <td><input class="form-control" name="studentId" value="${Applier.userId}" readonly></td>
-                            <td><input class="form-control" name="studygroupId" value="${studygroupID}" readonly></td>
-                            <td><input class="form-control" name="studyGroup_Leader" value="<sec:authentication property="name"/>" readonly></td>
+                            <td>${ Applier.name }</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>${ Applier.updateDate }</td>
+                            <td><input type="hidden" class="form-control" name="studentId" value="${Applier.userId}" readonly></td>
+                            <td><input type="hidden" class="form-control" name="studygroupId" value="${studygroupID}" readonly></td>
+                            <td><input type="hidden" class="form-control" name="studyGroup_Leader" value="<sec:authentication property="name"/>" readonly></td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-                <button type="submit" class="btn" name="cmd" value="save">저장</button>
+
         </div>
+
 
 </body>
 </html>

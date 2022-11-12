@@ -20,7 +20,7 @@ public interface ParticipationMapper {
     @Select("SELECT studyGroup_id FROM studygroup WHERE title = #{title} && writer = #{writer}")
     Integer findStudygroupid(String title, String writer);
 
-    @Select("SELECT a.userId, u.name " +
+    @Select("SELECT a.userId, a.updateDate, u.name " +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
             "                 WHERE s.title = #{title}                   " +
