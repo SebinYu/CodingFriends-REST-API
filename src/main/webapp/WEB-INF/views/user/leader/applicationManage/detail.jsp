@@ -67,6 +67,8 @@
 </div>
 <div class="container" style="margin-top: 100px;width: 70%; float:left; padding: 50px 50px 50px 50px;">
     <div><h1>스터디 지원자</h1>
+
+<%--     만든 스터디 조회--%>
         <c:forEach var="StudygroupTitle" items="${ StudygroupTitleList }">
         <div class="" style="display: inline-block; margin: 20px;">
             <div class="card" style="width: 18rem;">
@@ -78,33 +80,17 @@
             </div>
         </div>
         </c:forEach>
-        <div style="margin-top: 30px">
-            <form method="post">
-                <c:forEach var="Applier" items="${ ApplierList }">
-                    <h2>${ Applier.name }</h2>
-                    <%--                    type ="hidden"--%>
-                    <p>지원자 번호 <textarea  class="form-control" name="studentId" value=" ${participationrate.studentId }" readonly>${Applier.userId }</textarea></p>
-                    <p>스터디 번호 <textarea class="form-control" name="studygroupId" value=" ${participationrate.studygroupId }" readonly>54</textarea></p>
-                    <p>스터디 조직장 이름 <textarea class="form-control" name="studyGroup_Leader" value=" ${participationrate.studyGroup_Leader}" readonly> <sec:authentication property="name"/> </textarea></p>
-                    <hr>
-                </c:forEach>
-                <button type="submit" id="request" class="btn btn-primary">신청수락</button>
-
-            </form>
-        </div>
 
 
-
-
-
+<%--        스터디 지원자_ 신청 허가창--%>
         <div class="container">
-
             <form method="post">
                 <table class="list">
                     <thead>
                     <tr>
                         <th><button type="submit" class="btn-mini" name="cmd" value="delete"
                                     data-confirm-delete>삭제</button></th>
+                        <th>지원자 이름</th>
                         <th>지원자 ID번호</th>
                         <th>스터디 번호</th>
                         <th>스터디 조직장 이름</th>
@@ -114,9 +100,10 @@
                     <c:forEach var="Applier" items="${ ApplierList }">
                         <tr>
                             <td><input type="checkbox" name="idChecked" value="${ department.id }" /></td>
-                            <td><textarea class="form-control" name="studentId" value=" ${participationrate.studentId }" readonly>${Applier.userId }</textarea></td>
-                            <td><textarea class="form-control" name="studygroupId" value=" ${participationrate.studygroupId }" readonly>54</textarea></td>
-                            <td><textarea class="form-control" name="studyGroup_Leader" value=" ${participationrate.studyGroup_Leader}" readonly> <sec:authentication property="name"/> </textarea></td>
+                            <td><h2>${ Applier.name }</h2></td>
+                            <td><input class="form-control" name="studentId" value="${Applier.userId}" readonly></td>
+                            <td><input class="form-control" name="studygroupId" value="${studygroupID}" readonly></td>
+                            <td><input class="form-control" name="studyGroup_Leader" value="<sec:authentication property="name"/>" readonly></td>
                         </tr>
                     </c:forEach>
                     </tbody>

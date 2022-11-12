@@ -14,9 +14,11 @@ public interface ParticipationMapper {
 
 
     //   로그인 사용자가 등록한 스터디 이름 조회
-    @Select("SELECT title FROM studygroup WHERE writer = #{writer}")
+    @Select("SELECT title, studyGroup_id FROM studygroup WHERE writer = #{writer}")
     List<Map<String, Studygroup>> findStudygroupTitle(String writer);
 
+    @Select("SELECT studyGroup_id FROM studygroup WHERE title = #{title} && writer = #{writer}")
+    Integer findStudygroupid(String title, String writer);
 
     @Select("SELECT a.userId, u.name " +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +

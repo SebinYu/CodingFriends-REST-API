@@ -73,9 +73,12 @@ public class UserController {
         System.out.println(StudygroupTitleList.size());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
+        List<Apply> ApplierList = participationMapper.findApplier(StudygroupTitle);
+        model.addAttribute("ApplierList", ApplierList);
 
-            List<Apply> ApplierList = participationMapper.findApplier(StudygroupTitle);
-            model.addAttribute("ApplierList", ApplierList);
+        Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
+        System.out.println(studygroupID);
+        model.addAttribute("studygroupID", studygroupID);
 
         return "user/leader/applicationManage/detail";
     }
