@@ -21,7 +21,7 @@
 <jsp:include page="/template/footer.jsp"></jsp:include>
 
 <div class="nav-container" style="margin-top: 130px;">
-    <div style="background:black; width: 50%; height: 50px; margin-left:370px">sss</div>
+<%--    <div style="background:black; width: 50%; height: 50px; margin-left:370px">sss</div>--%>
 </div>
 
 <div class="container" style="margin-top: 7px">

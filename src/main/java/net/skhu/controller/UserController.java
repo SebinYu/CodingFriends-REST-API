@@ -78,18 +78,34 @@ public class UserController {
         return "user/leader";
     }
 
-    @RequestMapping(value = "process", method = RequestMethod.POST, params = "cmd=save")
-    public String save(Model model, Form5 form5) {
-        for (int i = 0; i < form5.getStudentId().length; ++i) {
-            Participation participation = new Participation();
-            participation.setStudentId(form5.getStudentId()[i]);
-            participation.setStudygroupId(form5.getStudygroupId()[i]);
-            participation.setStudyGroup_Leader(form5.getStudyGroup_Leader()[i]);
-            if (participation.getStudyGroup_Leader().trim().length() > 0)
-                ParticipationRepository.save(participation);
-        }
-        System.out.println(ParticipationRepository);
-        return "user/index";
+//    @RequestMapping(value = "process", method = RequestMethod.POST, params = "cmd=save")
+//    public String save(Model model, Form5 form5) {
+//        for (int i = 0; i < form5.getStudentId().length; ++i) {
+//            Participation participation = new Participation();
+//            participation.setStudentId(form5.getStudentId()[i]);
+//            participation.setStudygroupId(form5.getStudygroupId()[i]);
+//            participation.setStudyGroup_Leader(form5.getStudyGroup_Leader()[i]);
+//            if (participation.getStudyGroup_Leader().trim().length() > 0)
+//                ParticipationRepository.save(participation);
+//        }
+//        System.out.println(ParticipationRepository);
+//        return "user/index";
+//
+//    }
 
-    }
+
+//    @GetMapping("user/leader")
+//    public String leader_Manage(Model model, Principal principal) {
+//
+//        String name = principal.getName();
+//        List<Studygroup> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+//        System.out.println(StudygroupTitleList);
+//        model.addAttribute("StudygroupTitleList", StudygroupTitleList);
+//
+//
+//        List<Apply> ApplierList = participationMapper.findApplier("Do it! 점프 투 파이썬");
+//        System.out.println(StudygroupTitleList);
+//        model.addAttribute("ApplierList", ApplierList);
+//        return "user/leader";
+//    }
 }

@@ -68,6 +68,7 @@
 <div class="container" style="margin-top: 100px;width: 70%; float:left; padding: 50px 50px 50px 50px;">
   <div><h1>스터디 지원자</h1>
         <h3>Do it! 점프 투 파이썬</h3>
+        <h3>${StudygroupTitleList}</h3>
 
         <div style="margin-top: 30px">
             <form method="post">
