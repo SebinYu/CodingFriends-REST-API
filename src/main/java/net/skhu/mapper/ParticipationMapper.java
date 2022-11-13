@@ -24,9 +24,9 @@ public interface ParticipationMapper {
     @Select("SELECT a.userId, a.updateDate, u.name " +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
-            "                 WHERE s.title = #{title}                   " +
+            "                 WHERE s.studyGroup_id = #{studygroupID}                   " +
             " ORDER BY u.user_id")
-    List<Apply> findApplier(String title);
+    List<Apply> findApplier(Integer studygroupID);
 
     @Select("SELECT a.studygroupId" +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +

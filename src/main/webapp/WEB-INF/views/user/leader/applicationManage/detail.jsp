@@ -95,23 +95,8 @@
 <body style="background: rgba(243,243,243,0.22);">
 <jsp:include page="/template/header.jsp"></jsp:include>
 <jsp:include page="/template/footer.jsp"></jsp:include>
+<jsp:include page="/template/left_column.jsp"></jsp:include>
 
-<div class="dashboard" style="">
-    <div style="margin: 100px 0px 80px 10px">
-        <img src="../../../../../resources/static/imgs/settings.png" width="250px" height="250px">
-    </div>
-    <div style="height: 35%; margin-top: 50px">
-        <hr>
-        <a class="link" href="/user/leader">    <i class="fa-duotone fa-ballot-check"></i>
-            주차별 참여율</a>
-        <br><br>
-        <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }" class="link">스터원 관리</a>
-        <br><br>
-        <a href="/user/leader/applicationManage/index" class="link" >스터디 지원자 리스트</a>
-
-    </div>
-
-</div>
 <div class="container" style="margin: 100px 0px 0px 20px; width: 70%; float:left; padding: 50px 50px 50px 50px;">
     <div><p style="color: #0dc9ef; font-size: 70px; font-weight: bold; margin: 0px 0px 10px 13px;">스터디 지원자</p>
 
