@@ -23,6 +23,7 @@
     <title>Coding Study Friends</title>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/c30dd58b89.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar bg-info fixed-top">

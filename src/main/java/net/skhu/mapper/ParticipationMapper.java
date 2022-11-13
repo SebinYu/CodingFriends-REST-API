@@ -4,6 +4,7 @@ import net.skhu.dto.Apply;
 import net.skhu.dto.Participation;
 import net.skhu.dto.Studygroup;
 import org.apache.ibatis.annotations.*;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -28,17 +29,11 @@ public interface ParticipationMapper {
     List<Apply> findApplier(String title);
 
 
-    @Select("SELECT s.title " +
-            " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
-            "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
-            "                 JOIN studygroup s ON p.studyGroup_Leader = s.writer                   " +
-            "                 WHERE s.writer = #{writer}                   " +
-            " ORDER BY u.user_id")
-    List<Participation> findAll(String writer);
-
     @Insert("INSERT participationrate (studentId,studygroupId,studyGroup_Leader)"
             + " VALUES (#{studentId},#{studygroupId},#{studyGroup_Leader})")
     @Options(useGeneratedKeys=true, keyProperty="participationRate_id")
     void Insert(Participation participation);
 
+    @Delete("DELETE FROM participationrate WHERE studentId = #{studentId}")
+    void delete(int studentId);
 }

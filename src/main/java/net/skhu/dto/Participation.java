@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Entity
 public class Participation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,7 @@ public class Participation {
     Integer studentId;
     Integer studygroupId;
     String studyGroup_Leader;
-    private List<Participation> list;
+//    private List<Participation> list;
 
     Integer week;
     Boolean weeklyAttendance;

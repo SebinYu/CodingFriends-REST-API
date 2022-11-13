@@ -6,14 +6,13 @@ import net.skhu.dto.Participation;
 import net.skhu.dto.Studygroup;
 import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
+import net.skhu.repository.ParticipationRepository;
 import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
@@ -104,6 +103,15 @@ public class UserController {
         }
         return "user/leader/applicationManage/index";
     }
+
+//    @RequestMapping(value = "user/leader/applicationManage/detail" ,method=RequestMethod.POST, params="cmd=delete")
+//    public String delete(Model model,HttpServletRequest deleteRequest, Participation participation) {
+//        String[] idChecked = deleteRequest.getParameterValues("idChecked");
+//        System.out.println(idChecked);
+//        for (int i = 0; i < idChecked.length; ++i){
+//        participationMapper.delete(Integer.parseInt(idChecked[i]));}
+//        return "redirect:user/leader/applicationManage/detail";
+//    }
 
 
 }
