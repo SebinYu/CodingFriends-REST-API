@@ -1,24 +1,24 @@
 package net.skhu.controller;
 
 
-        import net.skhu.dto.Apply;
-        import net.skhu.dto.Participation;
-        import net.skhu.dto.Studygroup;
-        import net.skhu.mapper.ParticipationMapper;
-        import net.skhu.mapper.StudygroupMapper;
-        import net.skhu.repository.ParticipationRepository;
-        import net.skhu.repository.UserRepository;
-        import net.skhu.mapper.ApplyMapper;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.Model;
-        import org.springframework.web.bind.annotation.*;
+import net.skhu.dto.Apply;
+import net.skhu.dto.Participation;
+import net.skhu.dto.Studygroup;
+import net.skhu.mapper.ParticipationMapper;
+import net.skhu.mapper.StudygroupMapper;
+import net.skhu.repository.ParticipationRepository;
+import net.skhu.repository.UserRepository;
+import net.skhu.mapper.ApplyMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-        import javax.servlet.http.HttpServletRequest;
-        import java.math.BigInteger;
-        import java.security.Principal;
-        import java.util.List;
-        import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
+import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -68,7 +68,7 @@ public class LeaderController {
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value="/process", method= RequestMethod.POST, params="cmd=save")
     public String applicationAccepted(Model model,
-                         HttpServletRequest request, Principal principal, Participation participation) {
+                                      HttpServletRequest request, Principal principal, Participation participation) {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
         String studyGroup_Leader = principal.getName();
@@ -76,15 +76,15 @@ public class LeaderController {
 
         for (int i = 0; i < checkedStudentID.length; i++) {
             int OneStudentId = Integer.parseInt(checkedStudentID[i]);
-            Integer[] checkedStudygroupId = participationMapper.findAcceptedUserInfo(OneStudentId);
-            int studygroupId = checkedStudygroupId[i];
+            Integer checkedStudygroupId = participationMapper.findAcceptedUserInfo(OneStudentId);
+            System.out.println(checkedStudygroupId);
 
             participation.setStudentId(OneStudentId);
-            participation.setStudygroupId(studygroupId);
+            participation.setStudygroupId(checkedStudygroupId);
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participationMapper.Insert(participation);
         }
-        return "redirect:studygroup/list";
+        return "redirect:user/leader/applicationManage/index";
     }
 
     // 지원자 관리페이지_지원 거절
@@ -93,7 +93,7 @@ public class LeaderController {
         String[] idChecked = deleteRequest.getParameterValues("idChecked");
         for (int i = 0; i < idChecked.length; ++i){
             applyMapper.delete(new BigInteger(idChecked[i]));}
-        return "redirect:studygroup/list";
+        return "redirect:user/leader/applicationManage/index";
     }
 
 

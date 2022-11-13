@@ -33,7 +33,7 @@ public interface ParticipationMapper {
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
             "                 WHERE a.userId = #{idChecked}                   " +
             " ORDER BY u.user_id")
-    Integer[] findAcceptedUserInfo(Integer idChecked);
+    Integer findAcceptedUserInfo(Integer idChecked);
 
     @Insert("INSERT participationrate (studentId,studygroupId,studyGroup_Leader)"
             + " VALUES (#{studentId},#{studygroupId},#{studyGroup_Leader})")
