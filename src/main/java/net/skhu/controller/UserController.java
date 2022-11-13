@@ -83,7 +83,7 @@ public class UserController {
     }
 
     //    조직장 페이지: 지원자 관리페이지_지원 수락
-    @PostMapping("user/leader/applicationManage/detail")
+    @RequestMapping(value="process", method=RequestMethod.POST, params="cmd=save")
     public String leader(Model model,
                          HttpServletRequest request, Participation participation) {
 
@@ -104,14 +104,13 @@ public class UserController {
         return "user/leader/applicationManage/index";
     }
 
-//    @RequestMapping(value = "user/leader/applicationManage/detail" ,method=RequestMethod.POST, params="cmd=delete")
-//    public String delete(Model model,HttpServletRequest deleteRequest, Participation participation) {
-//        String[] idChecked = deleteRequest.getParameterValues("idChecked");
-//        System.out.println(idChecked);
-//        for (int i = 0; i < idChecked.length; ++i){
-//        participationMapper.delete(Integer.parseInt(idChecked[i]));}
-//        return "redirect:user/leader/applicationManage/detail";
-//    }
+    @RequestMapping(value="/process", method=RequestMethod.POST, params="cmd=delete")
+    public String delete(Model model,HttpServletRequest deleteRequest, Participation participation) {
+        String[] idChecked = deleteRequest.getParameterValues("idChecked");
+        for (int i = 0; i < idChecked.length; ++i){
+        applyMapper.delete(new BigInteger(idChecked[i]));}
+        return "user/leader/applicationManage/detail";
+    }
 
 
 }

@@ -37,12 +37,12 @@ public interface ApplyMapper {
     void insert(Apply apply);
 
 
-    @Update("UPDATE applys SET userId = #{userId}, studygroupId = #{studygroupId}, application = #{application} WHERE apply_id = #{apply_id}")
+    @Update("UPDATE apply SET userId = #{userId}, studygroupId = #{studygroupId}, application = #{application} WHERE apply_id = #{apply_id}")
     void update(Apply apply);
 
 
-    @Delete("DELETE FROM applys WHERE apply_id = #{apply_id}")
-    void delete(BigInteger apply_id);
+    @Delete("DELETE FROM apply WHERE userId = #{userId}")
+    void delete(BigInteger userId);
 
 
 }

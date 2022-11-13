@@ -131,7 +131,7 @@
 
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
-            <form method="post" action="" style="width: 50%">
+            <form method="post" action="/process" style="width: 50%">
                 <table class="list" >
                     <thead style="">
                     <tr>
