@@ -28,6 +28,12 @@ public interface ParticipationMapper {
             " ORDER BY u.user_id")
     List<Apply> findApplier(String title);
 
+    @Select("SELECT a.studygroupId" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE a.userId = #{idChecked}                   " +
+            " ORDER BY u.user_id")
+    Integer[] findAcceptedUserInfo(Integer idChecked);
 
     @Insert("INSERT participationrate (studentId,studygroupId,studyGroup_Leader)"
             + " VALUES (#{studentId},#{studygroupId},#{studyGroup_Leader})")

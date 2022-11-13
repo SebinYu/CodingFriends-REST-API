@@ -85,27 +85,28 @@ public class UserController {
     //    조직장 페이지: 지원자 관리페이지_지원 수락
     @RequestMapping(value="process", method=RequestMethod.POST, params="cmd=save")
     public String leader(Model model,
-                         HttpServletRequest request, Participation participation) {
+                         HttpServletRequest request, Principal principal, Participation participation) {
 
-        String[] studentId = request.getParameterValues("studentId");
-        String[] studygroupId = request.getParameterValues("studygroupId");
-        String[] studyGroup_Leader = request.getParameterValues("studyGroup_Leader");
+        String[] checkedStudentID = request.getParameterValues("idChecked");
+//        String[] studygroupId = request.getParameterValues("studygroupId");
+        String studyGroup_Leader = principal.getName();
 
-        for (int i = 0; i < studentId.length; i++) {
-            int OneStudentId = Integer.parseInt(studentId[i]);
-            int OneStudygroupId = Integer.parseInt(studygroupId[i]);
-            String OneStudyGroup_Leader = studyGroup_Leader[i];
+
+        for (int i = 0; i < checkedStudentID.length; i++) {
+            int OneStudentId = Integer.parseInt(checkedStudentID[i]);
+            Integer[] checkedStudygroupId = participationMapper.findAcceptedUserInfo(OneStudentId);
+            int studygroupId = checkedStudygroupId[i];
 
             participation.setStudentId(OneStudentId);
-            participation.setStudygroupId(OneStudygroupId);
-            participation.setStudyGroup_Leader(OneStudyGroup_Leader);
+            participation.setStudygroupId(studygroupId);
+            participation.setStudyGroup_Leader(studyGroup_Leader);
             participationMapper.Insert(participation);
         }
         return "user/leader/applicationManage/index";
     }
 
     @RequestMapping(value="/process", method=RequestMethod.POST, params="cmd=delete")
-    public String delete(Model model,HttpServletRequest deleteRequest, Participation participation) {
+    public String delete(Model model,HttpServletRequest deleteRequest) {
         String[] idChecked = deleteRequest.getParameterValues("idChecked");
         for (int i = 0; i < idChecked.length; ++i){
         applyMapper.delete(new BigInteger(idChecked[i]));}
