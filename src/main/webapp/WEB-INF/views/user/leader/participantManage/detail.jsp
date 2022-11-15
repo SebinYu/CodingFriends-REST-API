@@ -121,8 +121,8 @@
                     <thead style="">
                     <tr>
                         <th>
-                            <button type="submit" class="btn btn-info" style="color: white" name="cmd" value="save" data-confirm-save>수락</button>
-                            <button type="submit" class="btn btn-danger" name="cmd" value="delete" data-confirm-delete>거절</button>
+                            <button type="submit" class="btn btn-info" style="color: white" name="cmd" value="save">수락</button>
+                            <button type="submit" class="btn btn-danger" name="cmd" value="delete" >거절</button>
                         </th>
                         <th>지원자</th>
                         <th>후기평점</th>
@@ -133,15 +133,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="Applier" items="${ ApplierList }">
+                    <c:forEach var="Participant" items="${ ParticipationList }">
                         <tr>
-                            <td><input type="checkbox" name="idChecked" value="${Applier.userId}" required/></td>
-                            <td>${ Applier.name }</td>
+                            <td>${ Participant.name }</td>
                             <td>⭐⭐⭐⭐⭐</td>
                             <td>${ Applier.updateDate }</td>
-                            <td><input type="hidden" class="form-control" name="studentId" value="${Applier.userId}" readonly></td>
-                            <td><input type="hidden" class="form-control" name="studygroupId" value="${studygroupID}" readonly></td>
-                            <td><input type="hidden" class="form-control" name="studyGroup_Leader" value="<sec:authentication property="name"/>" readonly></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -160,11 +156,7 @@
         })
 
         $("[data-confirm-delete]").click(function() {
-            return confirm("거절하시겠습니까?");
-        })
-
-        $("[data-confirm-save]").click(function() {
-            return confirm("수락하시겠습니까?");
+            return confirm("삭제하시겠습니까?");
         })
 
     })

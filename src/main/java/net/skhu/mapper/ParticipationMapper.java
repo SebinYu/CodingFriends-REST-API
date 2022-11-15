@@ -28,6 +28,13 @@ public interface ParticipationMapper {
             " ORDER BY u.user_id")
     List<Apply> findApplier(Integer studygroupID);
 
+    @Select("SELECT p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name " +
+            " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
+            "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE p.studygroupId = #{studygroupId}                   " +
+            " ORDER BY u.user_id")
+    List<Participation> findParticipant(Integer studygroupId);
+
     @Select("SELECT a.studygroupId" +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +

@@ -6,7 +6,6 @@ import net.skhu.dto.Participation;
 import net.skhu.dto.Studygroup;
 import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
-import net.skhu.repository.ParticipationRepository;
 import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,9 @@ public class LeaderController {
         model.addAttribute("studygroupID", studygroupID);
 
         List<Apply> ApplierList = participationMapper.findApplier(studygroupID);
-        model.addAttribute("ApplierList", ApplierList);
+//        for (int i = 0; i < ApplierList.length; i++) {
+
+            model.addAttribute("ApplierList", ApplierList);
         return "user/leader/applicationManage/detail";
     }
 
@@ -84,7 +85,7 @@ public class LeaderController {
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participationMapper.Insert(participation);
         }
-        return "redirect:user/leader/applicationManage/index";
+        return "user/leader/applicationManage/index";
     }
 
     // 지원자 관리페이지_지원 거절
@@ -93,7 +94,7 @@ public class LeaderController {
         String[] idChecked = deleteRequest.getParameterValues("idChecked");
         for (int i = 0; i < idChecked.length; ++i){
             applyMapper.delete(new BigInteger(idChecked[i]));}
-        return "redirect:user/leader/applicationManage/index";
+        return "user/leader/applicationManage/index";
     }
 
 
@@ -102,13 +103,27 @@ public class LeaderController {
     public String Participant (Model model, Principal principal) {
 
         String name = principal.getName();
-//        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
-//        model.addAttribute("StudygroupTitleList", StudygroupTitleList);
+        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/participantManage/index";
     }
 
+    @GetMapping("user/leader/participantManage/detail")
+    public String ParticipantInfo (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
+        String name = principal.getName();
+        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        model.addAttribute("StudygroupTitleList", StudygroupTitleList);
+
+        Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
+        model.addAttribute("studygroupID", studygroupID);
+
+        List<Participation> ParticipationList = participationMapper.findParticipant(studygroupID);
+        model.addAttribute("ParticipationList", ParticipationList);
+
+        return "user/leader/participantManage/detail";
+    }
 
 }
 
