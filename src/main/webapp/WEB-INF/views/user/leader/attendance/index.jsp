@@ -56,7 +56,7 @@
 
 
 <div class="container" style="margin: 100px 0px 0px 20px; width: 80%; float:left; padding: 50px 50px 50px 50px;">
-    <div><p style="color: #0dc9ef; font-size: 70px; font-weight: bold; margin: 0px 0px 10px 13px;">스터디원 관리</p>
+    <div><p style="color: #0dc9ef; font-size: 70px; font-weight: bold; margin: 0px 0px 10px 13px;">주차별 참여율</p>
         <c:forEach var="StudygroupTitle" items="${ StudygroupTitleList }">
         <div class="" style="display: inline-block; margin: 20px;">
             <div class="card" style="width: 25rem; text-align: center">

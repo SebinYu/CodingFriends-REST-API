@@ -12,14 +12,13 @@ import java.util.List;
 
 @Data
 public class Participation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     BigInteger participationRate_id;
 
-    Integer studentId;
-    Integer studygroupId;
+    String studentId;
+    String studygroupId;
     String studyGroup_Leader;
     Integer week;
-    Boolean weeklyAttendance;
+    String weeklyAttendance;
+    String weeklyHomework;
     private LocalDateTime updateDate;
 }

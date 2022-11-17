@@ -43,7 +43,7 @@
   </div>
   <div style="height: 35%; margin-top: 50px">
     <hr>
-    <a class="link" href="/user/leader">주차별 참여율</a>
+    <a class="link" href="/user/leader/attendance/index">주차별 참여율</a>
     <br><br>
     <a href="/user/leader/participantManage/index" class="link">스터디원 관리</a>
     <br><br>

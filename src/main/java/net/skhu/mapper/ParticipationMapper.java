@@ -28,22 +28,22 @@ public interface ParticipationMapper {
             " ORDER BY u.user_id")
     List<Apply> findApplier(Integer studygroupID);
 
-    @Select("SELECT p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name " +
+    @Select("SELECT p.participationRate_id,p.studentId, p.studygroupId, p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name" +
             " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
             "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
             "                 WHERE p.studygroupId = #{studygroupId}                   " +
             " ORDER BY u.user_id")
-    List<Participation> findParticipant(Integer studygroupId);
+    List<Map<String, Participation>> findParticipant(Integer studygroupId);
 
     @Select("SELECT a.studygroupId" +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
             "                 WHERE a.userId = #{idChecked}                   " +
             " ORDER BY u.user_id")
-    Integer findAcceptedUserInfo(Integer idChecked);
+    String findAcceptedUserInfo(String idChecked);
 
-    @Insert("INSERT participationrate (studentId,studygroupId,studyGroup_Leader)"
-            + " VALUES (#{studentId},#{studygroupId},#{studyGroup_Leader})")
+    @Insert("INSERT participationrate (studentId, studygroupId, studyGroup_Leader, week, weeklyHomework,weeklyAttendance  )"
+            + " VALUES (#{studentId},#{studygroupId},#{studyGroup_Leader}, #{week}, #{weeklyHomework}, #{weeklyAttendance})")
     @Options(useGeneratedKeys=true, keyProperty="participationRate_id")
     void Insert(Participation participation);
 

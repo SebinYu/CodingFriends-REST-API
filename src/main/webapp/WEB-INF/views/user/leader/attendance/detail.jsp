@@ -57,6 +57,11 @@
             border-radius: 0px 25px 25px 0px;
         }
 
+        td:nth-child(4) {
+            height: 55px;
+            border-radius: 0px 25px 25px 0px;
+        }
+
         thead{
             background: #93e7f8;
             border-radius: 20px;
@@ -69,11 +74,15 @@
 
         tbody {
             font-size: 20px;
-            background: #e9f0f5;
             border:1px solid black;
+            font-weight: bold;
+            color: #838994;
         }
 
-
+        td:nth-child(1) { background: rgba(233, 234, 238, 0.4);}
+        td:nth-child(2) { background: rgba(233, 234, 238, 0.4);}
+        td:nth-child(3) { background: rgba(233, 234, 238, 0.4);}
+        td:nth-child(4) { background: rgba(233, 234, 238, 0.4);}
 
 
 
@@ -87,7 +96,7 @@
 <jsp:include page="/template/left_column.jsp"></jsp:include>
 
 <div class="container" style="margin: 100px 0px 0px 20px; width: 70%; float:left; padding: 50px 50px 50px 50px;">
-    <div><p style="color: #0dc9ef; font-size: 70px; font-weight: bold; margin: 0px 0px 10px 13px;">스터디원 관리</p>
+    <div><p style="color: #0dc9ef; font-size: 70px; font-weight: bold; margin: 0px 0px 10px 13px;">주차별 참여율</p>
 
 <%--     만든 스터디 조회--%>
         <c:forEach var="StudygroupTitle" items="${ StudygroupTitleList }">
@@ -106,7 +115,7 @@
 
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
-
+            <form method="post" action="/attendanceProcess">
             <table class="list" >
                 <thead style="">
                 <tr>
@@ -134,15 +143,17 @@
                 <c:forEach var="Participant" items="${ ParticipationList }">
                     <tr>
                         <td>${ Participant.name }</td>
-                        <td>${ Participant.week } 주차</td>
-                        <td>${ Participant.weeklyAttendance }</td>
-                        <td>${ Participant.weeklyHomework }</td>
-
+                        <td>1주차</td>
+                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" value="⚪"/></td>
+                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" value="⚪"/></td>
+                        <td><input type="hidden" class="form-control" name="studentId" value="${Participant.studentId}" readonly></td>
+                        <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-
+                <button type="submit" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check" data-confirm-save>등록</button>
+            </form>
         </div>
 
 

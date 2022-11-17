@@ -113,6 +113,7 @@
         </div>
         </c:forEach>
 <hr>
+        <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitlePara}</h2>
 
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
@@ -135,7 +136,7 @@
                     <tbody>
                     <c:forEach var="Applier" items="${ ApplierList }">
                         <tr>
-                            <td><input type="checkbox" name="idChecked" value="${Applier.userId}" required/></td>
+                            <td><input type="checkbox" name="idChecked" value="${Applier.userId}"/></td>
                             <td>${ Applier.name }</td>
                             <td>⭐⭐⭐⭐⭐</td>
                             <td>${ Applier.updateDate }</td>
@@ -146,7 +147,7 @@
                     </c:forEach>
                     </tbody>
                 </table>
-
+            </form>
         </div>
 
 
