@@ -46,20 +46,31 @@ public class StudygroupController {
 
     @GetMapping("search")
     public String search(Model model, HttpServletRequest httpServletRequest)throws Exception {
-        Integer learningMaterial_id = Integer.valueOf(httpServletRequest.getParameter("learningMaterial_id"));
-        System.out.println(learningMaterial_id);
+        String learningMaterial_id = httpServletRequest.getParameter("learningMaterial_id");
         String keyword = httpServletRequest.getParameter("keyword");
-        String emptyResultTest = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id).toString();
-        model.addAttribute("emptyResultTest", emptyResultTest);
+        System.out.println(learningMaterial_id);
+        System.out.println(keyword);
+        String emptyResultTest1 = studygroupMapper.findSearchedStudygroupKeyword(keyword).toString();
+        String emptyResultTest2 = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id).toString();
+        model.addAttribute("emptyResultTest", emptyResultTest1);
 
+//       learningMaterial_id를 선택하지 않은 경우
+        if(learningMaterial_id == null){
+            if( emptyResultTest1 == "[]"){
+                model.addAttribute("noResult", "\"검색결과 없음\"");
+            } else {
+                List<Studygroup> studygroups = studygroupMapper.findSearchedStudygroupKeyword(keyword);
+                model.addAttribute("studygroups", studygroups);
 
-        if( emptyResultTest == "[]"){
-            model.addAttribute("noResult", "\"검색결과 없음\"");
-        } else {
+            }
+        }else {
             List<Studygroup> studygroups = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id);
             model.addAttribute("studygroups", studygroups);
-
         }
+
+//
+
+
 
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         return "studygroup/search";

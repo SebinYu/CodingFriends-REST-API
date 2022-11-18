@@ -20,7 +20,11 @@ public interface StudygroupMapper {
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate " +
             "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%') AND learningMaterial_id LIKE CONCAT('%', #{learningMaterial_id}, '%')")
-    List<Studygroup> findSearchedStudygroup(String keyword, Integer learningMaterial_id);
+    List<Studygroup> findSearchedStudygroup(String keyword, String learningMaterial_id);
+
+    @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate " +
+            "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%')")
+    List<Studygroup> findSearchedStudygroupKeyword(String keyword);
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
             " FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")

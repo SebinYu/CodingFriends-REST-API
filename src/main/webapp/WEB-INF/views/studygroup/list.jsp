@@ -69,7 +69,7 @@
     <form method="get" action = "/studygroup/search" class="form-inline mt-3">
         <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
                 style="width: 120px">
-            <option value="none" disabled>== 선택 ==</option>
+            <option value="" disabled selected>== 종류 ==</option>
             <c:forEach var="d" items="${ learningMaterials }">
                 <option value="${ d.learningMaterial_id }"
                     ${ learningMaterial.learningMaterial_id == d.learningMaterial_id ? "selected" : "" }>
