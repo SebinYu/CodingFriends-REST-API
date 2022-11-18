@@ -55,7 +55,7 @@
 
 <%--스터디 종류 리스트--%>
 <div class="container" >
-    <form method="get" action="#" class="form-inline mt-3">
+    <form method="post" action="/search" class="form-inline mt-3">
         <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
                 style="width: 120px">
             <c:forEach var="d" items="${ learningMaterials }">
@@ -64,8 +64,8 @@
                         ${ d.materialType }</option>
             </c:forEach>
         </select>
-        <input type="text" name="search" class="form-control mx-1 mt-2" style="width: 200px" placeholder="내용을 입력하세요"/>
-        <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
+        <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px" placeholder="내용을 입력하세요"/>
+        <button type="submit" class="btn btn-primary btn-default mx-1 mt-2" name="cmd" value="search">검색</button>
     </form>
 </div>
 

@@ -152,7 +152,7 @@
                 </c:forEach>
                 </tbody>
             </table>
-                <button type="submit" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check" data-confirm-save>등록</button>
+                <a type="submit" href="" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check" data-confirm-save>등록</a>
             </form>
         </div>
 

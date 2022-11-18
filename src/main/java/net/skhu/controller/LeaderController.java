@@ -9,13 +9,16 @@ import net.skhu.mapper.StudygroupMapper;
 import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.Principal;
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 
@@ -173,11 +176,13 @@ public class LeaderController {
 
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck(Model model,
-                                      HttpServletRequest request, Principal principal, Participation participation) {
+    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation,
+                                  @RequestParam("StudygroupTitle") String StudygroupTitle, RedirectAttributes redirectAttributes) {
+
 
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
+        Principal userPrincipal = request.getUserPrincipal();
         String studyGroup_Leader = principal.getName();
         String[] attendanceChecked = request.getParameterValues("attendanceChecked");
         String[] homeworkChecked = request.getParameterValues("homeworkChecked");
@@ -203,7 +208,10 @@ public class LeaderController {
             participation.setWeeklyHomework(oneHomeworkChecked);
             participationMapper.Insert(participation);
         }
-        return "user/leader/applicationManage/index";
+
+        String referer = request.getHeader("Referer");
+
+        return "redirect:"+ referer;
     }
 }
 
