@@ -3,6 +3,8 @@ package net.skhu.dto;
 import lombok.Data;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+
 @Data
 public class Apply {
     BigInteger apply_id;
@@ -11,4 +13,5 @@ public class Apply {
     String title;
     String application;
     String name;
+    LocalDateTime updateDate;
 }

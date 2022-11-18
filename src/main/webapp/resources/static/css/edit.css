@@ -21,7 +21,7 @@ table, th, td {
 table {
 	width: 100%;
 	
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
 }
 
 .schedule {

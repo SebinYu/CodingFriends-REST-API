@@ -3,6 +3,7 @@ package net.skhu.dto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -14,7 +15,10 @@ import java.time.LocalDateTime;
 public class Studygroup implements Serializable {
     private static final long serialVersionUID = 1L;
     BigInteger studyGroup_id;
+
+    @NotEmpty(message="학번을 입력하세요")
     String title;
+
     String content;
     int learningMaterial_id;
     String writer;

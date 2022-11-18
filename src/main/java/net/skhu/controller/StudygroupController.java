@@ -8,10 +8,7 @@ import net.skhu.mapper.StudygroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,7 +27,7 @@ public class StudygroupController {
     @Autowired
     ApplyMapper applyMapper;
 
-    @RequestMapping("home")
+    @GetMapping("home")
     public String home(Model model,HttpSession session, HttpServletRequest request)throws Exception {
         List<Studygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
@@ -38,13 +35,15 @@ public class StudygroupController {
         return "studygroup/home";
     }
 
-    @RequestMapping("list")
-    public String list(Model model,HttpSession session, HttpServletRequest request)throws Exception {
+    @GetMapping("list")
+    public String list(Model model)throws Exception {
         List<Studygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         model.addAttribute("studygroups", studygroups);
         return "studygroup/list";
     }
+
+
 
     @GetMapping("create")
     public String create(Model model) {

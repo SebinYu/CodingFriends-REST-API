@@ -51,7 +51,7 @@
             <tr>
                 <td>조직장</td>
                 <td><textarea type="text" name="writer" class="form-control" style="height: 20px"
-                           value="${ studygroup.writer }" readonly/> <sec:authentication property="name"/> </textarea></td>
+                           value="${ studygroup.writer }" readonly/><sec:authentication property="name"/></textarea></td>
             </tr>
             <tr>
                 <td>최대 모집인원</td>

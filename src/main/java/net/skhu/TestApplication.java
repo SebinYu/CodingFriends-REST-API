@@ -18,7 +18,6 @@ import javax.persistence.Entity;
 @ComponentScan(basePackages = {"net.skhu.controller"})
 @ComponentScan(basePackages = {"net.skhu.mapper"})
 @ComponentScan(basePackages = {"net.skhu.service"})
-@ComponentScan(basePackages = {"net.skhu.Persistence"})
 @ComponentScan(basePackages = {"net.skhu.config"})
 @ComponentScan(basePackages = {"net.skhu.repository"})
 public class TestApplication {

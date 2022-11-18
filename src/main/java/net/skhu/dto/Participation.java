@@ -8,18 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-@Entity
 public class Participation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     BigInteger participationRate_id;
 
-    Integer studentId;
-    Integer studygroupId;
+    String studentId;
+    String studygroupId;
     String studyGroup_Leader;
     Integer week;
-    Boolean weeklyAttendance;
+    String weeklyAttendance;
+    String weeklyHomework;
     private LocalDateTime updateDate;
 }

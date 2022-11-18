@@ -52,37 +52,22 @@
 <body style="background: rgba(243,243,243,0.22);">
 <jsp:include page="/template/header.jsp"></jsp:include>
 <jsp:include page="/template/footer.jsp"></jsp:include>
+<jsp:include page="/template/left_column.jsp"></jsp:include>
 
-<div class="dashboard" style="">
-  <div style="height: 35%; margin-top: 350px">
-    <hr>
-    <a class="link" href="/user/leader">주차별 참여율</a>
-    <br><br>
-    <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }" class="link">스터원 관리</a>
-    <br><br>
-    <a href="/user/leader" class="link" >스터디 지원자 리스트</a>
 
-  </div>
-
-</div>
-<div class="container" style="margin-top: 100px;width: 70%; float:left; padding: 50px 50px 50px 50px;">
-  <div><h1>스터디 지원자</h1>
-    <h3>Do it! 점프 투 파이썬</h3>
-
-    <div style="margin-top: 30px">
-      <form method="post">
-        <c:forEach var="Applier" items="${ ApplierList }">
-          <h2>${ Applier.name }</h2>
-          <p>지원자 번호 <textarea class="form-control" name="studentId" value=" ${participationrate.studentId }" readonly>${Applier.userId }</textarea></p>
-        </c:forEach>
-        <p>스터디 번호 <textarea class="form-control" name="studygroupId" value=" ${participationrate.studygroupId }" readonly>54</textarea></p>
-        <p>스터디 조직장 이름 <textarea class="form-control" name="studyGroup_Leader" value=" ${participationrate.studyGroup_Leader}" readonly> <sec:authentication property="name"/> </textarea></p>
-        <button type="submit" id="request" class="btn btn-primary">신청수락</button>
-        <hr>
-      </form>
-
+<div class="container" style="margin: 100px 0px 0px 20px; width: 80%; float:left; padding: 50px 50px 50px 50px;">
+  <div><p style="color: #0dc9ef; font-size: 70px; font-weight: bold; margin: 0px 0px 10px 13px;">스터디 지원자</p>
+    <c:forEach var="StudygroupTitle" items="${ StudygroupTitleList }">
+    <div class="" style="display: inline-block; margin: 20px;">
+      <div class="card" style="width: 25rem; text-align: center">
+        <div class="card-body">
+          <h5 class="card-title" style="color: black">
+            <a href="detail?StudygroupTitle=${StudygroupTitle.title}" style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${StudygroupTitle.title}</a>
+          </h5>
+        </div>
+      </div>
     </div>
-
-
+    </c:forEach>
+<hr>
 </body>
 </html>

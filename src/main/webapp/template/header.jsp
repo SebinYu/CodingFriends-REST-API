@@ -23,6 +23,7 @@
     <title>Coding Study Friends</title>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/c30dd58b89.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar bg-info fixed-top">
@@ -35,7 +36,7 @@
                 <a href="/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
             </sec:authorize>
             <sec:authorize access="authenticated">
-                <a class="btn btn-warning" href="${R}user/leader">조직장 페이지</a>
+                <a class="btn btn-warning" href="${R}user/leader/applicationManage/index">조직장 페이지</a>
                 <a class="btn btn-success" href="${R}user/index">내 정보</a>
                 <a class="btn btn-secondary" href="${R}logout_processing" style="margin-right:15px;" >로그아웃</a>
             </sec:authorize>

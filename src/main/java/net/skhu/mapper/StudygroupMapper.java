@@ -19,6 +19,10 @@ public interface StudygroupMapper {
     List<Studygroup> findAll();
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
+            " FROM studygroup where title like '%#{keyword}%'")
+    List<Studygroup> findSearchedStudygroup(String keyword);
+
+    @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
             " FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
     Studygroup findOne(BigInteger studyGroup_id);
 
@@ -39,7 +43,4 @@ public interface StudygroupMapper {
     @Delete("DELETE FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
     void delete(BigInteger studyGroup_id);
 
-    @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
-            " FROM studygroup WHERE writer = #{writer}")
-    List<Studygroup> findStudygroupTitle(String writer);
 }
