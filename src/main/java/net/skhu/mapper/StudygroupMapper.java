@@ -18,8 +18,8 @@ public interface StudygroupMapper {
             " FROM studygroup")
     List<Studygroup> findAll();
 
-    @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
-            " FROM studygroup where title like '%#{keyword}%'")
+    @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate " +
+            "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%')")
     List<Studygroup> findSearchedStudygroup(String keyword);
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +

@@ -55,7 +55,7 @@
 
 <%--스터디 종류 리스트--%>
 <div class="container" >
-  <form method="get" action="#" class="form-inline mt-3">
+  <form method="get" class="form-inline mt-3">
     <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
             style="width: 120px">
       <c:forEach var="d" items="${ learningMaterials }">
@@ -65,23 +65,26 @@
       </c:forEach>
     </select>
     <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px" placeholder="내용을 입력하세요"/>
-    <button type="submit" href="searched" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
+    <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
   </form>
 </div>
 
 <%--스터디 리스트 조회--%>
 <div class="list" style="margin-left: 85px">
+  <c:if test="${emptyResultTest eq '[]' }">
+    <div class="noResult" style="font-weight: bold; font-size: 50px; color: grey; text-align: center; margin-top: 50px">${noResult}</div>
+  </c:if>
 
-  <c:forEach var="searchedStudygroup" items="${ searchedStudygroups }">
+  <c:forEach var="studygroup" items="${ studygroups }">
     <div class="" style="display: inline-block; margin: 20px;">
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title" style="color: black">
-            <a href="detail?studyGroup_id=${ searchedStudygroup.studyGroup_id }"
-               style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ searchedStudygroup.title }</a>
+            <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }"
+               style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>
           </h5>
           <p class="card-text">
-            BY. ${ searchedStudygroup.writer }<br> 정원. ${ searchedStudygroup.currentNum }/${ searchedStudygroup.totalNum }
+            BY. ${ studygroup.writer }<br> 정원. ${ studygroup.currentNum }/${ studygroup.totalNum }
           </p>
         </div>
       </div>
