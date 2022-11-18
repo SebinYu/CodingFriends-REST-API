@@ -19,8 +19,8 @@ public interface StudygroupMapper {
     List<Studygroup> findAll();
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate " +
-            "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%')")
-    List<Studygroup> findSearchedStudygroup(String keyword);
+            "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%') AND learningMaterial_id LIKE CONCAT('%', #{learningMaterial_id}, '%')")
+    List<Studygroup> findSearchedStudygroup(String keyword, Integer learningMaterial_id);
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
             " FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
@@ -28,14 +28,15 @@ public interface StudygroupMapper {
 
 
     @CacheEvict (value= "NoticeList", allEntries = true)
-    @Insert("INSERT studygroup (title,content,writer,totalNum,startDate,endDate)"
-    		+ " VALUES (#{title},#{content},#{writer},#{totalNum},#{startDate},#{endDate})")
+    @Insert("INSERT studygroup (title,content,writer,totalNum,startDate,endDate, learningMaterial_id)"
+    		+ " VALUES (#{title},#{content},#{writer},#{totalNum},#{startDate},#{endDate},#{learningMaterial_id})")
     @Options(useGeneratedKeys=true, keyProperty="studyGroup_id")
     void insert(Studygroup studygroup);
 
 
     @CacheEvict (value= "NoticeList", allEntries = true)
-    @Update("UPDATE studygroup SET title = #{title}, content = #{content}, writer = #{writer}, totalNum = #{totalNum}, startDate = #{startDate}, endDate = #{endDate} WHERE studyGroup_id = #{studyGroup_id}")
+    @Update("UPDATE studygroup SET title = #{title}, content = #{content}, writer = #{writer}, totalNum = #{totalNum}, startDate = #{startDate}, endDate = #{endDate} " +
+            "WHERE studyGroup_id = #{studyGroup_id}")
     void update(Studygroup studygroup);
 
 

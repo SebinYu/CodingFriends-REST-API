@@ -46,17 +46,17 @@ public class StudygroupController {
 
     @GetMapping("search")
     public String search(Model model, HttpServletRequest httpServletRequest)throws Exception {
-//        String learningMaterial_id = httpServletRequest.getParameter("learningMaterial_id");
+        Integer learningMaterial_id = Integer.valueOf(httpServletRequest.getParameter("learningMaterial_id"));
+        System.out.println(learningMaterial_id);
         String keyword = httpServletRequest.getParameter("keyword");
-        String emptyResultTest = studygroupMapper.findSearchedStudygroup(keyword).toString();
+        String emptyResultTest = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id).toString();
         model.addAttribute("emptyResultTest", emptyResultTest);
 
 
         if( emptyResultTest == "[]"){
             model.addAttribute("noResult", "\"검색결과 없음\"");
         } else {
-            List<Studygroup> studygroups = studygroupMapper.findSearchedStudygroup(keyword);
-            System.out.println(studygroups);
+            List<Studygroup> studygroups = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id);
             model.addAttribute("studygroups", studygroups);
 
         }

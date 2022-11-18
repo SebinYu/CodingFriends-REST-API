@@ -33,6 +33,16 @@
           integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
           crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    select{
+      width: 1000px; /* 원하는 너비설정 */
+      padding: .3em .10em; /* 여백으로 높이 설정 */
+      border: 1px solid #999;
+      border-radius: 10px; /* iOS 둥근모서리 제거 */
+      margin-right: 10px;
+    }
+
+  </style>
 </head>
 <body>
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -58,6 +68,7 @@
   <form method="get" class="form-inline mt-3">
     <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
             style="width: 120px">
+      <option value="none" disabled selected>== 종류 ==</option>
       <c:forEach var="d" items="${ learningMaterials }">
         <option value="${ d.learningMaterial_id }"
           ${ learningMaterial.learningMaterial_id == d.learningMaterial_id ? "selected" : "" }>
