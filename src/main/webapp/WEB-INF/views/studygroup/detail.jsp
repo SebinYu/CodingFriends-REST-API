@@ -133,7 +133,7 @@
             // 'request'라는 id를 가진 버튼 클릭 시 실행.
             $('#request').click(function () {
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: "/studygroup/detail?studyGroup_id=${studygroup.studyGroup_id }",
                     data: { param: 'string' },
                     success: function (data) {
