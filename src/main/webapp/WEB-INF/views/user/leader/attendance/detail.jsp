@@ -144,15 +144,15 @@
                     <tr>
                         <td>${ Participant.name }</td>
                         <td>1주차</td>
-                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" value="⚪"/></td>
-                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" value="⚪"/></td>
-                        <td><input type="hidden" class="form-control" name="studentId" value="${Participant.studentId}" readonly></td>
+                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" value="${Participant.userId}"/></td>
+                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" value="${Participant.userId}"/></td>
+                        <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
                         <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-                <a type="submit" href="" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check" data-confirm-save>등록</a>
+                <button type="submit" href="" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
             </form>
         </div>
 

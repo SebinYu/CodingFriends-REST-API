@@ -14,8 +14,8 @@ import java.util.List;
 public class Participation {
     BigInteger participationRate_id;
 
-    String studentId;
-    String studygroupId;
+    Integer studentId;
+    Integer studygroupId;
     String studyGroup_Leader;
     Integer week;
     String weeklyAttendance;

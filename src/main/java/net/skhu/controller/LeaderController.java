@@ -62,7 +62,7 @@ public class LeaderController {
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
         model.addAttribute("studygroupID", studygroupID);
 
-        List<Apply> ApplierList = participationMapper.findApplier(studygroupID);
+        List<Map<String, Apply>> ApplierList = applyMapper.findAcceptedAppliers(studygroupID,"미정");
             model.addAttribute("ApplierList", ApplierList);
 
         String StudygroupTitlePara = StudygroupTitle;
@@ -73,26 +73,19 @@ public class LeaderController {
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value="/process", method= RequestMethod.POST, params="cmd=save")
     public String applicationAccepted(Model model,
-                                      HttpServletRequest request, Principal principal, Participation participation) {
+                                      HttpServletRequest request, Principal principal, Apply apply) {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
-        String studyGroup_Leader = principal.getName();
 
+        for (int i = 0; i < checkedStudentID.length; ++i){
+            String onecheckedStudentID = checkedStudentID[i];
 
-        for (int i = 0; i < checkedStudentID.length; i++) {
-            String OneStudentId = checkedStudentID[i];
-            String checkedStudygroupId = participationMapper.findAcceptedUserInfo(OneStudentId);
-            System.out.println(checkedStudygroupId);
+            apply.setUserId(onecheckedStudentID);
+            apply.setApplyStatus("등록");
 
-
-            participation.setStudentId(OneStudentId);
-            participation.setStudygroupId(checkedStudygroupId);
-            participation.setStudyGroup_Leader(studyGroup_Leader);
-            participation.setWeek(0);
-            participation.setWeeklyAttendance("미정");
-            participation.setWeeklyHomework("미정");
-            participationMapper.Insert(participation);
+            applyMapper.update(apply);
         }
+
         return "user/leader/applicationManage/index";
     }
 
@@ -165,9 +158,7 @@ public class LeaderController {
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
 
 
-
-
-        List<Map<String, Participation>> ParticipationList = participationMapper.findParticipant(studygroupID);
+        List<Map<String, Apply>> ParticipationList = applyMapper.findAcceptedAppliers(studygroupID, "등록");
         model.addAttribute("ParticipationList", ParticipationList);
 
         return "user/leader/attendance/detail";
@@ -176,42 +167,62 @@ public class LeaderController {
 
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation,
-                                  @RequestParam("StudygroupTitle") String StudygroupTitle, RedirectAttributes redirectAttributes) {
+    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation) {
 
 
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
-        Principal userPrincipal = request.getUserPrincipal();
         String studyGroup_Leader = principal.getName();
-        String[] attendanceChecked = request.getParameterValues("attendanceChecked");
-        String[] homeworkChecked = request.getParameterValues("homeworkChecked");
+        String[] attendanceCheckedID = request.getParameterValues("attendanceChecked");
+        String[] homeworkCheckedID = request.getParameterValues("homeworkChecked");
 
-        for (int i = 0; i < studentId.length; i++) {
-            String oneStudentId = studentId[i];
-            String oneStudygroupID = studygroupID[i];
-            String oneAttendanceChecked = attendanceChecked[i];
-            System.out.println(oneAttendanceChecked);
-            String oneHomeworkChecked = homeworkChecked[i];
-            System.out.println(oneHomeworkChecked);
+        for (int i = 0; i < studentId.length-1; i++) {
+            Integer oneStudentId = Integer.parseInt(studentId[i]);
+            Integer oneStudygroupID = Integer.parseInt(studygroupID[i]);
+            Integer oneAttendanceChecked = Integer.parseInt(attendanceCheckedID[i]);
+            Integer oneHomeworkChecked = Integer.parseInt(homeworkCheckedID[i]);
 
 
-            participation.setStudentId(oneStudentId);
-            participation.setStudygroupId(oneStudygroupID);
-            participation.setStudyGroup_Leader(studyGroup_Leader);
-            participation.setWeek(1);
-            if(oneAttendanceChecked == null){
-                participation.setWeeklyAttendance("불참");
+
+            if(oneStudentId == oneAttendanceChecked && oneStudentId == oneHomeworkChecked){
+                participation.setStudentId(oneStudentId);
+                participation.setStudygroupId(oneStudygroupID);
+                participation.setStudyGroup_Leader(studyGroup_Leader);
+                participation.setWeek(1);
+                participation.setWeeklyAttendance("\uD83D\uDFE2");
+                participation.setWeeklyHomework("\uD83D\uDFE2");
+
+
+            } else if (oneStudentId == oneAttendanceChecked) {
+                participation.setStudentId(oneStudentId);
+                participation.setStudygroupId(oneStudygroupID);
+                participation.setStudyGroup_Leader(studyGroup_Leader);
+                participation.setWeek(1);
+                participation.setWeeklyAttendance("\uD83D\uDFE2");
+                participation.setWeeklyHomework("❌");
+
+
+            } else if (oneStudentId == oneHomeworkChecked) {
+                participation.setStudentId(oneStudentId);
+                participation.setStudygroupId(oneStudygroupID);
+                participation.setStudyGroup_Leader(studyGroup_Leader);
+                participation.setWeek(1);
+                participation.setWeeklyAttendance("❌");
+                participation.setWeeklyHomework("\uD83D\uDFE2");
+
+
             }else {
-                participation.setWeeklyAttendance(oneAttendanceChecked);
+                participation.setStudentId(oneStudentId);
+                participation.setStudygroupId(oneStudygroupID);
+                participation.setStudyGroup_Leader(studyGroup_Leader);
+                participation.setWeek(1);
+                participation.setWeeklyAttendance("❌");
+                participation.setWeeklyHomework("❌");
+
             }
-            participation.setWeeklyHomework(oneHomeworkChecked);
             participationMapper.Insert(participation);
+
         }
-
-        String referer = request.getHeader("Referer");
-
-        return "redirect:"+ referer;
-    }
+        return "user/leader/participantManage/index";    }
 }
 

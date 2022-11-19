@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ApplyMapper {
@@ -29,7 +30,12 @@ public interface ApplyMapper {
             " ORDER BY u.user_id")
     List<Apply> findUserApplyList(String userName);
 
-
+    @Select("SELECT a.userId, a.studygroupId, u.name " +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE a.studygroupId = #{studygroupID} AND a.applyStatus = #{applyStatus}              " +
+            " ORDER BY u.user_id")
+    List<Map<String, Apply>> findAcceptedAppliers(Integer studygroupID, String applyStatus);
 
     @Insert("INSERT apply (userId,studygroupId, title, application)"
             + " VALUES (#{userId},#{studygroupId},#{title},#{application})")
@@ -37,9 +43,8 @@ public interface ApplyMapper {
     void insert(Apply apply);
 
 
-    @Update("UPDATE apply SET userId = #{userId}, studygroupId = #{studygroupId}, application = #{application} WHERE apply_id = #{apply_id}")
+    @Update("UPDATE apply SET applyStatus = #{applyStatus} WHERE userId = #{userId}")
     void update(Apply apply);
-
 
     @Delete("DELETE FROM apply WHERE userId = #{userId}")
     void delete(BigInteger userId);

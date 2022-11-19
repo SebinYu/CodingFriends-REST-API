@@ -11,6 +11,7 @@ public class Apply {
     String userId;
     String studygroupId;
     String title;
+    String applyStatus;
     String application;
     String name;
     LocalDateTime updateDate;
