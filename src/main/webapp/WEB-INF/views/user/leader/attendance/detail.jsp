@@ -149,8 +149,8 @@
                         <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value="${Participant.userId}"/>${Participant.userId}</td>
                         <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
                         <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
-<%--                        <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>--%>
-<%--                        <td><input type="hidden" class="form-control" name="homeworkChecked" value="x" readonly></td>--%>
+                        <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>
+                        <td><input type="hidden" class="form-control" name="homeworkChecked" value="x" readonly></td>
 
                     </tr>
                     </c:forEach>
