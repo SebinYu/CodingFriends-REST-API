@@ -141,15 +141,20 @@
                 </thead>
                 <tbody>
                 <c:forEach var="Participant" items="${ ParticipationList }">
-                    <tr>
+
+                <tr>
                         <td>${ Participant.name }</td>
                         <td>1주차</td>
-                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" value="${Participant.userId}"/></td>
-                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" value="${Participant.userId}"/></td>
+                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value="${Participant.userId}"/>${Participant.userId}</td>
+                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value="${Participant.userId}"/>${Participant.userId}</td>
                         <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
                         <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
+<%--                        <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>--%>
+<%--                        <td><input type="hidden" class="form-control" name="homeworkChecked" value="x" readonly></td>--%>
+
                     </tr>
-                </c:forEach>
+                    </c:forEach>
+
                 </tbody>
             </table>
                 <button type="submit" href="" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
@@ -171,6 +176,18 @@
         })
 
     })
+
+    // if($('input_attendanceCheck').is(":checked") == false){
+    //     document.getElementById("input_attendanceCheck").value = "x";
+    // }
+    //
+    //
+    // if($('input_homeworkCheck').is(":checked") == false){
+    //     document.getElementById("input_homeworkCheck").value = "x";
+    // }
+
+
+
 
 </script>
 </html>
