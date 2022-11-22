@@ -177,7 +177,10 @@
 
     })
 
-    // if($('input_attendanceCheck').is(":checked") == false){
+
+
+    //ajax연습 필요
+    // if($('input_attendanceCheck').is(":.checked") == false){
     //     document.getElementById("input_attendanceCheck").value = "x";
     // }
     //
