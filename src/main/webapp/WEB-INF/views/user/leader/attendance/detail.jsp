@@ -157,7 +157,7 @@
 
                 </tbody>
             </table>
-                <button type="submit" href="" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
+                <button type="submit" href="" id="button" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
             </form>
         </div>
 
@@ -179,15 +179,67 @@
 
 
 
-    //ajax연습 필요
-    // if($('input_attendanceCheck').is(":.checked") == false){
-    //     document.getElementById("input_attendanceCheck").value = "x";
-    // }
+
+    // $("#button").click(function (){
     //
-    //
-    // if($('input_homeworkCheck').is(":checked") == false){
-    //     document.getElementById("input_homeworkCheck").value = "x";
-    // }
+    //     let str = "";
+    //     $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
+    //         attendanceCheckedArr.push($(this).val());
+    //     });
+    //     $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
+    //         homeworkCheckedArr.push($(this).val());
+    //     });
+    //     alert(attendanceCheckedArr);
+    //     return attendanceCheckedArr;
+    // });
+
+    let attendanceCheckedArr = [];
+    let homeworkCheckedArr = [];
+
+$("#button").click(function (){
+
+
+
+
+    $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
+            attendanceCheckedArr.push($(this).val());
+        });
+
+    $('input:checkbox[name="attendanceChecked"]:not(:checked)').each(function (index) {
+        attendanceCheckedArr.push(0);
+    });
+
+
+    $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
+        homeworkCheckedArr.push($(this).val());
+    });
+
+    $('input:checkbox[name="homeworkChecked"]:not(:checked)').each(function (index) {
+        homeworkCheckedArr.push(0);
+
+        return attendanceCheckedArr, homeworkCheckedArr;
+    });
+
+    alert(attendanceCheckedArr);
+
+
+
+});
+    $.ajax({
+        type : "POST",
+        url : "${R}/attendanceProcess", //요청 할 URL
+        data : {
+            "attendanceCheckedList": attendanceCheckedArr,
+            "homeworkCheckedList":  homeworkCheckedArr}, //넘길 파라미터
+        dataType: "json",
+        traditional : true,
+        success : function(data) {
+            //통신이 정상적으로 되었을때 실행 할 내용
+            alert("성공");
+        }
+
+    });
+
 
 
 

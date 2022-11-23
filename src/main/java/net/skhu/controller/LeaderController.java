@@ -187,40 +187,40 @@ public class LeaderController {
 
     // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation) {
+    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation,
+                                   @RequestParam(name = "attendanceCheckedList[]") String[] attendanceCheckedList) {
 
 
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
         String studyGroup_Leader = principal.getName();
-        String[] attendanceCheckedID = request.getParameterValues("attendanceChecked");
-        String[] homeworkCheckedID = request.getParameterValues("homeworkChecked");
-
+        String[] attendanceCheckedID = attendanceCheckedList;
+        System.out.println(attendanceCheckedList);
 
         for (int i = 0; i < studentId.length; i++) {
             String oneStudentId = studentId[i];
             String oneStudygroupID = studygroupID[i];
             String oneAttendanceCheckedID = attendanceCheckedID[i];
             System.out.println("출석" + oneAttendanceCheckedID);
-            String oneHomeworkCheckedID = homeworkCheckedID[i];
-            System.out.println("숙제" + oneHomeworkCheckedID);
+//            String oneHomeworkCheckedID = homeworkCheckedID[i];
+//            System.out.println("숙제" + oneHomeworkCheckedID);
 
             participation.setStudentId(oneStudentId);
             participation.setStudygroupId(oneStudygroupID);
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participation.setWeek(1);
 
-            if(oneStudentId.equals(oneAttendanceCheckedID)){
-                participation.setWeeklyAttendance("\uD83D\uDFE2");
-            }else{
-                participation.setWeeklyAttendance("x");
-            }
-
-            if(oneStudentId.equals(oneHomeworkCheckedID)){
-                participation.setWeeklyHomework("\uD83D\uDFE2");
-            }else{
-                participation.setWeeklyHomework("x");
-            }
+//            if(oneStudentId.equals(oneAttendanceCheckedID)){
+//                participation.setWeeklyAttendance("\uD83D\uDFE2");
+//            }else{
+//                participation.setWeeklyAttendance("x");
+//            }
+//
+//            if(oneStudentId.equals(oneHomeworkCheckedID)){
+//                participation.setWeeklyHomework("\uD83D\uDFE2");
+//            }else{
+//                participation.setWeeklyHomework("x");
+//            }
 
             participationMapper.Insert(participation);
 

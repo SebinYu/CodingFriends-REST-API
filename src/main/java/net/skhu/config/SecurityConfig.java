@@ -1,5 +1,7 @@
 package net.skhu.config;
 
+import com.nimbusds.oauth2.sdk.auth.ClientAuthenticationMethod;
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +15,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -39,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/res/**");
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -47,7 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/").permitAll()
+                .antMatchers("/gitLogin").permitAll()
                 .antMatchers("/studygroup/**").permitAll();
+
+
+//        http.oauth2Login();
 
         http.formLogin()
                 .loginPage("/login")
@@ -64,12 +73,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 //       소셜 로그인
-
-
         http.exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
-        http.oauth2Login();
+
     }
 
 

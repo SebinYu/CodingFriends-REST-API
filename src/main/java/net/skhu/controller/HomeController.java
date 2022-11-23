@@ -26,14 +26,14 @@ public class HomeController {
     }
 
 
-    @GetMapping("user")
+    @GetMapping("gitLogin")
     public Object user(Model model, @AuthenticationPrincipal OAuth2User principal) {
         model.addAttribute("login", principal.getAttribute("login"));
         model.addAttribute("name", principal.getAttribute("name"));
         model.addAttribute("email", principal.getAttribute("email"));
         model.addAttribute("avatar_url", principal.getAttribute("avatar_url"));
         model.addAttribute("picture", principal.getAttribute("picture"));
-        return "user";
+        return "gitLogin";
     }
 
 
