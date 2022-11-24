@@ -103,25 +103,27 @@
         </c:forEach>
 <hr>
        <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitlePara}</h2>
-
+        <div class="container" style="margin-left: 70px; margin-top: 30px ">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    주차
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="detail?StudygroupTitle=${StudygroupTitle.title}" style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${StudygroupTitle.title}</a>
+                    <c:forEach var="WeekInfo" items="${ WeekInfoList }">
+                        <a href="detail?week=${ WeekInfo.week }&&StudygroupTitle=${StudygroupTitlePara}" class="dropdown-item"  name="week">${ WeekInfo.week }주차</a>
+                        <br>
+                    </c:forEach>
+                </div>
+            </div>
 <%--        스터디 지원자_ 신청 허가창--%>
-        <div class="container" style="text-align: center">
 
             <table class="list" >
                 <thead style="">
                 <tr>
                     <th>이름</th>
                     <th>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                주차
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">1주차</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
+                        주차
                     </th>
                     <th>출석</th>
                     <th>과제실행</th>
@@ -131,13 +133,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="Participant" items="${ ParticipationList }">
+                <c:forEach var="WeeklyReport" items="${ WeeklyReport }">
                     <tr>
-                        <td>${ Participant.name }</td>
-                        <td>${ Participant.week } 주차</td>
-                        <td>${ Participant.weeklyAttendance }</td>
-                        <td>${ Participant.weeklyHomework }</td>
-
+                        <td>${ WeeklyReport.name }</td>
+                        <td>${ WeeklyReport.week }주차</td>
+                        <td>${ WeeklyReport.weeklyAttendance }</td>
+                        <td>${ WeeklyReport.weeklyHomework }</td>
                     </tr>
                 </c:forEach>
                 </tbody>

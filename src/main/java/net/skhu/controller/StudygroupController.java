@@ -48,8 +48,6 @@ public class StudygroupController {
     public String search(Model model, HttpServletRequest httpServletRequest)throws Exception {
         String learningMaterial_id = httpServletRequest.getParameter("learningMaterial_id");
         String keyword = httpServletRequest.getParameter("keyword");
-        System.out.println(learningMaterial_id);
-        System.out.println(keyword);
         String emptyResultTest1 = studygroupMapper.findSearchedStudygroupKeyword(keyword).toString();
         String emptyResultTest2 = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id).toString();
         model.addAttribute("emptyResultTest", emptyResultTest1);

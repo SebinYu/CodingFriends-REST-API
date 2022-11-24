@@ -133,7 +133,7 @@ public class LeaderController {
 
 //    스터디 참여자 정보 조회
     @GetMapping("user/leader/participantManage/detail")
-    public String ParticipantInfo (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
+    public String ParticipantInfo (Model model, Principal principal, HttpServletRequest httpServletRequest, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
         List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
@@ -144,6 +144,14 @@ public class LeaderController {
 
         String StudygroupTitlePara = StudygroupTitle;
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
+
+        List<Map<String, Participation>> WeekInfoList = participationMapper.findWeekInfo(studygroupID);
+        model.addAttribute("WeekInfoList", WeekInfoList);
+
+        String week = httpServletRequest.getParameter("week");
+        List<Map<String, Participation>> WeeklyReport = participationMapper.findWeeklyReport(week);
+        model.addAttribute("WeeklyReport", WeeklyReport);
+
 
 
         List<Map<String, Participation>> ParticipationList = participationMapper.findParticipant(studygroupID);
@@ -187,46 +195,48 @@ public class LeaderController {
 
     // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation,
-                                   @RequestParam(name = "attendanceCheckedList[]") String[] attendanceCheckedList) {
+    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation) {
 
 
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
         String studyGroup_Leader = principal.getName();
-        String[] attendanceCheckedID = attendanceCheckedList;
-        System.out.println(attendanceCheckedList);
+        String[] attendanceCheckedID = request.getParameterValues("attendanceChecked");
+        String[] homeworkCheckedID = request.getParameterValues("homeworkChecked");
+
 
         for (int i = 0; i < studentId.length; i++) {
             String oneStudentId = studentId[i];
             String oneStudygroupID = studygroupID[i];
             String oneAttendanceCheckedID = attendanceCheckedID[i];
-            System.out.println("출석" + oneAttendanceCheckedID);
-//            String oneHomeworkCheckedID = homeworkCheckedID[i];
-//            System.out.println("숙제" + oneHomeworkCheckedID);
+            System.out.println("출석id:" + oneAttendanceCheckedID);
+            String oneHomeworkCheckedID = homeworkCheckedID[i];
+            System.out.println("숙제id:" + oneHomeworkCheckedID);
+            Integer score = 0;
 
             participation.setStudentId(oneStudentId);
             participation.setStudygroupId(oneStudygroupID);
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participation.setWeek(1);
 
-//            if(oneStudentId.equals(oneAttendanceCheckedID)){
-//                participation.setWeeklyAttendance("\uD83D\uDFE2");
-//            }else{
-//                participation.setWeeklyAttendance("x");
-//            }
-//
-//            if(oneStudentId.equals(oneHomeworkCheckedID)){
-//                participation.setWeeklyHomework("\uD83D\uDFE2");
-//            }else{
-//                participation.setWeeklyHomework("x");
-//            }
+            if(oneStudentId.equals(oneAttendanceCheckedID)){
+                participation.setWeeklyAttendance("\uD83D\uDFE2");
+                score += 10;
+            }else{
+                participation.setWeeklyAttendance("x");
+            }
 
+            if(oneStudentId.equals(oneHomeworkCheckedID)){
+                participation.setWeeklyHomework("\uD83D\uDFE2");
+                score += 10;
+                System.out.println("누적 점수:"+ score);
+            }else{
+                participation.setWeeklyHomework("x");
+            }
             participationMapper.Insert(participation);
 
 
         }
-
 
 
 

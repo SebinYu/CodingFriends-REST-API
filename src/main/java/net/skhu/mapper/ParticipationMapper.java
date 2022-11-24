@@ -21,12 +21,7 @@ public interface ParticipationMapper {
     @Select("SELECT studyGroup_id FROM studygroup WHERE title = #{title} && writer = #{writer}")
     Integer findStudygroupid(String title, String writer);
 
-    @Select("SELECT a.userId, a.updateDate, u.name " +
-            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
-            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
-            "                 WHERE s.studyGroup_id = #{studygroupID}                   " +
-            " ORDER BY u.user_id")
-    List<Apply> findApplier(Integer studygroupID);
+
 
     @Select("SELECT p.participationRate_id,p.studentId, p.studygroupId, p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name" +
             " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
@@ -34,6 +29,30 @@ public interface ParticipationMapper {
             "                 WHERE p.studygroupId = #{studygroupId}                   " +
             " ORDER BY u.user_id")
     List<Map<String, Participation>> findParticipant(Integer studygroupId);
+
+    @Select("SELECT DISTINCT p.week" +
+            " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
+            "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE p.studygroupId = #{studygroupId}                   " +
+            " ORDER BY u.user_id")
+    List<Map<String, Participation>> findWeekInfo(Integer studygroupId);
+
+
+
+    @Select("SELECT p.participationRate_id,p.studentId, p.studygroupId, p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name" +
+            " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
+            "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE p.week = #{week}                   " +
+            " ORDER BY u.user_id")
+    List<Map<String, Participation>> findWeeklyReport(String week);
+
+    @Select("SELECT p.participationRate_id,p.studentId, p.studygroupId, p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name" +
+            " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
+            "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE p.week = #{week}                   " +
+            " ORDER BY u.user_id")
+    List<Map<String, Participation>> findExCompany(String title, String useris);
+
 
     @Select("SELECT a.studygroupId" +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
