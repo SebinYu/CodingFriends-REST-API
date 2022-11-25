@@ -1,4 +1,4 @@
-package net.skhu.dto;
+package net.skhu.dto.response;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
-public class Apply {
+public class ResponseApply {
     BigInteger apply_id;
     String userId;
     String studygroupId;

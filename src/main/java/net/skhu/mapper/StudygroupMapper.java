@@ -1,6 +1,7 @@
 package net.skhu.mapper;
 
-import net.skhu.dto.Studygroup;
+import net.skhu.dto.request.RequestStudygroup;
+import net.skhu.dto.response.ResponseStudygroup;
 import org.apache.ibatis.annotations.*;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,32 +17,32 @@ public interface StudygroupMapper {
     @Cacheable(value= "NoticeList")
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
             " FROM studygroup")
-    List<Studygroup> findAll();
+    List<ResponseStudygroup> findAll();
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate " +
             "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%') AND learningMaterial_id LIKE CONCAT('%', #{learningMaterial_id}, '%')")
-    List<Studygroup> findSearchedStudygroup(String keyword, String learningMaterial_id);
+    List<ResponseStudygroup> findSearchedStudygroup(String keyword, String learningMaterial_id);
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate " +
             "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%')")
-    List<Studygroup> findSearchedStudygroupKeyword(String keyword);
+    List<ResponseStudygroup> findSearchedStudygroupKeyword(String keyword);
 
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate" +
             " FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
-    Studygroup findOne(BigInteger studyGroup_id);
+    ResponseStudygroup findOne(BigInteger studyGroup_id);
 
 
     @CacheEvict (value= "NoticeList", allEntries = true)
     @Insert("INSERT studygroup (title,content,writer,totalNum,startDate,endDate, learningMaterial_id)"
     		+ " VALUES (#{title},#{content},#{writer},#{totalNum},#{startDate},#{endDate},#{learningMaterial_id})")
     @Options(useGeneratedKeys=true, keyProperty="studyGroup_id")
-    void insert(Studygroup studygroup);
+    void insert(ResponseStudygroup studygroup);
 
 
     @CacheEvict (value= "NoticeList", allEntries = true)
     @Update("UPDATE studygroup SET title = #{title}, content = #{content}, writer = #{writer}, totalNum = #{totalNum}, startDate = #{startDate}, endDate = #{endDate} " +
             "WHERE studyGroup_id = #{studyGroup_id}")
-    void update(Studygroup studygroup);
+    void update(ResponseStudygroup studygroup);
 
 
     @CacheEvict (value= "NoticeList", allEntries = true)

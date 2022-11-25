@@ -1,17 +1,12 @@
-package net.skhu.dto;
+package net.skhu.dto.request;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
-public class Participation {
+public class RequestParticipation {
     BigInteger participationRate_id;
 
     String studentId;

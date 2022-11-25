@@ -1,26 +1,23 @@
 package net.skhu.controller;
 
 
-import net.skhu.dto.Apply;
-import net.skhu.dto.Participation;
-import net.skhu.dto.Studygroup;
+import net.skhu.dto.request.RequestApply;
+import net.skhu.dto.request.RequestStudygroup;
+import net.skhu.dto.response.ResponseApply;
+import net.skhu.dto.response.ResponseParticipation;
 import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
 //import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
 import net.skhu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.Principal;
-import java.security.PublicKey;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +42,7 @@ public class LeaderController {
     public String applicationManage(Model model, Principal principal) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/applicationManage/index";
@@ -58,13 +55,13 @@ public class LeaderController {
     public String applicationDetail(Model model, Principal principal, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
         model.addAttribute("studygroupID", studygroupID);
 
-        List<Map<String, Apply>> ApplierList = applyMapper.findAcceptedAppliers(studygroupID,"미정");
+        List<Map<String, ResponseApply>> ApplierList = applyMapper.findAcceptedAppliers(studygroupID,"미정");
             model.addAttribute("ApplierList", ApplierList);
 
         String StudygroupTitlePara = StudygroupTitle;
@@ -81,7 +78,7 @@ public class LeaderController {
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value="/process", method= RequestMethod.POST, params="cmd=save")
     public String applicationAccepted(Model model,
-                                      HttpServletRequest request, Principal principal, Participation participation, Apply apply) {
+                                      HttpServletRequest request, Principal principal, ResponseParticipation participation, RequestApply apply) {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
         String studyGroup_Leader = principal.getName();
@@ -124,7 +121,7 @@ public class LeaderController {
     public String Participant (Model model, Principal principal) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/participantManage/index";
@@ -136,7 +133,7 @@ public class LeaderController {
     public String ParticipantInfo (Model model, Principal principal, HttpServletRequest httpServletRequest, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
@@ -145,16 +142,16 @@ public class LeaderController {
         String StudygroupTitlePara = StudygroupTitle;
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
 
-        List<Map<String, Participation>> WeekInfoList = participationMapper.findWeekInfo(studygroupID);
+        List<Map<String, ResponseParticipation>> WeekInfoList = participationMapper.findWeekInfo(studygroupID);
         model.addAttribute("WeekInfoList", WeekInfoList);
 
         String week = httpServletRequest.getParameter("week");
-        List<Map<String, Participation>> WeeklyReport = participationMapper.findWeeklyReport(week);
+        List<Map<String, ResponseParticipation>> WeeklyReport = participationMapper.findWeeklyReport(week);
         model.addAttribute("WeeklyReport", WeeklyReport);
 
 
 
-        List<Map<String, Participation>> ParticipationList = participationMapper.findParticipant(studygroupID);
+        List<Map<String, ResponseParticipation>> ParticipationList = participationMapper.findParticipant(studygroupID);
         model.addAttribute("ParticipationList", ParticipationList);
 
         return "user/leader/participantManage/detail";
@@ -165,7 +162,7 @@ public class LeaderController {
     public String attendanceIndex(Model model, Principal principal) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/attendance/index";
@@ -176,7 +173,7 @@ public class LeaderController {
     public String attendanceCheck (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
@@ -186,7 +183,7 @@ public class LeaderController {
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
 
 
-        List<Map<String, Apply>> ParticipationList = applyMapper.findAcceptedAppliers(studygroupID, "등록");
+        List<Map<String, ResponseApply>> ParticipationList = applyMapper.findAcceptedAppliers(studygroupID, "등록");
         model.addAttribute("ParticipationList", ParticipationList);
 
         return "user/leader/attendance/detail";
@@ -195,7 +192,7 @@ public class LeaderController {
 
     // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation) {
+    public String attendanceCheck( HttpServletRequest request, Principal principal, ResponseParticipation participation) {
 
 
         String[] studentId = request.getParameterValues("studentId");

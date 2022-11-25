@@ -1,6 +1,6 @@
 package net.skhu.mapper;
 
-import net.skhu.dto.LearningMaterial;
+import net.skhu.dto.request.RequestLearningMaterial;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -9,18 +9,18 @@ import java.util.List;
 public interface LearningMaterialMapper {
 
     @Select("SELECT learningMaterial_id, materialType FROM learningmaterial")
-    List<LearningMaterial> findAll();
+    List<RequestLearningMaterial> findAll();
 
     @Select("SELECT learningMaterial_id, materialType FROM learningmaterial WHERE learningMaterial_id = #{learningMaterial_id}")
-    LearningMaterial findOne(int learningMaterial_id);
+    RequestLearningMaterial findOne(int learningMaterial_id);
 
     @Insert("INSERT learningmaterial (learningMaterial_id) VALUES (#{learningMaterial_id})")
     @Options(useGeneratedKeys=true, keyProperty="learningMaterial_id")
-    void insert(LearningMaterial learningMaterial);
+    void insert(RequestLearningMaterial learningMaterial);
 
     @Update("UPDATE learningmaterial SET learningMaterial_id = #{learningMaterial_id} ")
-    void update(LearningMaterial learningMaterial);
+    void update(RequestLearningMaterial learningMaterial);
 
     @Delete("DELETE FROM learningmaterial WHERE learningMaterial_id = #{learningMaterial_id}")
-    void delete(LearningMaterial learningMaterial);
+    void delete(RequestLearningMaterial learningMaterial);
 }

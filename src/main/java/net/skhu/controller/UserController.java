@@ -1,9 +1,8 @@
 package net.skhu.controller;
 
 
-import net.skhu.dto.Apply;
-import net.skhu.dto.Participation;
-import net.skhu.dto.Studygroup;
+import net.skhu.dto.request.RequestApply;
+import net.skhu.dto.request.RequestStudygroup;
 import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
 import net.skhu.repository.UserRepository;
@@ -14,10 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,24 +37,24 @@ public class UserController {
 
 //  회원 프로필 페이지
     @GetMapping("user/index")
-    public String index(Model model, Principal principal, HttpServletRequest request, Apply apply) {
+    public String index(Model model, Principal principal, HttpServletRequest request, RequestApply apply) {
 
         String name = principal.getName();
-        List<Map<String, Apply>> ApplyTitles = applyMapper.findApplyLists(name,"미정");
+        List<Map<String, RequestApply>> ApplyTitles = applyMapper.findApplyLists(name,"미정");
         model.addAttribute("ApplyTitles", ApplyTitles);
 
-        List<Map<String, Apply>> ParticipantTitles = applyMapper.findApplyLists(name,"등록");
+        List<Map<String, RequestApply>> ParticipantTitles = applyMapper.findApplyLists(name,"등록");
         model.addAttribute("ParticipantTitles", ParticipantTitles);
 
         LocalDate[] EndDate = applyMapper.findEndDate(name,"등록");
-        List<Studygroup> EndDateTitle= applyMapper.findEndDateTitle(name,"등록");
+        List<RequestStudygroup> EndDateTitle= applyMapper.findEndDateTitle(name,"등록");
         for (int i = 0; i < EndDate.length; i++) {
             LocalDate date1 = EndDate[i];
             LocalDate date2 = LocalDate.now();
             System.out.println(date2.isAfter(date1));
             if(date2.isAfter(date1)){
-                Studygroup EndDateTitleN = EndDateTitle.get(i);
-                List<Studygroup> EndDateTitleLists = new ArrayList<>();
+                RequestStudygroup EndDateTitleN = EndDateTitle.get(i);
+                List<RequestStudygroup> EndDateTitleLists = new ArrayList<>();
                 EndDateTitleLists.add(EndDateTitleN);
                 model.addAttribute("EndDateTitleLists", EndDateTitleLists);
 //                apply.setApplyStatus("종료");
@@ -73,8 +70,8 @@ public class UserController {
     }
 
     @GetMapping("user/review/index")
-    public String review(Model model, Principal principal, HttpServletRequest request, Apply apply, @RequestParam("StudygroupTitle") String StudygroupTitle) {
-        List<Studygroup> names = applyMapper.findExCompany(StudygroupTitle);
+    public String review(Model model, Principal principal, HttpServletRequest request, RequestApply apply, @RequestParam("StudygroupTitle") String StudygroupTitle) {
+        List<RequestStudygroup> names = applyMapper.findExCompany(StudygroupTitle);
         model.addAttribute("names", names);
 
         return "user/review/index";
