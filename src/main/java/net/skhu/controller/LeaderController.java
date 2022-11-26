@@ -23,6 +23,7 @@ import java.util.Map;
 
 
 @Controller
+@RequestMapping("/user/leader")
 public class LeaderController {
     @Autowired
     ApplyMapper applyMapper;
@@ -38,7 +39,7 @@ public class LeaderController {
 
 
     // 지원자 관리페이지_첫 화면
-    @GetMapping("user/leader/applicationManage/index")
+    @GetMapping("applicationManage/index")
     public String applicationManage(Model model, Principal principal) {
 
         String name = principal.getName();
@@ -51,7 +52,7 @@ public class LeaderController {
 
 
     // 지원자 관리페이지_스터디 별 지원자 조회
-    @GetMapping("user/leader/applicationManage/detail")
+    @GetMapping("applicationManage/detail")
     public String applicationDetail(Model model, Principal principal, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
@@ -117,7 +118,7 @@ public class LeaderController {
 
 
     // 지원자 관리페이지_첫 화면
-    @GetMapping("user/leader/participantManage/index")
+    @GetMapping("participantManage/index")
     public String Participant (Model model, Principal principal) {
 
         String name = principal.getName();
@@ -129,7 +130,7 @@ public class LeaderController {
 
 
 //    스터디 참여자 정보 조회
-    @GetMapping("user/leader/participantManage/detail")
+    @GetMapping("participantManage/detail")
     public String ParticipantInfo (Model model, Principal principal, HttpServletRequest httpServletRequest, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
@@ -158,7 +159,7 @@ public class LeaderController {
     }
 
 
-    @GetMapping("user/leader/attendance/index")
+    @GetMapping("attendance/index")
     public String attendanceIndex(Model model, Principal principal) {
 
         String name = principal.getName();
@@ -169,7 +170,7 @@ public class LeaderController {
     }
 
     // 주차별 참여율 상세
-    @GetMapping("user/leader/attendance/detail")
+    @GetMapping("attendance/detail")
     public String attendanceCheck (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
