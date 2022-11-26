@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/studygroup/**").permitAll();
 
 
-//        http.oauth2Login();
+        http.oauth2Login();
 
         http.formLogin()
                 .loginPage("/login")

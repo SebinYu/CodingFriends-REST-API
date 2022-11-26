@@ -31,8 +31,8 @@
            style="color: white; font-weight: bold; margin-left: 10px; font-size: 30px">Coding Study Friends</a>
         <div class="buttons" style="padding:10px">
             <sec:authorize access="not authenticated">
-<%--                <a href="/oauth2/authorization/github">Github 로그인</a>--%>
-<%--                <a href="/oauth2/authorization/google">Google 로그인</a>--%>
+                <a href="/oauth2/authorization/github">Github 로그인</a>
+                <a href="/oauth2/authorization/google">Google 로그인</a>
                 <a href="/login" class="btn btn-secondary">로그인</a>
                 <a href="/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
             </sec:authorize>
