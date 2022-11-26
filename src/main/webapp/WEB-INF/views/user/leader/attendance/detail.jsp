@@ -137,9 +137,6 @@
                     </th>
                     <th>출석</th>
                     <th>과제실행</th>
-                    <%--    <th>지원자 ID번호</th>--%>
-                    <%--                        <th>스터디 번호</th>--%>
-                    <%--                        <th>스터디 조직장 이름</th>--%>
                 </tr>
                 </thead>
                 <tbody>
@@ -152,20 +149,27 @@
                         <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value="${Participant.userId}"/>${Participant.userId}</td>
                         <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
                         <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
-<%--                        <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>--%>
-<%--                        <td><input type="hidden" class="form-control" name="homeworkChecked" value="x" readonly></td>--%>
+                        <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>
+                        <td><input type="hidden" class="form-control" name="homeworkChecked" value="x" readonly></td>
 
                     </tr>
                     </c:forEach>
 
                 </tbody>
             </table>
-                <button type="submit" href="" id="button" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
+                <button type="submit" id="submit" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
             </form>
+
+
+            <textarea name="attendanceCheckedArr" id="attendanceCheckedArr"></textarea>
+            <textarea name="homeworkCheckedArr" id="homeworkCheckedArr"></textarea>
+
+            <button id="checkButton">버튼</button>
         </div>
 
 
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script>
     $(function() {
 
@@ -183,65 +187,52 @@
 
 
 
-    // $("#button").click(function (){
-    //
-    //     let str = "";
-    //     $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
-    //         attendanceCheckedArr.push($(this).val());
-    //     });
-    //     $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
-    //         homeworkCheckedArr.push($(this).val());
-    //     });
-    //     alert(attendanceCheckedArr);
-    //     return attendanceCheckedArr;
-    // });
-
-<%--    let attendanceCheckedArr = [];--%>
-<%--    let homeworkCheckedArr = [];--%>
-
-<%--$("#button").click(function (){--%>
+    var  attendanceCheckedArr = [];
+    var  homeworkCheckedArr = [];
 
 
+        $("#checkButton").click(function (){
+
+            $('input:checkbox[name="attendanceChecked"]:not(:checked)').each(function (index) {
+                attendanceCheckedArr.push(0);
+            })
+
+            $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
+                attendanceCheckedArr.push($(this).val());
+            })
 
 
-<%--    $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {--%>
-<%--            attendanceCheckedArr.push($(this).val());--%>
-<%--        });--%>
+            $('input:checkbox[name="homeworkChecked"]:not(:checked)').each(function (index) {
+                homeworkCheckedArr.push(0);
+            })
 
-<%--    $('input:checkbox[name="attendanceChecked"]:not(:checked)').each(function (index) {--%>
-<%--        attendanceCheckedArr.push(0);--%>
-<%--    });--%>
+            $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
+                homeworkCheckedArr.push($(this).val());
 
-
-<%--    $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {--%>
-<%--        homeworkCheckedArr.push($(this).val());--%>
-<%--    });--%>
-
-<%--    $('input:checkbox[name="homeworkChecked"]:not(:checked)').each(function (index) {--%>
-<%--        homeworkCheckedArr.push(0);--%>
-
-<%--        return attendanceCheckedArr, homeworkCheckedArr;--%>
-<%--    });--%>
-
-<%--    alert(attendanceCheckedArr);--%>
+            })
+            document.getElementById('attendanceCheckedArr').innerHTML= attendanceCheckedArr;
+            document.getElementById('homeworkCheckedArr').innerHTML= homeworkCheckedArr;
+            document.getElementsByName("attendanceCheckedArr").value = attendanceCheckedArr;
+            document.getElementsByName("homeworkCheckedArr").value = homeworkCheckedArr;
 
 
+        });
 
-<%--});--%>
-<%--    $.ajax({--%>
-<%--        type : "POST",--%>
-<%--        url : "${R}/attendanceProcess", //요청 할 URL--%>
-<%--        data : {--%>
-<%--            "attendanceCheckedList": attendanceCheckedArr,--%>
-<%--            "homeworkCheckedList":  homeworkCheckedArr}, //넘길 파라미터--%>
-<%--        dataType: "json",--%>
-<%--        traditional : true,--%>
-<%--        success : function(data) {--%>
-<%--            //통신이 정상적으로 되었을때 실행 할 내용--%>
-<%--            alert("성공");--%>
-<%--        }--%>
+    $.ajax({
+        type : "POST",
+        url : "/attendanceProcess", //요청 할 URL
+        traditional: true,	// ajax 배열 넘기기 옵션!
+        data : {
+            "attendanceCheckedArr" : attendanceCheckedArr,
+            "homeworkCheckedArr": homeworkCheckedArr}, //넘길 파라미터
+        dataType: "json",
+        success: function(data){
+            window.alert("성공");
+        },
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+    });
 
-<%--    });--%>
 
 
 

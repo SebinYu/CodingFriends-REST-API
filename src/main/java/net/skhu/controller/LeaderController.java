@@ -11,6 +11,7 @@ import net.skhu.mapper.StudygroupMapper;
 import net.skhu.mapper.ApplyMapper;
 import net.skhu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.Principal;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Controller
@@ -170,7 +173,8 @@ public class LeaderController {
 
     // 주차별 참여율 상세
     @GetMapping("user/leader/attendance/detail")
-    public String attendanceCheck (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
+    public String attendanceCheck (Model model, Principal principal,
+                                   @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
         List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
@@ -192,22 +196,21 @@ public class LeaderController {
 
     // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck( HttpServletRequest request, Principal principal, ResponseParticipation participation) {
-
+    @ResponseBody
+    public String attendanceCheck(HttpServletRequest request, Principal principal, ResponseParticipation participation) {
 
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
         String studyGroup_Leader = principal.getName();
-        String[] attendanceCheckedID = request.getParameterValues("attendanceChecked");
-        String[] homeworkCheckedID = request.getParameterValues("homeworkChecked");
-
+        String[] attendanceChecked = request.getParameterValues("attendanceChecked");
+        String[] homeworkChecked = request.getParameterValues("homeworkChecked");
 
         for (int i = 0; i < studentId.length; i++) {
             String oneStudentId = studentId[i];
             String oneStudygroupID = studygroupID[i];
-            String oneAttendanceCheckedID = attendanceCheckedID[i];
+            String oneAttendanceCheckedID = attendanceChecked[i];
             System.out.println("출석id:" + oneAttendanceCheckedID);
-            String oneHomeworkCheckedID = homeworkCheckedID[i];
+            String oneHomeworkCheckedID = homeworkChecked[i];
             System.out.println("숙제id:" + oneHomeworkCheckedID);
             Integer score = 0;
 
@@ -234,9 +237,8 @@ public class LeaderController {
 
 
         }
+        return "user/leader/attendance/index";
 
-
-
-        return "user/leader/participantManage/index";    }
+    }
 }
 

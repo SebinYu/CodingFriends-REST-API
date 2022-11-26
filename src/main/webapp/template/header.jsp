@@ -18,8 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
           rel="stylesheet">
-    <link href="${path}/static/css/list.css"
-          rel="stylesheet">
+
     <title>Coding Study Friends</title>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
