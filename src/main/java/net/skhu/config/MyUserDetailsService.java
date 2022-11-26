@@ -1,6 +1,6 @@
 package net.skhu.config;
 
-import net.skhu.entity.User;
+import net.skhu.entity.user;
 import net.skhu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserid(username);
+        user user = userRepository.findByUserid(username);
         if (user == null) throw new UsernameNotFoundException(username);
         return new MyUserDetails(user);
     }
