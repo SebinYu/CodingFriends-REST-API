@@ -196,9 +196,12 @@ public class LeaderController {
 
     // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    @ResponseBody
-    public String attendanceCheck(HttpServletRequest request, Principal principal, ResponseParticipation participation) {
+    public String attendanceCheck(HttpServletRequest request, Principal principal, ResponseParticipation participation,
+                                  @RequestParam(value="attendanceCheckedArr[]") List<String> attendanceCheckedArr,
+                                  @RequestParam(value="homeworkCheckedArr[]") List<String> homeworkCheckedArr) {
 
+        System.out.println(attendanceCheckedArr);
+        System.out.println(homeworkCheckedArr);
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
         String studyGroup_Leader = principal.getName();

@@ -157,14 +157,9 @@
 
                 </tbody>
             </table>
+
                 <button type="submit" id="submit" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
             </form>
-
-
-            <textarea name="attendanceCheckedArr" id="attendanceCheckedArr"></textarea>
-            <textarea name="homeworkCheckedArr" id="homeworkCheckedArr"></textarea>
-
-            <button id="checkButton">버튼</button>
         </div>
 
 
@@ -229,8 +224,8 @@
         success: function(data){
             window.alert("성공");
         },
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+        // error:function(request,status,error){
+        //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
     });
 
 
