@@ -1,26 +1,28 @@
 package net.skhu.controller;
 
 
-import net.skhu.dto.Apply;
-import net.skhu.dto.Participation;
-import net.skhu.dto.Studygroup;
+import net.skhu.dto.request.RequestApply;
+import net.skhu.dto.request.RequestStudygroup;
+import net.skhu.dto.response.ResponseApply;
+import net.skhu.dto.response.ResponseParticipation;
 import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
-import net.skhu.repository.UserRepository;
+//import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
+import net.skhu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.Principal;
-import java.security.PublicKey;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Controller
@@ -43,7 +45,7 @@ public class LeaderController {
     public String applicationManage(Model model, Principal principal) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/applicationManage/index";
@@ -56,13 +58,13 @@ public class LeaderController {
     public String applicationDetail(Model model, Principal principal, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
         model.addAttribute("studygroupID", studygroupID);
 
-        List<Apply> ApplierList = participationMapper.findApplier(studygroupID);
+        List<Map<String, ResponseApply>> ApplierList = applyMapper.findAcceptedAppliers(studygroupID,"미정");
             model.addAttribute("ApplierList", ApplierList);
 
         String StudygroupTitlePara = StudygroupTitle;
@@ -70,20 +72,25 @@ public class LeaderController {
         return "user/leader/applicationManage/detail";
     }
 
+
+//    private Integer getStudygroupID (String StudygroupTitle,String name){
+//        Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
+//        return studygroupID;
+//    }
+
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value="/process", method= RequestMethod.POST, params="cmd=save")
     public String applicationAccepted(Model model,
-                                      HttpServletRequest request, Principal principal, Participation participation) {
+                                      HttpServletRequest request, Principal principal, ResponseParticipation participation, RequestApply apply) {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
         String studyGroup_Leader = principal.getName();
 
 
-        for (int i = 0; i < checkedStudentID.length; i++) {
+        for (int i = 0; i < checkedStudentID.length; ++i){
             String OneStudentId = checkedStudentID[i];
-            String checkedStudygroupId = participationMapper.findAcceptedUserInfo(OneStudentId);
-            System.out.println(checkedStudygroupId);
-
+            String onecheckedStudentID = checkedStudentID[i];
+            String checkedStudygroupId = participationMapper.findAcceptedUserInfo(Integer.valueOf(OneStudentId));
 
             participation.setStudentId(OneStudentId);
             participation.setStudygroupId(checkedStudygroupId);
@@ -92,7 +99,13 @@ public class LeaderController {
             participation.setWeeklyAttendance("미정");
             participation.setWeeklyHomework("미정");
             participationMapper.Insert(participation);
+
+            apply.setUserId(onecheckedStudentID);
+            apply.setApplyStatus("등록");
+
+            applyMapper.update(apply);
         }
+
         return "user/leader/applicationManage/index";
     }
 
@@ -111,7 +124,7 @@ public class LeaderController {
     public String Participant (Model model, Principal principal) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/participantManage/index";
@@ -120,10 +133,10 @@ public class LeaderController {
 
 //    스터디 참여자 정보 조회
     @GetMapping("user/leader/participantManage/detail")
-    public String ParticipantInfo (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
+    public String ParticipantInfo (Model model, Principal principal, HttpServletRequest httpServletRequest, @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
@@ -132,8 +145,16 @@ public class LeaderController {
         String StudygroupTitlePara = StudygroupTitle;
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
 
+        List<Map<String, ResponseParticipation>> WeekInfoList = participationMapper.findWeekInfo(studygroupID);
+        model.addAttribute("WeekInfoList", WeekInfoList);
 
-        List<Map<String, Participation>> ParticipationList = participationMapper.findParticipant(studygroupID);
+        String week = httpServletRequest.getParameter("week");
+        List<Map<String, ResponseParticipation>> WeeklyReport = participationMapper.findWeeklyReport(week);
+        model.addAttribute("WeeklyReport", WeeklyReport);
+
+
+
+        List<Map<String, ResponseParticipation>> ParticipationList = participationMapper.findParticipant(studygroupID);
         model.addAttribute("ParticipationList", ParticipationList);
 
         return "user/leader/participantManage/detail";
@@ -144,7 +165,7 @@ public class LeaderController {
     public String attendanceIndex(Model model, Principal principal) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         return "user/leader/attendance/index";
@@ -152,10 +173,11 @@ public class LeaderController {
 
     // 주차별 참여율 상세
     @GetMapping("user/leader/attendance/detail")
-    public String attendanceCheck (Model model, Principal principal,  @RequestParam("StudygroupTitle") String StudygroupTitle) {
+    public String attendanceCheck (Model model, Principal principal,
+                                   @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
-        List<Map<String, Studygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
+        List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
         model.addAttribute("StudygroupTitleList", StudygroupTitleList);
 
         Integer studygroupID = participationMapper.findStudygroupid(StudygroupTitle, name);
@@ -165,24 +187,23 @@ public class LeaderController {
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
 
 
-
-
-        List<Map<String, Participation>> ParticipationList = participationMapper.findParticipant(studygroupID);
+        List<Map<String, ResponseApply>> ParticipationList = applyMapper.findAcceptedAppliers(studygroupID, "등록");
         model.addAttribute("ParticipationList", ParticipationList);
 
         return "user/leader/attendance/detail";
     }
 
 
-    // 지원자 관리페이지_지원 수락
+    // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck( HttpServletRequest request, Principal principal, Participation participation,
-                                  @RequestParam("StudygroupTitle") String StudygroupTitle, RedirectAttributes redirectAttributes) {
+    public String attendanceCheck(HttpServletRequest request, Principal principal, ResponseParticipation participation,
+                                  @RequestParam(value="attendanceCheckedArr[]") List<String> attendanceCheckedArr,
+                                  @RequestParam(value="homeworkCheckedArr[]") List<String> homeworkCheckedArr) {
 
-
+        System.out.println(attendanceCheckedArr);
+        System.out.println(homeworkCheckedArr);
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
-        Principal userPrincipal = request.getUserPrincipal();
         String studyGroup_Leader = principal.getName();
         String[] attendanceChecked = request.getParameterValues("attendanceChecked");
         String[] homeworkChecked = request.getParameterValues("homeworkChecked");
@@ -190,28 +211,37 @@ public class LeaderController {
         for (int i = 0; i < studentId.length; i++) {
             String oneStudentId = studentId[i];
             String oneStudygroupID = studygroupID[i];
-            String oneAttendanceChecked = attendanceChecked[i];
-            System.out.println(oneAttendanceChecked);
-            String oneHomeworkChecked = homeworkChecked[i];
-            System.out.println(oneHomeworkChecked);
-
+            String oneAttendanceCheckedID = attendanceChecked[i];
+            System.out.println("출석id:" + oneAttendanceCheckedID);
+            String oneHomeworkCheckedID = homeworkChecked[i];
+            System.out.println("숙제id:" + oneHomeworkCheckedID);
+            Integer score = 0;
 
             participation.setStudentId(oneStudentId);
             participation.setStudygroupId(oneStudygroupID);
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participation.setWeek(1);
-            if(oneAttendanceChecked == null){
-                participation.setWeeklyAttendance("불참");
-            }else {
-                participation.setWeeklyAttendance(oneAttendanceChecked);
+
+            if(oneStudentId.equals(oneAttendanceCheckedID)){
+                participation.setWeeklyAttendance("\uD83D\uDFE2");
+                score += 10;
+            }else{
+                participation.setWeeklyAttendance("x");
             }
-            participation.setWeeklyHomework(oneHomeworkChecked);
+
+            if(oneStudentId.equals(oneHomeworkCheckedID)){
+                participation.setWeeklyHomework("\uD83D\uDFE2");
+                score += 10;
+                System.out.println("누적 점수:"+ score);
+            }else{
+                participation.setWeeklyHomework("x");
+            }
             participationMapper.Insert(participation);
+
+
         }
+        return "user/leader/attendance/index";
 
-        String referer = request.getHeader("Referer");
-
-        return "redirect:"+ referer;
     }
 }
 

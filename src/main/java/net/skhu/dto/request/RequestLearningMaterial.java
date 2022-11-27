@@ -1,9 +1,9 @@
-package net.skhu.dto;
+package net.skhu.dto.request;
 
 import lombok.Data;
 
 @Data
-public class LearningMaterial {
+public class RequestLearningMaterial {
     int learningMaterial_id;
     String materialType;
 

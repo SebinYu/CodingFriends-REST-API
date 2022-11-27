@@ -18,8 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
           rel="stylesheet">
-    <link href="${path}/static/css/list.css"
-          rel="stylesheet">
+
     <title>Coding Study Friends</title>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -32,6 +31,8 @@
            style="color: white; font-weight: bold; margin-left: 10px; font-size: 30px">Coding Study Friends</a>
         <div class="buttons" style="padding:10px">
             <sec:authorize access="not authenticated">
+                <a href="/oauth2/authorization/github">Github 로그인</a>
+                <a href="/oauth2/authorization/google">Google 로그인</a>
                 <a href="/login" class="btn btn-secondary">로그인</a>
                 <a href="/register" class="btn btn-primary"  style="margin-right:15px;">회원가입</a>
             </sec:authorize>

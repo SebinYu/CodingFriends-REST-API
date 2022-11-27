@@ -1,4 +1,4 @@
-package net.skhu.dto;
+package net.skhu.dto.request;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -6,13 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-public class Studygroup implements Serializable {
+public class RequestStudygroup implements Serializable {
     private static final long serialVersionUID = 1L;
     BigInteger studyGroup_id;
 

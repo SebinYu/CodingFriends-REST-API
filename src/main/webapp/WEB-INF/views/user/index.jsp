@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:url var="R" value="/" />
 <!DOCTYPE html>
-<html>
+<>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
@@ -55,18 +55,28 @@
 <div class="profile">
     <div class="list-group" style="margin-bottom: 30px">
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #03dac6; border: #03dac6">
-            신청 스터디
+            승인대기 중
         </a>
-        <c:forEach var="userApply" items="${ userApplyList }">
-            <a href="#" class="list-group-item list-group-item-action">${ userApply.title }</a>
+        <c:forEach var="ApplyTitle" items="${ ApplyTitles }">
+            <a href="#" class="list-group-item list-group-item-action">${ ApplyTitle.title }</a>
         </c:forEach>
     </div>
 
+<%--    <div class="list-group" style="margin-bottom: 30px">--%>
+<%--        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">--%>
+<%--            참여 중--%>
+<%--        </a>--%>
+<%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
+<%--            <a href="#" class="list-group-item list-group-item-action">${ ParticipantTitle.title }</a>--%>
+<%--        </c:forEach>--%>
+<%--    </div>--%>
     <div class="list-group" >
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            참여중인 스터디
+            참여완료 (후기를 남겨주세요!)
         </a>
-        <a href="#" class="list-group-item list-group-item-action">미정</a>
+        <c:forEach var="EndDateTitleList" items="${ EndDateTitleLists }">
+        <a href="review/index?StudygroupTitle=${EndDateTitleList.title}" class="list-group-item list-group-item-action">${ EndDateTitleList.title }</a>
+        </c:forEach>
     </div>
 </div>
 <div class="profile">
@@ -77,9 +87,29 @@
         <a class="list-group-item list-group-item-action disabled">
             밑바닥부터 시작하는 딥러닝
             ⭐⭐⭐⭐⭐</a>
+<%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
+<%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
+<%--        </c:forEach>--%>
+    </div>
+
+    <div class="list-group" style="margin-top: 50px" >
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #59be7e; border: #59be7e">
+            내가 남긴 후기
+        </a>
+        <a class="list-group-item list-group-item-action disabled">
+            밑바닥부터 시작하는 딥러닝
+            ⭐⭐⭐⭐⭐</a>
+        <%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
+        <%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
+        <%--        </c:forEach>--%>
     </div>
 </div>
 
 </div>
+
 </body>
+<script>
+
+
+</script>
 </html>

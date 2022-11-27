@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="false" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -33,6 +34,17 @@
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        select{
+            width: 1000px; /* 원하는 너비설정 */
+            padding: .3em .10em; /* 여백으로 높이 설정 */
+            border: 1px solid #999;
+            border-radius: 10px; /* iOS 둥근모서리 제거 */
+            margin-right: 10px;
+        }
+
+    </style>
 </head>
 <body>
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -47,25 +59,31 @@
 	background-repeat: no-repeat;
 	background-size: cover;">
     <br><br><br><br><br><br><br><br><br><br><br>
-
-    <a href="create" class="btn btn-info" style="margin-top: 115px; color: white;">스터디 만들기</a>
-
+    <sec:authorize access="not authenticated">
+        <a href="/login" class="btn btn-info" style="margin-top: 115px; color: white;" >
+            <스터디 만들기><br>로그인 하러가기
+        </a>
+    </sec:authorize>
+    <sec:authorize access="authenticated">
+        <a href="create" class="btn btn-info" style="margin-top: 115px; color: white;">스터디 만들기</a>
+    </sec:authorize>
 </div>
 
 
 <%--스터디 종류 리스트--%>
 <div class="container" >
-    <form method="post" action="/search" class="form-inline mt-3">
+    <form method="get" action = "/studygroup/search" class="form-inline mt-3">
         <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
                 style="width: 120px">
+            <option value="" disabled selected>== 종류 ==</option>
             <c:forEach var="d" items="${ learningMaterials }">
                 <option value="${ d.learningMaterial_id }"
                     ${ learningMaterial.learningMaterial_id == d.learningMaterial_id ? "selected" : "" }>
                         ${ d.materialType }</option>
             </c:forEach>
         </select>
-        <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px" placeholder="내용을 입력하세요"/>
-        <button type="submit" class="btn btn-primary btn-default mx-1 mt-2" name="cmd" value="search">검색</button>
+        <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px;" placeholder="내용을 입력하세요"/>
+        <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
     </form>
 </div>
 

@@ -33,6 +33,16 @@
           integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
           crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    select{
+      width: 1000px; /* 원하는 너비설정 */
+      padding: .3em .10em; /* 여백으로 높이 설정 */
+      border: 1px solid #999;
+      border-radius: 10px; /* iOS 둥근모서리 제거 */
+      margin-right: 10px;
+    }
+
+  </style>
 </head>
 <body>
 <jsp:include page="/template/header.jsp"></jsp:include>
@@ -55,9 +65,10 @@
 
 <%--스터디 종류 리스트--%>
 <div class="container" >
-  <form method="get" action="#" class="form-inline mt-3">
+  <form method="get" class="form-inline mt-3">
     <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
             style="width: 120px">
+      <option value="none" disabled selected>== 종류 ==</option>
       <c:forEach var="d" items="${ learningMaterials }">
         <option value="${ d.learningMaterial_id }"
           ${ learningMaterial.learningMaterial_id == d.learningMaterial_id ? "selected" : "" }>
@@ -65,23 +76,26 @@
       </c:forEach>
     </select>
     <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px" placeholder="내용을 입력하세요"/>
-    <button type="submit" href="searched" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
+    <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
   </form>
 </div>
 
 <%--스터디 리스트 조회--%>
 <div class="list" style="margin-left: 85px">
+  <c:if test="${emptyResultTest eq '[]' }">
+    <div class="noResult" style="font-weight: bold; font-size: 50px; color: grey; text-align: center; margin-top: 50px">${noResult}</div>
+  </c:if>
 
-  <c:forEach var="searchedStudygroup" items="${ searchedStudygroups }">
+  <c:forEach var="studygroup" items="${ studygroups }">
     <div class="" style="display: inline-block; margin: 20px;">
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title" style="color: black">
-            <a href="detail?studyGroup_id=${ searchedStudygroup.studyGroup_id }"
-               style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ searchedStudygroup.title }</a>
+            <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }"
+               style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>
           </h5>
           <p class="card-text">
-            BY. ${ searchedStudygroup.writer }<br> 정원. ${ searchedStudygroup.currentNum }/${ searchedStudygroup.totalNum }
+            BY. ${ studygroup.writer }<br> 정원. ${ studygroup.currentNum }/${ studygroup.totalNum }
           </p>
         </div>
       </div>

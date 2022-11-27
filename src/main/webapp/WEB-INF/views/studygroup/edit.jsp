@@ -41,7 +41,7 @@
             <tr>
                 <td>스터디명</td>
                 <td><input type="text" name="title" class="form-control"
-                           value="${ studygroup.title }" required/></td>
+                           value="${ studygroup.title }" /></td>
             </tr>
             <tr>
                 <td>상세설명</td>

@@ -7,7 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
-import net.skhu.entity.User;
+import net.skhu.entity.user;
 
 @Data
 public class MyUserDetails implements UserDetails {
@@ -27,10 +27,10 @@ public class MyUserDetails implements UserDetails {
     final String userType;
     final boolean admin;
 
-    public MyUserDetails(User user) {
+    public MyUserDetails(user user) {
         switch (user.getUserType()) {
-            case "교수": authorities.add(new SimpleGrantedAuthority("ROLE_LEADER")); break;
-            case "학생": authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT")); break;
+            case "사용자": authorities.add(new SimpleGrantedAuthority("ROLE_LEADER")); break;
+            case "관리자": authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT")); break;
         }
         if (user.isAdmin()) authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         this.username = user.getUserid();
