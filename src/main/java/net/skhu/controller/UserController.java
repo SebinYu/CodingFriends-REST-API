@@ -1,9 +1,11 @@
 package net.skhu.controller;
 
 
+import net.skhu.dto.Review;
 import net.skhu.dto.request.RequestApply;
 import net.skhu.dto.request.RequestStudygroup;
 import net.skhu.mapper.ParticipationMapper;
+import net.skhu.mapper.ReviewMapper;
 import net.skhu.mapper.StudygroupMapper;
 import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
@@ -34,8 +36,10 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired ReviewMapper reviewMapper;
 
-//  회원 프로필 페이지
+
+    //  회원 프로필 페이지
     @GetMapping("user/index")
     public String index(Model model, Principal principal, HttpServletRequest request, RequestApply apply) {
 
@@ -57,23 +61,46 @@ public class UserController {
                 List<RequestStudygroup> EndDateTitleLists = new ArrayList<>();
                 EndDateTitleLists.add(EndDateTitleN);
                 model.addAttribute("EndDateTitleLists", EndDateTitleLists);
-//                apply.setApplyStatus("종료");
-//                apply.setUserId(name);
-//                applyMapper.update(apply);
+
             }
         }
-
-
-
-
             return "user/index";
     }
 
     @GetMapping("user/review/index")
-    public String review(Model model, Principal principal, HttpServletRequest request, RequestApply apply, @RequestParam("StudygroupTitle") String StudygroupTitle) {
+    public String reviewList(Model model,
+                         @RequestParam("StudygroupTitle") String StudygroupTitle) {
         List<RequestStudygroup> names = applyMapper.findExCompany(StudygroupTitle);
         model.addAttribute("names", names);
+        model.addAttribute("StudygroupTitle", StudygroupTitle);
+        return "user/review/index";
+    }
+
+    @RequestMapping(value="/reviewProcess", method=RequestMethod.POST, params="cmd=submit")
+    public String reviewInput(Model model, Review review, HttpServletRequest request) {
+
+        String[] rating = request.getParameterValues("rating");
+        String[] ratingContent = request.getParameterValues("ratingContent");
+        String[] studyGroupPartner = request.getParameterValues("studyGroupPartner");
+
+
+        Integer ratingNum = 0;
+        String ratingContentVal = "";
+        String studyGroupPartnerVal = "";
+        for (int i = 0; i < rating.length; ++i){
+            ratingNum = Integer.valueOf(rating[i]);
+            ratingContentVal = ratingContent[i];
+            studyGroupPartnerVal = studyGroupPartner[i];
+        }
+
+
+        review.setStudyGroupPartner(studyGroupPartnerVal);
+        review.setReviewScore(Double.valueOf(ratingNum));
+        review.setReviewContents(ratingContentVal);
+        reviewMapper.Insert(review);
 
         return "user/review/index";
     }
+
+
 }

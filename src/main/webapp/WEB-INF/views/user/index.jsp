@@ -72,7 +72,7 @@
 <%--    </div>--%>
     <div class="list-group" >
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            참여완료
+            참여완료 (후기를 남겨주세요!)
         </a>
         <c:forEach var="EndDateTitleList" items="${ EndDateTitleLists }">
         <a href="review/index?StudygroupTitle=${EndDateTitleList.title}" class="list-group-item list-group-item-action">${ EndDateTitleList.title }</a>
@@ -90,6 +90,18 @@
 <%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
 <%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
 <%--        </c:forEach>--%>
+    </div>
+
+    <div class="list-group" style="margin-top: 50px" >
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #59be7e; border: #59be7e">
+            내가 남긴 후기
+        </a>
+        <a class="list-group-item list-group-item-action disabled">
+            밑바닥부터 시작하는 딥러닝
+            ⭐⭐⭐⭐⭐</a>
+        <%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
+        <%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
+        <%--        </c:forEach>--%>
     </div>
 </div>
 
