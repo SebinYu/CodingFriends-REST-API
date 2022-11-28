@@ -26,15 +26,15 @@ public class HomeController {
     }
 
 
-    @GetMapping("gitLogin")
-    public Object user(Model model, @AuthenticationPrincipal OAuth2User principal) {
-        model.addAttribute("login", principal.getAttribute("login"));
-        model.addAttribute("name", principal.getAttribute("name"));
-        model.addAttribute("email", principal.getAttribute("email"));
-        model.addAttribute("avatar_url", principal.getAttribute("avatar_url"));
-        model.addAttribute("picture", principal.getAttribute("picture"));
-        return "gitLogin";
-    }
+//    @GetMapping("gitLogin")
+//    public Object user(Model model, @AuthenticationPrincipal OAuth2User principal) {
+//        model.addAttribute("login", principal.getAttribute("login"));
+//        model.addAttribute("name", principal.getAttribute("name"));
+//        model.addAttribute("email", principal.getAttribute("email"));
+//        model.addAttribute("avatar_url", principal.getAttribute("avatar_url"));
+//        model.addAttribute("picture", principal.getAttribute("picture"));
+//        return "gitLogin";
+//    }
 
 
     @RequestMapping("login")
@@ -43,13 +43,13 @@ public class HomeController {
     }
 
     @GetMapping("register")
-    public String register(Model model) {
+    public String registerGet(Model model) {
         model.addAttribute(new UserRegistration());
         return "home/register";
     }
 
     @PostMapping("register")
-    public String register(Model model,
+    public String registerPost(Model model,
                            @Valid UserRegistration userRegistration, BindingResult bindingResult)
     {
         if (userService.hasErrors(userRegistration, bindingResult)) {

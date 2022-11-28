@@ -145,8 +145,8 @@
                 <tr>
                         <td>${ Participant.name }</td>
                         <td>1주차</td>
-                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value="${Participant.userId}"/>${Participant.userId}</td>
-                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value="${Participant.userId}"/>${Participant.userId}</td>
+                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value=${Participant.userId}/>${Participant.userId}</td>
+                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value=${Participant.userId}/>${Participant.userId}</td>
                         <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
                         <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
                         <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>
@@ -158,7 +158,7 @@
                 </tbody>
             </table>
 
-                <button type="submit" id="submit" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
+                <button type="submit" id="checkButton" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
             </form>
         </div>
 
@@ -187,46 +187,54 @@
 
 
         $("#checkButton").click(function (){
+            alert(1);
 
             $('input:checkbox[name="attendanceChecked"]:not(:checked)').each(function (index) {
                 attendanceCheckedArr.push(0);
             })
 
+            alert(2);
+
             $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
                 attendanceCheckedArr.push($(this).val());
             })
 
+            alert(3);
 
             $('input:checkbox[name="homeworkChecked"]:not(:checked)').each(function (index) {
                 homeworkCheckedArr.push(0);
             })
+            alert(4);
 
             $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
                 homeworkCheckedArr.push($(this).val());
 
             })
-            document.getElementById('attendanceCheckedArr').innerHTML= attendanceCheckedArr;
-            document.getElementById('homeworkCheckedArr').innerHTML= homeworkCheckedArr;
-            document.getElementsByName("attendanceCheckedArr").value = attendanceCheckedArr;
-            document.getElementsByName("homeworkCheckedArr").value = homeworkCheckedArr;
+
+            alert(5);
+            var data = {"attendanceCheckedArr":attendanceCheckedArr,"homeworkCheckedArr": homeworkCheckedArr}
+            console.log(data);
+            alert(6);
 
 
+            $.ajax({
+                type : "POST",
+                url : "/attendanceProcess", //요청 할 URL
+                traditional: true,	// ajax 배열 넘기기 옵션!
+                data : {
+                    "attendanceCheckedArr" : attendanceCheckedArr,
+                    "homeworkCheckedArr": homeworkCheckedArr}, //넘길 파라미터
+                success: function(data){
+                    window.alert("성공");
+                },
+                // error:function(request,status,error){
+                //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+            });
         });
 
-    $.ajax({
-        type : "POST",
-        url : "/attendanceProcess", //요청 할 URL
-        traditional: true,	// ajax 배열 넘기기 옵션!
-        data : {
-            "attendanceCheckedArr" : attendanceCheckedArr,
-            "homeworkCheckedArr": homeworkCheckedArr}, //넘길 파라미터
-        dataType: "json",
-        success: function(data){
-            window.alert("성공");
-        },
-        // error:function(request,status,error){
-        //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-    });
+
+
+
 
 
 
