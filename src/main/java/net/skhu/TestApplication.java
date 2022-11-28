@@ -1,5 +1,6 @@
 package net.skhu;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -17,6 +18,7 @@ import javax.persistence.Entity;
 @EnableCaching
 @EnableScheduling
 @SpringBootApplication
+@EnableEncryptableProperties
 @ComponentScan(basePackages = {"net.skhu.controller"})
 @ComponentScan(basePackages = {"net.skhu.mapper"})
 @ComponentScan(basePackages = {"net.skhu.service"})
@@ -28,17 +30,7 @@ public class TestApplication {
 
 		SpringApplication.run(TestApplication.class, args);
 
-		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-		encryptor.setProvider(new BouncyCastleProvider());
-		encryptor.setPoolSize(2);
-		encryptor.setPassword("password");
-		encryptor.setAlgorithm("PBEWithSHA256And128BitAES-CBC-BC");
 
-		String plainText = "ssr_lc";
-		String encryptedText = encryptor.encrypt(plainText);
-		String decryptedText = encryptor.decrypt(encryptedText);
-		System.out.println("Enc = " + encryptedText);
-		System.out.println("Dec = " + decryptedText);
 	}
 
 }
