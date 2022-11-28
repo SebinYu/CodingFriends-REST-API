@@ -30,7 +30,7 @@ public class StudygroupController {
     ApplyMapper applyMapper;
 
     @GetMapping("home")
-    public String home(Model model,HttpSession session, HttpServletRequest request)throws Exception {
+    public String home(Model model)throws Exception {
         List<ResponseStudygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         model.addAttribute("studygroups", studygroups);
@@ -67,31 +67,26 @@ public class StudygroupController {
             List<ResponseStudygroup> studygroups = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id);
             model.addAttribute("studygroups", studygroups);
         }
-
-//
-
-
-
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         return "studygroup/search";
     }
 
     @GetMapping("create")
-    public String create(Model model) {
+    public String createGet(Model model) {
         model.addAttribute("studygroup", new RequestStudygroup());
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         return "studygroup/edit";
     }
 
     @PostMapping("create")
-    public String create(Model model, ResponseStudygroup studygroup) {
+    public String createPost(Model model, ResponseStudygroup studygroup) {
         studygroupMapper.insert(studygroup);
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         return "redirect:list";
     }
 
     @GetMapping("edit")
-    public String edit(Model model,
+    public String editGet(Model model,
                        @RequestParam(value ="studyGroup_id") BigInteger studyGroup_id) {
         ResponseStudygroup studygroup = studygroupMapper.findOne(studyGroup_id);
         model.addAttribute("studygroup", studygroup);
@@ -100,7 +95,7 @@ public class StudygroupController {
     }
 
     @PostMapping("edit")
-    public String edit(Model model, ResponseStudygroup studygroup) {
+    public String editPost(Model model, ResponseStudygroup studygroup) {
         studygroupMapper.update(studygroup);
         model.addAttribute("message", "저장했습니다.");
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
@@ -109,7 +104,7 @@ public class StudygroupController {
 
 
     @GetMapping("detail")
-    public String detail(Model model,
+    public String detailGet(Model model,
                          @RequestParam("studyGroup_id") BigInteger studyGroup_id) {
         List<ResponseStudygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("studygroups", studygroups);
@@ -130,7 +125,7 @@ public class StudygroupController {
 
 
     @PostMapping("detail")
-    public String edit(Model model, RequestApply apply) {
+    public String detailPost(Model model, RequestApply apply) {
         applyMapper.insert(apply);
         model.addAttribute("applys", applyMapper.findAll());
 

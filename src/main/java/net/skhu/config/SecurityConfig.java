@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/studygroup/**").permitAll();
 
 
-        http.oauth2Login();
+
 
         http.formLogin()
                 .loginPage("/login")
@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
-        http.oauth2Login();
+//        http.oauth2Login();
 
     }
 

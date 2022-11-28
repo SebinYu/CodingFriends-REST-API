@@ -79,7 +79,7 @@ public class LeaderController {
 //    }
 
     // 지원자 관리페이지_지원 수락
-    @RequestMapping(value="/process", method= RequestMethod.POST, params="cmd=save")
+    @RequestMapping(value="/saveProcess", method= RequestMethod.POST, params="cmd=save")
     public String applicationAccepted(Model model,
                                       HttpServletRequest request, Principal principal, ResponseParticipation participation, RequestApply apply) {
 
@@ -110,7 +110,7 @@ public class LeaderController {
     }
 
     // 지원자 관리페이지_지원 거절
-    @RequestMapping(value="/process", method=RequestMethod.POST, params="cmd=delete")
+    @RequestMapping(value="/deleteProcess", method=RequestMethod.POST, params="cmd=delete")
     public String applicationRejected(Model model,HttpServletRequest deleteRequest) {
         String[] idChecked = deleteRequest.getParameterValues("idChecked");
         for (int i = 0; i < idChecked.length; ++i){
@@ -162,7 +162,7 @@ public class LeaderController {
 
 
     @GetMapping("user/leader/attendance/index")
-    public String attendanceIndex(Model model, Principal principal) {
+    public String attendanceIndexGet(Model model, Principal principal) {
 
         String name = principal.getName();
         List<Map<String, RequestStudygroup>> StudygroupTitleList = participationMapper.findStudygroupTitle(principal.getName());
@@ -173,7 +173,7 @@ public class LeaderController {
 
     // 주차별 참여율 상세
     @GetMapping("user/leader/attendance/detail")
-    public String attendanceCheck (Model model, Principal principal,
+    public String attendanceCheckGet (Model model, Principal principal,
                                    @RequestParam("StudygroupTitle") String StudygroupTitle) {
 
         String name = principal.getName();
@@ -196,7 +196,7 @@ public class LeaderController {
 
     // 지원자 관리페이지_주차별 참여이력
     @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheck(HttpServletRequest request, Principal principal, ResponseParticipation participation,
+    public String attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation,
                                   @RequestParam(value="attendanceCheckedArr[]") String[] attendanceCheckedArr,
                                   @RequestParam(value="homeworkCheckedArr[]") String[] homeworkCheckedArr) {
 
