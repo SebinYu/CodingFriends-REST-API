@@ -76,8 +76,8 @@
 
                         <sec:authorize access="authenticated">
                             <p>사용자 번호<textarea class="form-control" name="userId" style="height: 20px" value=" ${apply.userId }" readonly><sec:authentication property="principal.userId"/></textarea></p>
-                            <input name="name" value=<sec:authentication property="principal.name"/>>
-                            <input name="email" value=<sec:authentication property="principal.email"/>>
+                            <input name="name" type="hidden" value=<sec:authentication property="principal.name"/>>
+                            <input name="email" type="hidden" value=<sec:authentication property="principal.email"/>>
 
 
                         </sec:authorize>
