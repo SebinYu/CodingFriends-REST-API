@@ -69,6 +69,7 @@ public class LeaderController {
 
         String StudygroupTitlePara = StudygroupTitle;
         model.addAttribute("StudygroupTitlePara", StudygroupTitlePara);
+
         return "user/leader/applicationManage/detail";
     }
 
@@ -86,15 +87,16 @@ public class LeaderController {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
         String studyGroup_Leader = principal.getName();
+        String[] studygroupID = request.getParameterValues("studygroupID");
 
 
         for (int i = 0; i < checkedStudentID.length ; i++){
             String OneStudentId = checkedStudentID[i];
             String onecheckedStudentID = checkedStudentID[i];
-            String checkedStudygroupId = participationMapper.findAcceptedUserInfo(Integer.valueOf(OneStudentId));
+            String StudygroupId = studygroupID[0];
 
             participation.setStudentId(OneStudentId);
-            participation.setStudygroupId(checkedStudygroupId);
+            participation.setStudygroupId(StudygroupId);
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participation.setWeek(0);
             participation.setWeeklyAttendance("미정");

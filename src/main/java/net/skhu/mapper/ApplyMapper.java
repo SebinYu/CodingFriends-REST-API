@@ -67,21 +67,18 @@ public interface ApplyMapper {
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
             "                 WHERE s.title = #{title}              " +
             " ORDER BY u.user_id")
-    List<RequestStudygroup> findExCompany(String title);
+    String[] findExCompany(String title);
 
-    @Select("SELECT u.name" +
+    @Select("SELECT u.userid" +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
-            "                 WHERE u.userid = #{userid}              " +
+            "                 WHERE s.title = #{title}              " +
             " ORDER BY u.user_id")
-    String findName(String userid);
+    String[] findExCompanyID(String title);
 
-    @Select("SELECT u.email" +
-            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
-            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
-            "                 WHERE u.userid = #{userid}              " +
-            " ORDER BY u.user_id")
-    String findEmail(String userid);
+    @Select("SELECT name" +
+            " FROM user WHERE userid = #{userid}")
+    String findExCompanyName(String userid);
 
     @Insert("INSERT apply (userId,studygroupId, title, application)"
             + " VALUES (#{userId},#{studygroupId},#{title},#{application})")

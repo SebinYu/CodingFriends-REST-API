@@ -113,11 +113,11 @@
         </div>
         </c:forEach>
 <hr>
-        <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitlePara}</h2>
-
+        <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitle}</h2>
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
             <form method="post" action="/process" style="width: 50%">
+                <input name="studygroupID" type="hidden" value=${studygroupID}>
                 <table class="list" >
                     <thead style="">
                     <tr>
@@ -128,9 +128,6 @@
                         <th>지원자</th>
                         <th>후기평점</th>
                         <th>지원일자</th>
-                    <%--    <th>지원자 ID번호</th>--%>
-<%--                        <th>스터디 번호</th>--%>
-<%--                        <th>스터디 조직장 이름</th>--%>
                     </tr>
                     </thead>
                     <tbody>

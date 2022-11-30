@@ -1,6 +1,7 @@
 package net.skhu.controller;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import net.skhu.dto.Review;
 import net.skhu.dto.request.RequestApply;
 import net.skhu.dto.request.RequestStudygroup;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +37,8 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired ReviewMapper reviewMapper;
-
+    @Autowired
+    ReviewMapper reviewMapper;
 
     //  회원 프로필 페이지
     @GetMapping("user/index")
@@ -69,20 +70,44 @@ public class UserController {
 
     @GetMapping("user/review/index")
     public String reviewList(Model model,
-                         @RequestParam("StudygroupTitle") String StudygroupTitle) {
-        List<RequestStudygroup> names = applyMapper.findExCompany(StudygroupTitle);
-        model.addAttribute("names", names);
+                             @RequestParam("StudygroupTitle") String StudygroupTitle, Principal principal) {
+
+        String name = principal.getName();
+        String KoreanName = applyMapper.findExCompanyName(name);
+        String[] exCompanyNameIDs = applyMapper.findExCompanyID(StudygroupTitle);
+        String[] exCompanyNames = applyMapper.findExCompany(StudygroupTitle);
+
+        for (int i = 0; i < exCompanyNames.length; i++) {
+
+            if(name.equals(exCompanyNameIDs[i])){
+                exCompanyNames = Arrays.stream(exCompanyNames)
+                        .filter(item -> !item.equals(KoreanName))
+                        .toArray(String[]::new);
+            }
+        }
+        System.out.println(exCompanyNames);
+        model.addAttribute("exCompanyNames", exCompanyNames);
         model.addAttribute("StudygroupTitle", StudygroupTitle);
         return "user/review/index";
     }
 
-    @RequestMapping(value="/reviewProcess", method=RequestMethod.POST, params="cmd=submit")
+    @RequestMapping(value="/reviewProcess", method= RequestMethod.POST, params="cmd=submit")
     public String reviewInput(Model model, Review review, HttpServletRequest request) {
 
         String[] rating = request.getParameterValues("rating");
         String[] ratingContent = request.getParameterValues("ratingContent");
         String[] studyGroupPartner = request.getParameterValues("studyGroupPartner");
 
+//        public String solution(int n, int[] arr){
+//            String answer="U";
+//            Arrays.sort(arr);
+//            for(int i=0; i<n-1; i++){
+//                if(arr[i]==arr[i+1]){
+//                    answer="D";
+//                    break;
+//                }
+//            }
+//            return answer;
 
         Integer ratingNum = 0;
         String ratingContentVal = "";
@@ -101,6 +126,4 @@ public class UserController {
 
         return "user/review/index";
     }
-
-
 }
