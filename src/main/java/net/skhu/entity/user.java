@@ -21,4 +21,6 @@ public class user {
     boolean enabled;
     String userType;
     boolean admin;
+    String address;
+    String address_detail;
 }

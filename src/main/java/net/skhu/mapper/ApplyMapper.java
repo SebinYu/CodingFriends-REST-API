@@ -33,7 +33,7 @@ public interface ApplyMapper {
             " ORDER BY u.user_id")
     List<ResponseApply> findUserApplyList(String userName);
 
-    @Select("SELECT a.userId, a.studygroupId, u.name " +
+    @Select("SELECT a.userId, a.studygroupId, u.name, u.email " +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
             "                 WHERE a.studygroupId = #{studygroupID} AND a.applyStatus = #{applyStatus}              " +
@@ -68,6 +68,20 @@ public interface ApplyMapper {
             "                 WHERE s.title = #{title}              " +
             " ORDER BY u.user_id")
     List<RequestStudygroup> findExCompany(String title);
+
+    @Select("SELECT u.name" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE u.userid = #{userid}              " +
+            " ORDER BY u.user_id")
+    String findName(String userid);
+
+    @Select("SELECT u.email" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
+            "                 WHERE u.userid = #{userid}              " +
+            " ORDER BY u.user_id")
+    String findEmail(String userid);
 
     @Insert("INSERT apply (userId,studygroupId, title, application)"
             + " VALUES (#{userId},#{studygroupId},#{title},#{application})")

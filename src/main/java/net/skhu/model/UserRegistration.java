@@ -28,4 +28,13 @@ public class UserRegistration {
     @Email(message="이메일 주소가 올바르지 않습니다")
     String email;
 
+    String userType;
+
+    @NotEmpty(message="도로명 주소를 입력하세요")
+    String address;
+
+    @NotEmpty(message="상세주소를 입력하세요")
+    String address_detail;
+
+
 }

@@ -1,5 +1,6 @@
 package net.skhu.controller;
 
+import net.skhu.dto.MailDTO;
 import net.skhu.dto.request.RequestApply;
 import net.skhu.dto.request.RequestStudygroup;
 import net.skhu.dto.response.ResponseApply;
@@ -7,6 +8,7 @@ import net.skhu.dto.response.ResponseStudygroup;
 import net.skhu.mapper.ApplyMapper;
 import net.skhu.mapper.LearningMaterialMapper;
 import net.skhu.mapper.StudygroupMapper;
+import net.skhu.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,9 @@ public class StudygroupController {
 
     @Autowired
     ApplyMapper applyMapper;
+
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("home")
     public String home(Model model)throws Exception {
@@ -125,11 +130,17 @@ public class StudygroupController {
 
 
     @PostMapping("detail")
-    public String detailPost(Model model, RequestApply apply) {
+    public String detailPost(Model model, RequestApply apply,HttpServletRequest request, MailDTO data) {
         applyMapper.insert(apply);
         model.addAttribute("applys", applyMapper.findAll());
+        String[] name = request.getParameterValues("name");
+        String[] email = request.getParameterValues("email");
 
-        return "studygroup/appliedMember";
+        data.setName(name[0]);
+        data.setEmail(email[0]);
+        String res = this.mailService.sendSimpleMessage(data);
+
+        return res;
     }
 
 

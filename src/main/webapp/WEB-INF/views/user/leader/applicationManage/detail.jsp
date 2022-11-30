@@ -135,6 +135,7 @@
                     </thead>
                     <tbody>
                     <c:forEach var="Applier" items="${ ApplierList }">
+<%--                        <input type="hidden" name="email" value=${ Applier.email }>--%>
                         <tr>
                             <td><input type="checkbox" name="idChecked" value="${Applier.userId}"/></td>
                             <td>${ Applier.name }</td>

@@ -36,7 +36,7 @@ public interface ParticipationMapper {
 
 
 
-    @Select("SELECT p.participationRate_id,p.studentId, p.studygroupId, p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name" +
+    @Select("SELECT p.participationRate_id,p.studentId, p.studygroupId, p.week, p.weeklyAttendance, p.weeklyHomework, s.title, u.name, u.email" +
             " FROM participationrate p JOIN user u ON p.studentId = u.user_id                 " +
             "                 JOIN studygroup s ON p.studygroupId = s.studyGroup_id                   " +
             "                 WHERE p.week = #{week}                   " +
@@ -58,7 +58,7 @@ public interface ParticipationMapper {
             " ORDER BY u.user_id")
     String findAcceptedUserInfo(Integer idChecked);
 
-    @Insert("INSERT participationrate (studentId, studygroupId, studyGroup_Leader, week, weeklyHomework,weeklyAttendance  )"
+    @Insert("INSERT participationrate (studentId, studygroupId, studyGroup_Leader, week, weeklyHomework, weeklyAttendance  )"
             + " VALUES (#{studentId},#{studygroupId},#{studyGroup_Leader}, #{week}, #{weeklyHomework}, #{weeklyAttendance})")
     @Options(useGeneratedKeys=true, keyProperty="participationRate_id")
     void Insert(ResponseParticipation participation);

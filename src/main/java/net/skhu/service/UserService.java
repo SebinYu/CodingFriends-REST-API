@@ -43,6 +43,9 @@ public class UserService {
         user.setName(userRegistration.getName());
         user.setEmail(userRegistration.getEmail());
         user.setEnabled(true);
+        user.setUserType("사용자");
+        user.setAddress(userRegistration.getAddress());
+        user.setAddress(userRegistration.getAddress());
         return user;
     }
 

@@ -71,11 +71,15 @@
                     </div>
 
                     <div class="modal-body" style="padding: 35px">
-                        <p>스터디 번호 <textarea class="form-control" name="studygroupId" style="height: 20px" value=" ${apply.studygroupId }" readonly>${studygroup.studyGroup_id }</textarea></p>
+                        <p>스터디 번호 <textarea  class="form-control" name="studygroupId" style="height: 20px" value=" ${apply.studygroupId }" readonly>${studygroup.studyGroup_id }</textarea></p>
                         <p>스터디 명칭 <textarea class="form-control" name="title" style="height: 20px" value=" ${apply.title }" readonly>${studygroup.title }</textarea></p>
 
                         <sec:authorize access="authenticated">
                             <p>사용자 번호<textarea class="form-control" name="userId" style="height: 20px" value=" ${apply.userId }" readonly><sec:authentication property="principal.userId"/></textarea></p>
+                            <input name="name" type="hidden" value=<sec:authentication property="principal.name"/>>
+                            <input name="email" type="hidden" value=<sec:authentication property="principal.email"/>>
+
+
                         </sec:authorize>
 
                         <hr style="margin-bottom: 30px">

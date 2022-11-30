@@ -49,6 +49,16 @@
         <label for="floatingInput">이메일 주소</label>
         <form:errors path="email" class="error" />
     </div>
+    <div class="form-floating mb-3">
+        <form:input type="text" class="form-control" id="address_kakao" placeholder="도로명 주소" path="address" />
+        <label for="floatingInput">도로명 주소</label>
+        <form:errors path="address" class="error" />
+    </div>
+    <div class="form-floating mb-3">
+        <form:input type="text" class="form-control" id="floatingInput" placeholder="상세주소" path="address_detail" />
+        <label for="floatingInput">상세주소</label>
+        <form:errors path="address_detail" class="error" />
+    </div>
     <hr>
     <button type="submit" class="btn btn-info" style="margin-top:10px; width: 48%; color:#ffffff; font-weight: bold">회원가입</button>
     <a href="${R}studygroup/list" class="btn btn-danger" style="margin-top:10px; width: 48%; color:#ffffff; font-weight: bold">취소</a>

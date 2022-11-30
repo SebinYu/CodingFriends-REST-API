@@ -79,15 +79,16 @@ public class LeaderController {
 //    }
 
     // 지원자 관리페이지_지원 수락
-    @RequestMapping(value="/saveProcess", method= RequestMethod.POST, params="cmd=save")
+    @RequestMapping(value="/process", method= RequestMethod.POST, params="cmd=save")
     public String applicationAccepted(Model model,
-                                      HttpServletRequest request, Principal principal, ResponseParticipation participation, RequestApply apply) {
+                                      HttpServletRequest request, Principal principal,
+                                      ResponseParticipation participation, RequestApply apply) {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
         String studyGroup_Leader = principal.getName();
 
 
-        for (int i = 0; i < checkedStudentID.length; ++i){
+        for (int i = 0; i < checkedStudentID.length ; i++){
             String OneStudentId = checkedStudentID[i];
             String onecheckedStudentID = checkedStudentID[i];
             String checkedStudygroupId = participationMapper.findAcceptedUserInfo(Integer.valueOf(OneStudentId));
@@ -110,7 +111,7 @@ public class LeaderController {
     }
 
     // 지원자 관리페이지_지원 거절
-    @RequestMapping(value="/deleteProcess", method=RequestMethod.POST, params="cmd=delete")
+    @RequestMapping(value="/process", method=RequestMethod.POST, params="cmd=delete")
     public String applicationRejected(Model model,HttpServletRequest deleteRequest) {
         String[] idChecked = deleteRequest.getParameterValues("idChecked");
         for (int i = 0; i < idChecked.length; ++i){

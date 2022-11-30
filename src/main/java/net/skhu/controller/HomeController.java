@@ -1,5 +1,6 @@
 package net.skhu.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.skhu.model.UserRegistration;
 import net.skhu.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -64,4 +71,20 @@ public class HomeController {
         return "home/login";
     }
 
+    @RequestMapping("upload")
+    public String upload() {
+        return "home/upload";
+    }
+
+    @RequestMapping("/uploadMultipleFiles")
+    public String fileupload(HttpServletRequest request, @RequestBody List<MultipartFile> files){
+        try{
+            for(int i=0;i<files.size();i++){
+                files.get(i).transferTo(new File("파일경로"+files.get(i).getOriginalFilename()));
+            }
+        }catch (IllegalStateException | IOException e){
+            e.printStackTrace();
+        }
+        return "file upload";
+    }
 }
