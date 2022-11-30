@@ -15,7 +15,7 @@ public class MailController {
     @Autowired
     private MailService mailService;
 
-    @PostMapping("/contact/send")
+    @PostMapping("/")
     public String mail(MailDTO data, HttpServletRequest request) {
         String[] name = request.getParameterValues("name");
         String[] email = request.getParameterValues("email");
