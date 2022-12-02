@@ -133,7 +133,6 @@
 
 <jsp:include page="/template/footer.jsp"></jsp:include>
         <script>
-
             // 'request'라는 id를 가진 버튼 클릭 시 실행.
             $('#request').click(function () {
                 $.ajax({
@@ -148,7 +147,6 @@
                     alert(data);
                 });
             });
-
         </script>
 </body>
 

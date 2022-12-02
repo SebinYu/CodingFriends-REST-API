@@ -79,6 +79,7 @@
 
     </style>
     <script src="https://kit.fontawesome.com/c30dd58b89.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body style="background: rgba(243,243,243,0.22);">

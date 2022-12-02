@@ -77,8 +77,8 @@ public interface ApplyMapper {
     String[] findExCompanyID(String title);
 
     @Select("SELECT name" +
-            " FROM user WHERE userid = #{userid}")
-    String findExCompanyName(String userid);
+            " FROM user WHERE userid = #{loginID}")
+    String findExCompanyName(String loginID);
 
     @Insert("INSERT apply (userId,studygroupId, title, application)"
             + " VALUES (#{userId},#{studygroupId},#{title},#{application})")
