@@ -17,16 +17,27 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Collections.swap;
 
 
 @Controller
 @RequestMapping("/studygroup")
 public class StudygroupController {
 
-    @Autowired StudygroupMapper studygroupMapper;
+    @Autowired
+    StudygroupMapper studygroupMapper;
 
-    @Autowired LearningMaterialMapper learningMaterialMapper;
+    @Autowired
+    LearningMaterialMapper learningMaterialMapper;
 
     @Autowired
     ApplyMapper applyMapper;
@@ -35,7 +46,7 @@ public class StudygroupController {
     private MailService mailService;
 
     @GetMapping("home")
-    public String home(Model model)throws Exception {
+    public String home(Model model) throws Exception {
         List<ResponseStudygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         model.addAttribute("studygroups", studygroups);
@@ -43,7 +54,7 @@ public class StudygroupController {
     }
 
     @GetMapping("list")
-    public String list(Model model)throws Exception {
+    public String list(Model model) throws Exception {
         List<ResponseStudygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         model.addAttribute("studygroups", studygroups);
@@ -52,7 +63,7 @@ public class StudygroupController {
 
 
     @GetMapping("search")
-    public String search(Model model, HttpServletRequest httpServletRequest)throws Exception {
+    public String search(Model model, HttpServletRequest httpServletRequest) throws Exception {
         String learningMaterial_id = httpServletRequest.getParameter("learningMaterial_id");
         String keyword = httpServletRequest.getParameter("keyword");
         String emptyResultTest1 = studygroupMapper.findSearchedStudygroupKeyword(keyword).toString();
@@ -60,21 +71,22 @@ public class StudygroupController {
         model.addAttribute("emptyResultTest", emptyResultTest1);
 
 //       learningMaterial_id를 선택하지 않은 경우
-        if(learningMaterial_id == null){
-            if( emptyResultTest1 == "[]"){
+        if (learningMaterial_id == null) {
+            if (emptyResultTest1 == "[]") {
                 model.addAttribute("noResult", "\"검색결과 없음\"");
             } else {
                 List<ResponseStudygroup> studygroups = studygroupMapper.findSearchedStudygroupKeyword(keyword);
                 model.addAttribute("studygroups", studygroups);
 
             }
-        }else {
+        } else {
             List<ResponseStudygroup> studygroups = studygroupMapper.findSearchedStudygroup(keyword, learningMaterial_id);
             model.addAttribute("studygroups", studygroups);
         }
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         return "studygroup/search";
     }
+
 
     @GetMapping("create")
     public String createGet(Model model) {

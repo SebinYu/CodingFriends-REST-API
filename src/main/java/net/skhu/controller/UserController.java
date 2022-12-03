@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     ApplyMapper applyMapper;
@@ -41,7 +43,7 @@ public class UserController {
     ReviewMapper reviewMapper;
 
     //  회원 프로필 페이지
-    @GetMapping("user/index")
+    @GetMapping("index")
     public String index(Model model, Principal principal, HttpServletRequest request, RequestApply apply) {
 
         String name = principal.getName();
@@ -67,47 +69,65 @@ public class UserController {
         }
             return "user/index";
     }
-
-    @GetMapping("user/review/index")
+    @GetMapping("review/index")
     public String reviewList(Model model,
                              @RequestParam("StudygroupTitle") String StudygroupTitle, Principal principal) {
 
-        String name = principal.getName();
-        String KoreanName = applyMapper.findExCompanyName(name);
-        String[] exCompanyNameIDs = applyMapper.findExCompanyID(StudygroupTitle);
+        String LoginID = principal.getName();
+        String KoreanName = applyMapper.findExCompanyName(LoginID);
+        String[] exCompanyLoginIDs = applyMapper.findExCompanyID(StudygroupTitle);
         String[] exCompanyNames = applyMapper.findExCompany(StudygroupTitle);
 
         for (int i = 0; i < exCompanyNames.length; i++) {
 
-            if(name.equals(exCompanyNameIDs[i])){
+            if(LoginID.equals(exCompanyLoginIDs[i])){
                 exCompanyNames = Arrays.stream(exCompanyNames)
                         .filter(item -> !item.equals(KoreanName))
                         .toArray(String[]::new);
             }
         }
-        System.out.println(exCompanyNames);
+
         model.addAttribute("exCompanyNames", exCompanyNames);
         model.addAttribute("StudygroupTitle", StudygroupTitle);
         return "user/review/index";
     }
 
-    @RequestMapping(value="/reviewProcess", method= RequestMethod.POST, params="cmd=submit")
-    public String reviewInput(Model model, Review review, HttpServletRequest request) {
+    @GetMapping("review/detail")
+    public String reviewInput(Model model,
+                             @RequestParam("StudygroupTitle") String StudygroupTitle,
+                              @RequestParam("chosenName") String chosenName, Principal principal) {
 
+        String LoginID = principal.getName();
+        String KoreanName = applyMapper.findExCompanyName(LoginID);
+        String[] exCompanyLoginIDs = applyMapper.findExCompanyID(StudygroupTitle);
+        String[] exCompanyNames = applyMapper.findExCompany(StudygroupTitle);
+
+        for (int i = 0; i < exCompanyNames.length; i++) {
+
+            if(LoginID.equals(exCompanyLoginIDs[i])){
+                exCompanyNames = Arrays.stream(exCompanyNames)
+                        .filter(item -> !item.equals(KoreanName))
+                        .toArray(String[]::new);
+            }
+        }
+
+        model.addAttribute("exCompanyNames", exCompanyNames);
+        model.addAttribute("StudygroupTitle", StudygroupTitle);
+        model.addAttribute("chosenName", chosenName);
+
+        return "user/review/detail";
+    }
+
+    @PostMapping("review/detail")
+   public String reviewInput(Model model, Review review, HttpServletRequest request, Principal principal,
+                              @RequestParam("StudygroupTitle") String StudygroupTitle,
+                              @RequestParam("chosenName") String chosenName) {
+        String LoginID = principal.getName();
         String[] rating = request.getParameterValues("rating");
         String[] ratingContent = request.getParameterValues("ratingContent");
-        String[] studyGroupPartner = request.getParameterValues("studyGroupPartner");
+        BigInteger chosenStudentID = reviewMapper.findchosenStudentID(chosenName);
+        BigInteger studygroupID = reviewMapper.findStudygroupID(StudygroupTitle);
 
-//        public String solution(int n, int[] arr){
-//            String answer="U";
-//            Arrays.sort(arr);
-//            for(int i=0; i<n-1; i++){
-//                if(arr[i]==arr[i+1]){
-//                    answer="D";
-//                    break;
-//                }
-//            }
-//            return answer;
 
         Integer ratingNum = 0;
         String ratingContentVal = "";
@@ -115,15 +135,21 @@ public class UserController {
         for (int i = 0; i < rating.length; ++i){
             ratingNum = Integer.valueOf(rating[i]);
             ratingContentVal = ratingContent[i];
-            studyGroupPartnerVal = studyGroupPartner[i];
         }
 
-
-        review.setStudyGroupPartner(studyGroupPartnerVal);
+        review.setStudentId(chosenStudentID);
+        review.setStudygroupId(studygroupID);
+        review.setStudyGroupPartner(LoginID);
         review.setReviewScore(Double.valueOf(ratingNum));
         review.setReviewContents(ratingContentVal);
         reviewMapper.Insert(review);
 
         return "user/review/index";
+    }
+
+    @GetMapping("review/check")
+    public String reviewInput(Model model, Review review, HttpServletRequest request, Principal principal){
+
+        return "user/review/check";
     }
 }

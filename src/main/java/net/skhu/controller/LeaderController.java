@@ -11,7 +11,6 @@ import net.skhu.mapper.StudygroupMapper;
 import net.skhu.mapper.ApplyMapper;
 import net.skhu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.security.Principal;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -198,26 +196,26 @@ public class LeaderController {
 
 
     // 지원자 관리페이지_주차별 참여이력
-    @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST, params="cmd=check")
-    public String attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation,
-                                  @RequestParam(value="attendanceCheckedArr[]") String[] attendanceCheckedArr,
-                                  @RequestParam(value="homeworkCheckedArr[]") String[] homeworkCheckedArr) {
+    @PostMapping("user/leader/attendance/detail")
+    @ResponseBody
+    public String attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation) {
 
-        System.out.println(attendanceCheckedArr);
-        System.out.println(homeworkCheckedArr);
+
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
         String studyGroup_Leader = principal.getName();
-        String[] attendanceChecked = request.getParameterValues("attendanceChecked");
-        String[] homeworkChecked = request.getParameterValues("homeworkChecked");
+        String[] attendanceChecked = request.getParameterValues("attendanceCheckedArr");
+        String[] homeworkChecked = request.getParameterValues("homeworkCheckedArr");
+            System.out.println("출석id:" + attendanceChecked[0]);
+
 
         for (int i = 0; i < studentId.length; i++) {
             String oneStudentId = studentId[i];
             String oneStudygroupID = studygroupID[i];
-            String oneAttendanceCheckedID = attendanceChecked[i];
-            System.out.println("출석id:" + oneAttendanceCheckedID);
-            String oneHomeworkCheckedID = homeworkChecked[i];
-            System.out.println("숙제id:" + oneHomeworkCheckedID);
+//            String oneAttendanceCheckedID = attendanceChecked[i];
+//            System.out.println("출석id:" + oneAttendanceCheckedID);
+//            String oneHomeworkCheckedID = homeworkChecked[i];
+//            System.out.println("숙제id:" + oneHomeworkCheckedID);
             Integer score = 0;
 
             participation.setStudentId(oneStudentId);
@@ -225,25 +223,25 @@ public class LeaderController {
             participation.setStudyGroup_Leader(studyGroup_Leader);
             participation.setWeek(1);
 
-            if(oneStudentId.equals(oneAttendanceCheckedID)){
-                participation.setWeeklyAttendance("\uD83D\uDFE2");
-                score += 10;
-            }else{
-                participation.setWeeklyAttendance("x");
-            }
-
-            if(oneStudentId.equals(oneHomeworkCheckedID)){
-                participation.setWeeklyHomework("\uD83D\uDFE2");
-                score += 10;
-                System.out.println("누적 점수:"+ score);
-            }else{
-                participation.setWeeklyHomework("x");
-            }
+//            if(oneStudentId.equals(oneAttendanceCheckedID)){
+//                participation.setWeeklyAttendance("\uD83D\uDFE2");
+//                score += 10;
+//            }else{
+//                participation.setWeeklyAttendance("x");
+//            }
+//
+//            if(oneStudentId.equals(oneHomeworkCheckedID)){
+//                participation.setWeeklyHomework("\uD83D\uDFE2");
+//                score += 10;
+//                System.out.println("누적 점수:"+ score);
+//            }else{
+//                participation.setWeeklyHomework("x");
+//            }
             participationMapper.Insert(participation);
 
 
         }
-        return "user/leader/attendance/index";
+        return "user/leader/participantManage/detail";
 
     }
 }

@@ -22,7 +22,7 @@ public class RequestStudygroup implements Serializable {
     String writer;
     int totalNum;
     int currentNum;
-    private LocalDateTime updateDate;
+    LocalDateTime updateDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate startDate;

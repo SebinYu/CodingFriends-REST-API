@@ -120,15 +120,18 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a href="detail?StudygroupTitle=${StudygroupTitle.title}" style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${StudygroupTitle.title}</a>
                     <c:forEach var="WeekInfo" items="${ WeekInfoList }">
-                        <a href="detail?week=${ WeekInfo.week }&&StudygroupTitle=${StudygroupTitlePara}" class="dropdown-item"  name="week">${ WeekInfo.week }주차</a>
+                        <a href="detail?week=${ WeekInfo.week }&&StudygroupTitle=${StudygroupTitlePara}" class="dropdown-item">${ WeekInfo.week }주차</a>
                         <br>
                     </c:forEach>
                 </div>
             </div>
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
-            <form method="post" action="/attendanceProcess">
-            <table class="list" >
+            <form method="post">
+                <input id = "attendanceCheckedArr">
+                <input id = "homeworkCheckedArr">
+
+                <table class="list" >
                 <thead style="">
                 <tr>
                     <th>이름</th>
@@ -145,8 +148,8 @@
                 <tr>
                         <td>${ Participant.name }</td>
                         <td>1주차</td>
-                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value=${Participant.userId}/>${Participant.userId}</td>
-                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value=${Participant.userId}/>${Participant.userId}</td>
+                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value=${Participant.userId}>${Participant.userId}</td>
+                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value=${Participant.userId}>${Participant.userId}</td>
                         <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
                         <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
                         <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>
@@ -179,58 +182,51 @@
 
     })
 
-
-
-
-    var  attendanceCheckedArr = [];
-    var  homeworkCheckedArr = [];
-
-
-        $("#checkButton").click(function (){
-            alert(1);
+    $(document).ready(function () {
+        $("#checkButton").click(function () {
+            var attendanceCheckedArr = [];
+            var homeworkCheckedArr = [];
 
             $('input:checkbox[name="attendanceChecked"]:not(:checked)').each(function (index) {
                 attendanceCheckedArr.push(0);
             })
 
-            alert(2);
-
             $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
                 attendanceCheckedArr.push($(this).val());
             })
 
-            alert(3);
-
             $('input:checkbox[name="homeworkChecked"]:not(:checked)').each(function (index) {
                 homeworkCheckedArr.push(0);
             })
-            alert(4);
 
             $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
                 homeworkCheckedArr.push($(this).val());
 
             })
 
-            alert(5);
-            var data = {"attendanceCheckedArr":attendanceCheckedArr,"homeworkCheckedArr": homeworkCheckedArr}
-            console.log(data);
-            alert(6);
+
+            document.getElementById("attendanceCheckedArr").value = attendanceCheckedArr;
+            document.getElementById("homeworkCheckedArr").value = homeworkCheckedArr;
 
 
-            $.ajax({
-                type : "POST",
-                url : "/attendanceProcess", //요청 할 URL
-                traditional: true,	// ajax 배열 넘기기 옵션!
-                data : {
-                    "attendanceCheckedArr" : attendanceCheckedArr,
-                    "homeworkCheckedArr": homeworkCheckedArr}, //넘길 파라미터
-                success: function(data){
-                    window.alert("성공");
-                },
-                // error:function(request,status,error){
-                //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-            });
+
+            // $.ajax({
+            //     type: "POST",
+            //     url: "detail", //요청 할 URL
+            //     traditional: true,	// ajax 배열 넘기기 옵션!
+            //     data: {
+            //         'attendanceCheckedArr': attendanceCheckedArr,
+            //         'homeworkCheckedArr': homeworkCheckedArr
+            //     }, //넘길 파라미터
+            //     success: function (data) {
+            //         window.alert("성공");
+            //     },
+            //     error: function (request, status, error) {
+            //         alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            //     }
+            // });
         });
+    });
 
 
 

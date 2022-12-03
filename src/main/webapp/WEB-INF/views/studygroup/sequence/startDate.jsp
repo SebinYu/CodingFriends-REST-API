@@ -55,7 +55,7 @@
 	text-align: center;
 
 	/* background:black; */
-	background-image: url('../imgs/bannerImg.jpg');
+	background-image: url('../../imgs/bannerImg.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;">
     <br><br><br><br><br><br><br><br><br><br><br>
@@ -85,7 +85,8 @@
         <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px;" placeholder="내용을 입력하세요"/>
         <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
     </form>
-    <a href="latestOrder" class="btn btn-secondary" style="float: left; margin-top: 12px">최신순</a>
+    <a href="/studygroup/sequence/startDate" class="btn btn-secondary" style="float: left; margin-top: 12px; margin-right: 7px">스터디 시작일 최신순</a>
+    <a href="/studygroup/sequence/updateDate" class="btn btn-secondary" style="float: left; margin-top: 12px">작성일 최신순</a>
     <div style="clear: both"></div>
 </div>
 <hr>
@@ -102,7 +103,10 @@
                            style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>
                     </h5>
                     <p class="card-text">
-                        BY. ${ studygroup.writer }<br> 정원. ${ studygroup.currentNum }/${ studygroup.totalNum }
+                        BY. ${ studygroup.writer }<br>
+                            <%--                        정원. ${ studygroup.currentNum }/${ studygroup.totalNum }--%>
+                        스터디 시작일. ${ studygroup.startDate }<br>
+                        작성일. ${ studygroup.updateDate }
                     </p>
                 </div>
             </div>

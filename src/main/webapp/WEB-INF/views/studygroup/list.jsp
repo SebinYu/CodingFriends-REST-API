@@ -71,8 +71,8 @@
 
 
 <%--스터디 종류 리스트--%>
-<div class="container" >
-    <form method="get" action = "/studygroup/search" class="form-inline mt-3">
+<div class="container"  >
+    <form method="get" style=" float: left; width: 430px" action = "/studygroup/search" class="form-inline mt-1">
         <select class="dropdown mx-1 mt-2" name="learningMaterial_id"
                 style="width: 120px">
             <option value="" disabled selected>== 종류 ==</option>
@@ -85,7 +85,11 @@
         <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px;" placeholder="내용을 입력하세요"/>
         <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
     </form>
+    <a href="/studygroup/sequence/startDate" class="btn btn-secondary" style="float: left; margin-top: 12px; margin-right: 7px">스터디 시작일 최신순</a>
+    <a href="/studygroup/sequence/updateDate" class="btn btn-secondary" style="float: left; margin-top: 12px">작성일 최신순</a>
+    <div style="clear: both"></div>
 </div>
+<hr>
 
 <%--스터디 리스트 조회--%>
 <div class="list" style="margin-left: 85px">
@@ -99,7 +103,10 @@
                            style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>
                     </h5>
                     <p class="card-text">
-                        BY. ${ studygroup.writer }<br> 정원. ${ studygroup.currentNum }/${ studygroup.totalNum }
+                        BY. ${ studygroup.writer }<br>
+                            <%--                        정원. ${ studygroup.currentNum }/${ studygroup.totalNum }--%>
+                        스터디 시작일. ${ studygroup.startDate }<br>
+                        작성일. ${ studygroup.updateDate }
                     </p>
                 </div>
             </div>

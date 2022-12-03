@@ -84,25 +84,14 @@
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #59be7e; border: #59be7e">
             내 스터디 평점
         </a>
-        <a class="list-group-item list-group-item-action disabled">
+        <button href="#" class="list-group-item list-group-item-action" aria-current="true" id="request">
             밑바닥부터 시작하는 딥러닝
-            ⭐⭐⭐⭐⭐</a>
+            ⭐⭐⭐⭐⭐</button>
 <%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
 <%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
 <%--        </c:forEach>--%>
     </div>
 
-    <div class="list-group" style="margin-top: 50px" >
-        <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #59be7e; border: #59be7e">
-            내가 남긴 후기
-        </a>
-        <a class="list-group-item list-group-item-action disabled">
-            밑바닥부터 시작하는 딥러닝
-            ⭐⭐⭐⭐⭐</a>
-        <%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
-        <%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
-        <%--        </c:forEach>--%>
-    </div>
 </div>
 
 </div>
@@ -110,6 +99,15 @@
 </body>
 <script>
 
+    var url = "review/check";
+    var windowTargetName = "targetName";
+    var features = "scrollbars=yes,width=400,height=600,location=no, resizable=yes";
+
+
+    // 'request'라는 id를 가진 버튼 클릭 시 실행.
+    $('#request').click(function () {
+        window.open(url, windowTargetName, features);
+    });
 
 </script>
 </html>

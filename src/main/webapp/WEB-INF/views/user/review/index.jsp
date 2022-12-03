@@ -107,60 +107,15 @@
                 조원 후기 남기기
             </a>
             <c:forEach var="exCompanyName" items="${exCompanyNames}">
-                <a href="#" class="list-group-item list-group-item-action">${exCompanyName}</a>
+                <a href="detail?StudygroupTitle=${StudygroupTitle}&&chosenName=${exCompanyName}" class="list-group-item list-group-item-action">${exCompanyName}</a>
               </c:forEach>
-
-
             </a>
         </div>
-        <legend>점수 (5점 만점)</legend>
-
-        <form name="myform" id="myform" method="post" action="/reviewProcess">
-            <input type="hidden" name="studyGroupPartner" value=<sec:authentication property="name"/>>
-            <fieldset>
-                <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
-                <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
-                <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
-                <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
-                <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
-            </fieldset>
-            <div style="margin-top: 30px"></div>
-            <legend>상세 내용</legend>
-            <textarea type="text" name="ratingContent" class="form-control" style="height: 200px"></textarea>
-            <button type="submit" class="btn btn-info" id ="checkButton" style="color: white; margin-top: 30px; width: 100%" name="cmd" value="submit">제출</button>
-
-        </form>
-
-
-
-
-
-
-
     </div>
 </div>
 
 </body>
 <script>
-
-    $("#myform").submit(function (){
-        var starRate = document.myform.ratingContent.value;
-        if(starRate == null || starRate == ""){
-            alert("별점을 입력해주세요")
-        }
-
-        var reviewContent = document.myform.rating.value;
-        if(reviewContent == null || reviewContent == ""){
-            alert("후기내용을 입력해주세요")
-        }
-
-        var rv = true;
-        if(starRate == null || starRate == "" || reviewContent == null || reviewContent == ""){
-            return rv = false
-        }
-
-        return rv;
-    });
 
 </script>
 </html>
