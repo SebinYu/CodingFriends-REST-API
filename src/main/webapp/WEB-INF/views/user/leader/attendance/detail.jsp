@@ -128,8 +128,8 @@
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
             <form method="post">
-                <input id = "attendanceCheckedArr">
-                <input id = "homeworkCheckedArr">
+                <input id = "attendanceCheckedArr" name="attendanceCheckedArr">
+                <input id = "homeworkCheckedArr" name="homeworkCheckedArr">
 
                 <table class="list" >
                 <thead style="">
@@ -210,22 +210,24 @@
 
 
 
-            // $.ajax({
-            //     type: "POST",
-            //     url: "detail", //요청 할 URL
-            //     traditional: true,	// ajax 배열 넘기기 옵션!
-            //     data: {
-            //         'attendanceCheckedArr': attendanceCheckedArr,
-            //         'homeworkCheckedArr': homeworkCheckedArr
-            //     }, //넘길 파라미터
-            //     success: function (data) {
-            //         window.alert("성공");
-            //     },
-            //     error: function (request, status, error) {
-            //         alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            //     }
-            // });
+            var data = {"attendanceCheckedArr":attendanceCheckedArr,"homeworkCheckedArr": homeworkCheckedArr}
+
+
+
         });
+        // $.ajax({
+        //     url : "/attendanceProcess", //요청 할 URL
+        //     type: "post",
+        //     data:JSON.stringify(data),
+        //     dataType: "json",
+        //     contentType:"application/json;",
+        //     success: function(data){
+        //         window.alert("성공");
+        //     },
+        //     error:function(request,status,error){
+        //         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        //     }
+        // });
     });
 
 

@@ -85,6 +85,7 @@
         <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px;" placeholder="내용을 입력하세요"/>
         <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
     </form>
+    <a href="/studygroup/map/index" class="btn btn-secondary" style="float: left; margin-top: 12px; margin-right: 7px">지역별 오프라인 스터디</a>
     <a href="/studygroup/sequence/startDate" class="btn btn-secondary" style="float: left; margin-top: 12px; margin-right: 7px">스터디 시작일 최신순</a>
     <a href="/studygroup/sequence/updateDate" class="btn btn-secondary" style="float: left; margin-top: 12px">작성일 최신순</a>
     <div style="clear: both"></div>

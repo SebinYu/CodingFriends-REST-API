@@ -9,6 +9,7 @@ import net.skhu.mapper.ParticipationMapper;
 import net.skhu.mapper.StudygroupMapper;
 //import net.skhu.repository.UserRepository;
 import net.skhu.mapper.ApplyMapper;
+import net.skhu.model.Test;
 import net.skhu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -196,10 +197,13 @@ public class LeaderController {
 
 
     // 지원자 관리페이지_주차별 참여이력
+//    @ResponseBody
+//    @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST)
+//    public String attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation,
+//                                      @RequestBody Test checkInfo) {
     @PostMapping("user/leader/attendance/detail")
-    @ResponseBody
-    public String attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation) {
-
+    public String attendanceCheckPost(HttpServletRequest request, Principal principal,
+                                      ResponseParticipation participation) {
 
         String[] studentId = request.getParameterValues("studentId");
         String[] studygroupID = request.getParameterValues("studygroupID");
@@ -238,10 +242,10 @@ public class LeaderController {
 //                participation.setWeeklyHomework("x");
 //            }
             participationMapper.Insert(participation);
-
-
         }
-        return "user/leader/participantManage/detail";
+
+
+        return "redirect:/user/leader/participantManage/index";
 
     }
 }
