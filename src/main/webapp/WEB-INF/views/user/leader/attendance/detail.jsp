@@ -127,7 +127,7 @@
             </div>
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
-            <form method="post">
+            <form method="post" action="/attendanceProcess" onsubmit="return false">
                 <input id = "attendanceCheckedArr" name="attendanceCheckedArr">
                 <input id = "homeworkCheckedArr" name="homeworkCheckedArr">
 
@@ -161,7 +161,7 @@
                 </tbody>
             </table>
 
-                <button type="submit" id="checkButton" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
+                <button id="checkButton" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
             </form>
         </div>
 
@@ -212,22 +212,22 @@
 
             var data = {"attendanceCheckedArr":attendanceCheckedArr,"homeworkCheckedArr": homeworkCheckedArr}
 
-
+            $.ajax({
+                url : "/attendanceProcess", //요청 할 URL
+                type: "post",
+                data:JSON.stringify(data),
+                dataType: "json",
+                contentType:"application/json;",
+                success: function(data){
+                    window.alert("성공");
+                },
+                error:function(request,status,error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            });
 
         });
-        // $.ajax({
-        //     url : "/attendanceProcess", //요청 할 URL
-        //     type: "post",
-        //     data:JSON.stringify(data),
-        //     dataType: "json",
-        //     contentType:"application/json;",
-        //     success: function(data){
-        //         window.alert("성공");
-        //     },
-        //     error:function(request,status,error){
-        //         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        //     }
-        // });
+
     });
 
 

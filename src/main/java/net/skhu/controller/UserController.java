@@ -115,7 +115,7 @@ public class UserController {
         model.addAttribute("StudygroupTitle", StudygroupTitle);
         model.addAttribute("chosenName", chosenName);
 
-        return "user/review/detail";
+        return "redirect:/user/review/detail?StudygroupTitle=" + StudygroupTitle  +"&&chosenName=" + chosenName;
     }
 
     @PostMapping("review/detail")

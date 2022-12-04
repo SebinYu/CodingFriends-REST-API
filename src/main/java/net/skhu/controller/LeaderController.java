@@ -197,55 +197,57 @@ public class LeaderController {
 
 
     // 지원자 관리페이지_주차별 참여이력
-//    @ResponseBody
-//    @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST)
-//    public String attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation,
-//                                      @RequestBody Test checkInfo) {
-    @PostMapping("user/leader/attendance/detail")
-    public String attendanceCheckPost(HttpServletRequest request, Principal principal,
-                                      ResponseParticipation participation) {
+    @ResponseBody
+    @RequestMapping(value="/attendanceProcess", method= RequestMethod.POST)
+    public Object attendanceCheckPost(HttpServletRequest request, Principal principal, ResponseParticipation participation,
+                                      @RequestBody Test checkInfo) {
 
-        String[] studentId = request.getParameterValues("studentId");
-        String[] studygroupID = request.getParameterValues("studygroupID");
-        String studyGroup_Leader = principal.getName();
-        String[] attendanceChecked = request.getParameterValues("attendanceCheckedArr");
-        String[] homeworkChecked = request.getParameterValues("homeworkCheckedArr");
-            System.out.println("출석id:" + attendanceChecked[0]);
-
-
-        for (int i = 0; i < studentId.length; i++) {
-            String oneStudentId = studentId[i];
-            String oneStudygroupID = studygroupID[i];
-//            String oneAttendanceCheckedID = attendanceChecked[i];
-//            System.out.println("출석id:" + oneAttendanceCheckedID);
-//            String oneHomeworkCheckedID = homeworkChecked[i];
-//            System.out.println("숙제id:" + oneHomeworkCheckedID);
-            Integer score = 0;
-
-            participation.setStudentId(oneStudentId);
-            participation.setStudygroupId(oneStudygroupID);
-            participation.setStudyGroup_Leader(studyGroup_Leader);
-            participation.setWeek(1);
-
-//            if(oneStudentId.equals(oneAttendanceCheckedID)){
-//                participation.setWeeklyAttendance("\uD83D\uDFE2");
-//                score += 10;
-//            }else{
-//                participation.setWeeklyAttendance("x");
-//            }
+        System.out.println(checkInfo);
+//    @PostMapping("user/leader/attendance/detail")
+//    public String attendanceCheckPost(HttpServletRequest request, Principal principal,
+//                                      ResponseParticipation participation) {
 //
-//            if(oneStudentId.equals(oneHomeworkCheckedID)){
-//                participation.setWeeklyHomework("\uD83D\uDFE2");
-//                score += 10;
-//                System.out.println("누적 점수:"+ score);
-//            }else{
-//                participation.setWeeklyHomework("x");
-//            }
-            participationMapper.Insert(participation);
-        }
+//        String[] studentId = request.getParameterValues("studentId");
+//        String[] studygroupID = request.getParameterValues("studygroupID");
+//        String studyGroup_Leader = principal.getName();
+//        String[] attendanceChecked = request.getParameterValues("attendanceCheckedArr");
+//        String[] homeworkChecked = request.getParameterValues("homeworkCheckedArr");
+//            System.out.println("출석id:" + attendanceChecked[0]);
+//
+//
+//        for (int i = 0; i < studentId.length; i++) {
+//            String oneStudentId = studentId[i];
+//            String oneStudygroupID = studygroupID[i];
+////            String oneAttendanceCheckedID = attendanceChecked[i];
+////            System.out.println("출석id:" + oneAttendanceCheckedID);
+////            String oneHomeworkCheckedID = homeworkChecked[i];
+////            System.out.println("숙제id:" + oneHomeworkCheckedID);
+//            Integer score = 0;
+//
+//            participation.setStudentId(oneStudentId);
+//            participation.setStudygroupId(oneStudygroupID);
+//            participation.setStudyGroup_Leader(studyGroup_Leader);
+//            participation.setWeek(1);
+//
+////            if(oneStudentId.equals(oneAttendanceCheckedID)){
+////                participation.setWeeklyAttendance("\uD83D\uDFE2");
+////                score += 10;
+////            }else{
+////                participation.setWeeklyAttendance("x");
+////            }
+////
+////            if(oneStudentId.equals(oneHomeworkCheckedID)){
+////                participation.setWeeklyHomework("\uD83D\uDFE2");
+////                score += 10;
+////                System.out.println("누적 점수:"+ score);
+////            }else{
+////                participation.setWeeklyHomework("x");
+////            }
+//            participationMapper.Insert(participation);
+//        }
 
 
-        return "redirect:/user/leader/participantManage/index";
+        return checkInfo;
 
     }
 }
