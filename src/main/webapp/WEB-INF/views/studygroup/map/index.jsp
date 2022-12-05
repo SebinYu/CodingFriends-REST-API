@@ -78,7 +78,7 @@
 	text-align: center;
 
 	/* background:black; */
-	background-image: url('../imgs/bannerImg.jpg');
+	background-image: url('../../imgs/bannerImg.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;">
   <br><br><br><br><br><br><br><br><br><br><br>
@@ -114,13 +114,12 @@
   <div style="clear: both"></div>
 </div>
 <hr>
-<h2 style="text-align:center;" >[거리순 검색] : 오프라인 스터디</h2>
-<button id="mapButton"  data-url>ss</button>
+<h1 style="text-align:center; margin-bottom: 20px; font-weight: bold" >[거리순 검색] : 오프라인 스터디</h1>
 <div id="map" style="width:30%; height:30%; float: left; margin-left: 40px"></div>
 <div style="width:5%; height:100%;float: left"></div>
 
-<input type="text" class="form-control mx-1 mt-2" id="address" value="" style="width: 600px; margin-left: 20px">
-<input type="button" class="btn btn-primary btn-default mx-1 mt-2" value="좌표값 검색" onclick="addressChk()">
+<input type="text" class="form-control mx-1 mt-2" id="address" value="" placeholder="주소를 입력해주세요." style="width: 400px; margin-left: 20px; float: left">
+<input type="button" class="btn btn-primary btn-default mx-1 mt-2" value="가까운 스터디 검색" onclick="addressChk()">
 <div id="coordXY"></div>
 
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47714ab440386647ecccccabec88a49&libraries=services"></script>

@@ -29,9 +29,20 @@ public class OrderController {
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
 
         LocalDateTime[] UpdateDate = studygroupMapper.findUpdateDate();
+        System.out.println("정렬 전");
+
+        for (int i = 0; i < UpdateDate.length ; i++){
+            System.out.println(UpdateDate[i]);
+        }
+
         QSort(UpdateDate, 0, UpdateDate.length - 1);
 
-        List<ResponseStudygroup> studygroups = new ArrayList<>();
+        System.out.println("정렬 후");
+        for (int i = 0; i < UpdateDate.length ; i++){
+            System.out.println(UpdateDate[i]);
+        }
+
+            List<ResponseStudygroup> studygroups = new ArrayList<>();
 
         for (int i = 0; i < UpdateDate.length ; i++){
             System.out.println("업로드" + UpdateDate[i]);

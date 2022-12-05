@@ -1,7 +1,7 @@
 package net.skhu.controller;
 
 
-import org.apache.commons.lang3.ArrayUtils;
+import net.skhu.dupCheck;
 import net.skhu.dto.Review;
 import net.skhu.dto.request.RequestApply;
 import net.skhu.dto.request.RequestStudygroup;
@@ -13,7 +13,9 @@ import net.skhu.mapper.ApplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
@@ -93,9 +95,11 @@ public class UserController {
     }
 
     @GetMapping("review/detail")
-    public String reviewInput(Model model,
+    public String reviewInput(Model model, Principal principal,
                              @RequestParam("StudygroupTitle") String StudygroupTitle,
-                              @RequestParam("chosenName") String chosenName, Principal principal) {
+                              @RequestParam("chosenName") String chosenName,
+                              @RequestParam(value = "overlapError", required=false) String overlapError
+                              ) {
 
         String LoginID = principal.getName();
         String KoreanName = applyMapper.findExCompanyName(LoginID);
@@ -111,15 +115,18 @@ public class UserController {
             }
         }
 
+
+        model.addAttribute("overlapError", overlapError);
         model.addAttribute("exCompanyNames", exCompanyNames);
         model.addAttribute("StudygroupTitle", StudygroupTitle);
         model.addAttribute("chosenName", chosenName);
 
-        return "redirect:/user/review/detail?StudygroupTitle=" + StudygroupTitle  +"&&chosenName=" + chosenName;
+        return "user/review/detail";
     }
 
     @PostMapping("review/detail")
    public String reviewInput(Model model, Review review, HttpServletRequest request, Principal principal,
+                             RedirectAttributes redirectAttributes, BindingResult bindingResult,
                               @RequestParam("StudygroupTitle") String StudygroupTitle,
                               @RequestParam("chosenName") String chosenName) {
         String LoginID = principal.getName();
@@ -137,6 +144,7 @@ public class UserController {
             ratingContentVal = ratingContent[i];
         }
 
+
         review.setStudentId(chosenStudentID);
         review.setStudygroupId(studygroupID);
         review.setStudyGroupPartner(LoginID);
@@ -144,7 +152,22 @@ public class UserController {
         review.setReviewContents(ratingContentVal);
         reviewMapper.Insert(review);
 
-        return "user/review/index";
+        Integer[] UplodedUser = reviewMapper.findUplodedUser(LoginID);
+        String dupCheckValue = dupCheck.solution(UplodedUser);
+
+        Integer overlapError = 0;
+        if(dupCheckValue == "중복"){
+            overlapError = 1;
+            model.addAttribute("overlapError", overlapError);
+            reviewMapper.delete(ratingContentVal);
+        }else {
+            model.addAttribute("overlapError", overlapError);
+        }
+        redirectAttributes.addAttribute("overlapError", overlapError);
+        redirectAttributes.addAttribute("StudygroupTitle", StudygroupTitle);
+        redirectAttributes.addAttribute("chosenName", chosenName);
+
+        return "redirect:/user/review/detail";
     }
 
     @GetMapping("review/check")

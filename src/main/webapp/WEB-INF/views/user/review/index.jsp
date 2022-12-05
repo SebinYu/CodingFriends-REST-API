@@ -86,25 +86,25 @@
             </div>
         </div>
     </div>
-    <div class="profile" style="width:28%; clear:both;">
-        <div class="list-group" style="margin-bottom: 30px;">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #91c5e0; border: #03dac6">
-                후기 작성완료
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">유세빈</a>
-            <a href="#" class="list-group-item list-group-item-action">이유진</a>
+<%--    <div class="profile" style="width:28%; clear:both;">--%>
+<%--        <div class="list-group" style="margin-bottom: 30px;">--%>
+<%--            <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #91c5e0; border: #03dac6">--%>
+<%--                후기 작성완료--%>
+<%--            </a>--%>
+<%--            <a href="#" class="list-group-item list-group-item-action">유세빈</a>--%>
+<%--            <a href="#" class="list-group-item list-group-item-action">이유진</a>--%>
 
-            </a>
-        </div>
-    </div>
-
-
+<%--            </a>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 
-    <div class="profile" style="margin-top: -250px">
+
+
+    <div class="profile" style="margin-top: 10px">
         <div class="list-group" style="margin-bottom: 30px;">
             <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #03dac6; border: #03dac6">
-                조원 후기 남기기
+                조원 후기 남기기<br>(이미 후기가 등록된 사용자 경우, 추가 등록이 안됩니다.)
             </a>
             <c:forEach var="exCompanyName" items="${exCompanyNames}">
                 <a href="detail?StudygroupTitle=${StudygroupTitle}&&chosenName=${exCompanyName}" class="list-group-item list-group-item-action">${exCompanyName}</a>

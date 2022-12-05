@@ -73,24 +73,24 @@
       </c:forEach>
     </div>
   </div>
-  <div class="profile" style="width:28%; clear:both;">
-    <div class="list-group" style="margin-bottom: 30px;">
-      <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #91c5e0; border: #03dac6">
-        후기 작성완료
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">유세빈</a>
-      <a href="#" class="list-group-item list-group-item-action">이유진</a>
+<%--  <div class="profile" style="width:28%; clear:both;">--%>
+<%--    <div class="list-group" style="margin-bottom: 30px;">--%>
+<%--      <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #91c5e0; border: #03dac6">--%>
+<%--        후기 작성완료--%>
+<%--      </a>--%>
+<%--      <a href="#" class="list-group-item list-group-item-action">유세빈</a>--%>
+<%--      <a href="#" class="list-group-item list-group-item-action">이유진</a>--%>
 
-      </a>
-    </div>
-  </div>
-
-
+<%--      </a>--%>
+<%--    </div>--%>
+<%--  </div>--%>
 
 
 
 
-  <div class="profile" style="margin-top: -270px">
+
+
+  <div class="profile" style="margin-top: 10px">
     <h1 style="color: rgba(0,176,217,0.73)"><${StudygroupTitle}></h1>
 
     <h1 style="color: rgba(0,176,217,0.73)">"${chosenName}"스터디원</h1>
@@ -107,10 +107,14 @@
       </fieldset>
       <div style="margin-top: 30px"></div>
       <legend>해당 점수를 준 이유</legend>
-      <textarea type="text" name="ratingContent" class="form-control" style="height: 200px" placeholder="해당기록은 상대방의 평점에 영향을 미칩니다. 부디 공정한 평가를 남겨주시면 감사하겠습니다."></textarea>
-      <button type="submit" class="btn btn-info" id ="checkButton" style="color: white; margin-top: 30px; width: 100%" name="cmd" value="submit">제출</button>
+      <textarea type="text" name="ratingContent" class="form-control" style="height: 200px; text-align: center" placeholder="해당기록은 상대방의 평점에 영향을 미칩니다. 부디 공정한 평가를 부탁드립니다."></textarea>
+      <c:if test="${ overlapError == 1 }">
+        <p style="color: red; margin-top: 10px; font-weight: bold" >"이미 후기가 등록된 스터디원입니다."</p>
+      </c:if>
+      <button type="submit" class="btn btn-info" id ="checkButton" style="color: white; margin-top: 10px; width: 100%" name="cmd" value="submit">제출</button>
 
     </form>
+
 
 
 
@@ -129,6 +133,10 @@
     if(starRate == null || starRate == ""){
       alert("별점을 입력해주세요")
     }
+
+    $("#myform").submit(function (){
+        alert(${overlapError})
+      });
 
     var reviewContent = document.myform.rating.value;
     if(reviewContent == null || reviewContent == ""){

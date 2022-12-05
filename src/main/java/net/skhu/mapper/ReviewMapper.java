@@ -12,9 +12,13 @@ import java.util.List;
 @Mapper
 public interface ReviewMapper {
 
-    @Select("SELECT studentId, studygroupId, studyGroupPartner, reviewScore, reviewContents,lectureScore, objection" +
-            " FROM studygroup")
-    List<Review> findAll();
+    @Select("SELECT studentId" +
+            " FROM review WHERE studyGroupPartner = #{studyGroupPartner}")
+    Integer[] findUplodedUser(String studyGroupPartner);
+
+    @Select("SELECT studentId" +
+            " FROM review WHERE studentId = #{studentId} && studyGroupPartner = #{studyGroupPartner}")
+    BigInteger[] findReviewID(String studentId, String studyGroupPartner);
 
     @Select("SELECT studyGroup_id" +
             " FROM studygroup WHERE title = #{title} " )
@@ -33,7 +37,7 @@ public interface ReviewMapper {
     @Options(useGeneratedKeys=true, keyProperty="review_id")
     void Insert(Review review);
 
-    @Delete("DELETE FROM participationrate WHERE studentId = #{studentId}")
-    void delete(int studentId);
+    @Delete("DELETE FROM review WHERE reviewContents = #{reviewContents}")
+    void delete(String reviewContents);
 
 }

@@ -28,9 +28,11 @@ public class MapController {
         List<ResponseStudygroup> studygroups = studygroupMapper.findAll();
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         model.addAttribute("studygroups", studygroups);
-        double[][] coordinates = {{3, 3}, {32, 52}, {12, 30}, {3, 4}};
-        System.out.println(closest_pair(coordinates)[0][0]);
-        System.out.println(closest_pair(coordinates)[1][0]);
+
+        double[][] coordinates = {{32.1651461, 52.64648841}, {12, 30}, {4, 4}};
+        System.out.println("서울 강남구 가로수길 5과 가장 가까운 위도/경도");
+        System.out.println("위도: " + closest_pair(coordinates)[1][0]);
+        System.out.println("경도: " + closest_pair(coordinates)[1][1]);
 
         return "studygroup/map/index";
     }
@@ -41,23 +43,20 @@ public class MapController {
     }
 
     double[][] closest_pair(double[][] coordinates){
-        double[][] pair = {coordinates[0], coordinates[1]};
+        double x = 37.5182112402056;
+        double y = 127.023150432187;
+        double[] startPoint = {x, y};
+        double[][] pair = { startPoint, coordinates[0]};
 
-        for(int i=0; i< coordinates.length-1; i++)
-        {
-            for(int j=i+1; j < coordinates.length; j++)
+            for(int j = 0; j < coordinates.length; j++)
             {
-                double[] store1 = coordinates[i];
-                double[] store2 = coordinates[j];
-//# 더 가까운 두 매장을 찾으면 pair 업데이트
-                if (distance(pair[0], pair[1]) > distance(store1, store2)){
-                    pair = new double[][]{store1, store2};
-
+                double[] spot1 = coordinates[j];
+                if (distance(startPoint, pair[1]) > distance(startPoint, spot1)){
+                    pair = new double[][]{startPoint, spot1};
                 }
-
             }
-        }
         return pair;
     }
+
 
 }
