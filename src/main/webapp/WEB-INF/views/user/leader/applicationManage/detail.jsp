@@ -113,7 +113,8 @@
         </div>
         </c:forEach>
 <hr>
-        <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitle}</h2>
+        <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)" name="StudygroupTitle">${StudygroupTitle}</h2>
+
 <%--        스터디 지원자_ 신청 허가창--%>
         <div class="container" style="text-align: center">
             <form method="post" action="/process" style="width: 50%">
@@ -134,7 +135,7 @@
                     <c:forEach var="Applier" items="${ ApplierList }">
 <%--                        <input type="hidden" name="email" value=${ Applier.email }>--%>
                         <tr>
-                            <td><input type="checkbox" name="idChecked" value="${Applier.userId}"/></td>
+                            <td><input type="checkbox" style="accent-color: #0383c8; zoom:1.7;" name="idChecked" value="${Applier.userId}"/></td>
                             <td>${ Applier.name }</td>
                             <td>⭐⭐⭐⭐⭐</td>
                             <td>${ Applier.updateDate }</td>

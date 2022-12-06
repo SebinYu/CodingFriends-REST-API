@@ -1,7 +1,7 @@
 package net.skhu.controller;
 
 
-import net.skhu.dupCheck;
+import net.skhu.method.OverlapCheck;
 import net.skhu.dto.Review;
 import net.skhu.dto.request.RequestApply;
 import net.skhu.dto.request.RequestStudygroup;
@@ -153,7 +153,7 @@ public class UserController {
         reviewMapper.Insert(review);
 
         Integer[] UplodedUser = reviewMapper.findUplodedUser(LoginID);
-        String dupCheckValue = dupCheck.solution(UplodedUser);
+        String dupCheckValue = OverlapCheck.solution(UplodedUser);
 
         Integer overlapError = 0;
         if(dupCheckValue == "중복"){

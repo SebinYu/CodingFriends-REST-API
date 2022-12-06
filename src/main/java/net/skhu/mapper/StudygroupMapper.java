@@ -45,14 +45,14 @@ public interface StudygroupMapper {
     List<ResponseStudygroup> findStartDate();
 
     @CacheEvict (value= "NoticeList", allEntries = true)
-    @Insert("INSERT studygroup (title,content,writer,totalNum,startDate,endDate, learningMaterial_id)"
-    		+ " VALUES (#{title},#{content},#{writer},#{totalNum},#{startDate},#{endDate},#{learningMaterial_id})")
+    @Insert("INSERT studygroup (title,content,writer,totalNum,startDate,endDate, learningMaterial_id, x_map, y_map)"
+    		+ " VALUES (#{title},#{content},#{writer},#{totalNum},#{startDate},#{endDate},#{learningMaterial_id},#{x_map}, #{y_map})")
     @Options(useGeneratedKeys=true, keyProperty="studyGroup_id")
     void insert(ResponseStudygroup studygroup);
 
 
     @CacheEvict (value= "NoticeList", allEntries = true)
-    @Update("UPDATE studygroup SET title = #{title}, content = #{content}, writer = #{writer}, totalNum = #{totalNum}, startDate = #{startDate}, endDate = #{endDate} " +
+    @Update("UPDATE studygroup SET title = #{title}, content = #{content}, writer = #{writer}, totalNum = #{totalNum}, startDate = #{startDate}, endDate = #{endDate}, x_map = #{x_map}, y_map = #{y_map} " +
             "WHERE studyGroup_id = #{studyGroup_id}")
     void update(ResponseStudygroup studygroup);
 

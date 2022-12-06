@@ -108,14 +108,14 @@
     <input type="text" name="keyword" class="form-control mx-1 mt-2" style="width: 200px;" placeholder="내용을 입력하세요"/>
     <button type="submit" class="btn btn-primary btn-default mx-1 mt-2">검색</button>
   </form>
-  <a href="/studygroup/map/index" class="btn btn-secondary"  style="float: left; margin-top: 12px; margin-right: 7px">지역별 오프라인 스터디</a>
+  <a href="/studygroup/map/index" class="btn" style="float: left; background: #0523f6; color: white; margin-top: 12px; font-weight: bold;  margin-right: 7px">지역별 오프라인 스터디</a>
   <a href="/studygroup/sequence/startDate" class="btn btn-secondary" style="float: left; margin-top: 12px; margin-right: 7px">스터디 시작일 최신순</a>
   <a href="/studygroup/sequence/updateDate" class="btn btn-secondary" style="float: left; margin-top: 12px">작성일 최신순</a>
   <div style="clear: both"></div>
 </div>
 <hr>
 <h1 style="text-align:center; margin-bottom: 20px; font-weight: bold" >[거리순 검색] : 오프라인 스터디</h1>
-<div id="map" style="width:30%; height:30%; float: left; margin-left: 40px"></div>
+<div id="map" style="width:30%; border-radius:20px; height:30%; float: left; margin-left: 40px"></div>
 <div style="width:5%; height:100%;float: left"></div>
 
 <input type="text" class="form-control mx-1 mt-2" id="address" value="" placeholder="주소를 입력해주세요." style="width: 400px; margin-left: 20px; float: left">
@@ -205,7 +205,7 @@
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title" style="color: black">
-            <a href="detail?studyGroup_id=${ studygroup.studyGroup_id }"
+            <a href="/studygroup/detail?studyGroup_id=${ studygroup.studyGroup_id }"
                style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${ studygroup.title }</a>
           </h5>
           <p class="card-text">

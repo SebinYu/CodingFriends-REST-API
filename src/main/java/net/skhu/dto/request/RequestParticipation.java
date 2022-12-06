@@ -15,5 +15,6 @@ public class RequestParticipation {
     Integer week;
     String weeklyAttendance;
     String weeklyHomework;
+    Double lectureScore;
     private LocalDateTime updateDate;
 }

@@ -96,7 +96,16 @@ public class StudygroupController {
     }
 
     @PostMapping("create")
-    public String createPost(Model model, ResponseStudygroup studygroup) {
+    public String createPost(Model model, ResponseStudygroup studygroup,
+                             HttpServletRequest request) {
+        String[] xMap = request.getParameterValues("xMap");
+        String[] yMap = request.getParameterValues("yMap");
+        System.out.println(xMap[0]);
+        System.out.println(yMap[0]);
+
+        studygroup.setX_map(Double.valueOf(xMap[0]));
+        studygroup.setY_map(Double.valueOf(yMap[0]));
+
         studygroupMapper.insert(studygroup);
         model.addAttribute("learningMaterials", learningMaterialMapper.findAll());
         return "redirect:list";

@@ -103,7 +103,7 @@
         </div>
         </c:forEach>
 <hr>
-       <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitlePara}</h2>
+       <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)" value="StudygroupTitlePara">${StudygroupTitlePara}</h2>
         <div class="container" style="margin-left: 70px; margin-top: 30px ">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -162,6 +162,7 @@
         })
 
     })
+
 
 </script>
 </html>

@@ -1,9 +1,7 @@
-package net.skhu;
-
-import java.util.Arrays;
+package net.skhu.method;
 
 
-public class dupCheck {
+public class OverlapCheck {
     public static String solution(Integer[] arr) {
         System.out.println("정렬 전 배열");
         for (int i = 0; i < arr.length; i++) {

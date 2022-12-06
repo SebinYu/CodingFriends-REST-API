@@ -28,6 +28,11 @@ public interface ReviewMapper {
             " FROM user WHERE name = #{name} " )
     BigInteger findchosenStudentID(String name);
 
+    @Select("SELECT lectureScore" +
+            " FROM review WHERE studentId = #{oneStudentId} " )
+    Integer[] findAccumulatedScores(String oneStudentId);
+
+
     @Update("UPDATE studygroup SET title = #{title}, content = #{content}, writer = #{writer}, totalNum = #{totalNum}, startDate = #{startDate}, endDate = #{endDate} " +
             "WHERE studyGroup_id = #{studyGroup_id}")
     void update(Review review);
