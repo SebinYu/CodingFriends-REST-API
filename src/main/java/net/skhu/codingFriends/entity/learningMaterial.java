@@ -3,11 +3,10 @@ package net.skhu.codingFriends.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
-public class LearningMaterial {
+public class learningMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
