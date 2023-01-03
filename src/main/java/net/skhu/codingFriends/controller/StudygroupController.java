@@ -26,4 +26,16 @@ public class StudygroupController {
         return studygroupService.findOneStudygroupInfo(studyGroup_id);
     }
 
+    @GetMapping("search-With-Keyword")
+    public List<studygroup> searchWithKeyword(@RequestParam String keyword){
+        return studygroupService.searchWithKeyword(keyword);
+    }
+
+    @GetMapping("search-With-searchWithLearningMaterial_idAndKeyword-And-Keyword")
+    public List<studygroup> searchWithLearningMaterial_idAndKeyword(
+            @RequestParam Integer learningMaterial_id,
+            @RequestParam String keyword){
+
+        return studygroupService.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
+    }
 }

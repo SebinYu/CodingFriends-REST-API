@@ -16,5 +16,9 @@ public interface StudygroupService {
 
     studygroup findOneStudygroupInfo(BigInteger studyGroup_id);
 
+//    List<studygroup> searchWithLearningMaterial_id(BigInteger learningMaterial_id);
+    List<studygroup> searchWithKeyword(String keyword);
+
+    List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
 
 }

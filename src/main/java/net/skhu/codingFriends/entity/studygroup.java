@@ -1,9 +1,6 @@
 package net.skhu.codingFriends.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,6 +19,7 @@ public class studygroup implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     BigInteger studyGroup_id;
 
+    String title;
     String content;
     int learningMaterial_id;
     String writer;
@@ -35,5 +33,4 @@ public class studygroup implements Serializable {
     LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate endDate;
-
 }

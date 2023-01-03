@@ -24,4 +24,17 @@ public class StudygroupServiceImpl implements StudygroupService {
     public studygroup findOneStudygroupInfo(BigInteger studyGroup_id){
         return studygroupRepository.findByStudyGroup_id(studyGroup_id);
     }
+
+//    public List<studygroup> searchWithLearningMaterial_id(BigInteger learningMaterial_id){
+//        return studygroupRepository.searchWithLearningMaterial_id(learningMaterial_id);
+//    }
+
+    public List<studygroup> searchWithKeyword(String keyword){
+        return studygroupRepository.findByTitleContaining(keyword);
+    }
+
+    public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword){
+        return studygroupRepository.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
+    }
+
 }
