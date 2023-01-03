@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.service.StudygroupService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -17,9 +16,14 @@ public class StudygroupController {
 
     private final StudygroupService studygroupService;
 
-    public final StudygroupRepository studygroupRepository;
     @GetMapping("list")
     public List<studygroup> list(){
-        return studygroupRepository.findAll();
+        return studygroupService.findAll();
     }
+
+    @GetMapping("detail")
+    public studygroup detail(@RequestParam BigInteger studyGroup_id){
+        return studygroupService.findOneStudygroupInfo(studyGroup_id);
+    }
+
 }
