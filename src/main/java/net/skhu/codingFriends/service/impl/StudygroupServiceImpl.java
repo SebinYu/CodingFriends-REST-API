@@ -41,9 +41,9 @@ public class StudygroupServiceImpl implements StudygroupService {
         return learningmaterialRepository.findAllLearningMaterial();
     }
 
-    public studygroup save(studygroup studygroupInfo){
-        return studygroupRepository.save(studygroupInfo);
+    public void insert(studygroup studygroup) throws Exception {
+        if (studygroupRepository.findByStudyGroup_id(BigInteger.valueOf(-1)) != null)
+            throw new Exception("예외처리 연습");
+        studygroupRepository.save(studygroup);
     }
-
-
 }

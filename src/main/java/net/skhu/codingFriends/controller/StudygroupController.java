@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.controller;
 
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.dto.ActionResult;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.repository.StudygroupRepository;
@@ -53,9 +54,13 @@ public class StudygroupController {
 
     //http://localhost:8081/studygroup/create
     @PostMapping("create")
-    public studygroup createPost(@RequestBody studygroup studygroupInfo) {
-        //updateDate 경우 직접 timestamp 값 넣어주기
-        return studygroupService.save(studygroupInfo);
+    public ActionResult createPost(@RequestBody studygroup studygroupInfo) {
+        try {
+            studygroupService.insert(studygroupInfo);
+            return new ActionResult(true);
+        } catch (Exception e) {
+            return new ActionResult(false, e.getMessage());
+        }
     }
 
 
