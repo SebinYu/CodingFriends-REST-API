@@ -41,7 +41,7 @@ public class StudygroupServiceImpl implements StudygroupService {
         return learningmaterialRepository.findAllLearningMaterial();
     }
 
-    public studygroup postStudygroup(studygroup studygroupInfo){
+    public studygroup save(studygroup studygroupInfo){
         return studygroupRepository.save(studygroupInfo);
     }
 

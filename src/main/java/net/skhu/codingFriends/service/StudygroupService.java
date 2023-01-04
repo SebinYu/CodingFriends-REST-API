@@ -18,7 +18,7 @@ public interface StudygroupService {
 
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
     List<learningmaterial> findAllLearningMaterial();
-    studygroup postStudygroup(studygroup studygroupInfo);
+    studygroup save(studygroup studygroupInfo);
 
 
 }

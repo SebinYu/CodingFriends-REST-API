@@ -55,7 +55,7 @@ public class StudygroupController {
     @PostMapping("create")
     public studygroup createPost(@RequestBody studygroup studygroupInfo) {
         //updateDate 경우 직접 timestamp 값 넣어주기
-        return studygroupService.postStudygroup(studygroupInfo);
+        return studygroupService.save(studygroupInfo);
     }
 
 
