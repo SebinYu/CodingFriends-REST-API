@@ -3,6 +3,7 @@ package net.skhu.codingFriends.entity;
 import javax.persistence.*;
 
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -27,6 +28,8 @@ public class studygroup implements Serializable {
     Double y_map;
     int totalNum;
     int currentNum;
+
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
