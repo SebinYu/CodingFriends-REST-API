@@ -17,4 +17,5 @@ public interface StudygroupRepository extends JpaRepository<studygroup, Integer>
 
     @Query("SELECT s FROM studygroup s WHERE s.learningMaterial_id = ?1 AND s.title like %?2%")
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
+
 }
