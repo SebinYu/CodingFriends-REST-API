@@ -29,7 +29,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     public studygroup findOneStudygroupInfo(BigInteger studyGroup_id){
-        return studygroupRepository.findByStudyGroup_id(studyGroup_id);
+        return studygroupRepository.findById(studyGroup_id).get();
     }
 
 
@@ -45,9 +45,7 @@ public class StudygroupServiceImpl implements StudygroupService {
         return learningmaterialRepository.findAllLearningMaterial();
     }
 
-    public void insert(studygroup studygroup) throws Exception {
-        if (studygroupRepository.findByStudyGroup_id(BigInteger.valueOf(-1)) != null)
-            throw new Exception("예외처리 연습");
+    public void insert(studygroup studygroup) {
         studygroupRepository.save(studygroup);
     }
 
@@ -80,7 +78,8 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     public void deleteByStudyGroup_id(int id){
-        studygroupRepository.deleteByStudyGroup_id(BigInteger.valueOf(id));
+        studygroupRepository.deleteById(BigInteger.valueOf(id));
+//        studygroupRepository.deleteByStudyGroup_id(BigInteger.valueOf(id));
     };
 
 }

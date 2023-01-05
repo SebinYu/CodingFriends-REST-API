@@ -61,12 +61,8 @@ public class StudygroupController {
     //http://localhost:8081/studygroup/create
     @PostMapping("create")
     public ActionResult createPost(@RequestBody studygroup studygroupInfo) {
-        try {
             studygroupService.insert(studygroupInfo);
-            return new ActionResult(true);
-        } catch (Exception e) {
-            return new ActionResult(false, e.getMessage());
-        }
+        return new ActionResult(true);
     }
 
     //http://localhost:8081/studygroup/edit

@@ -12,10 +12,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface StudygroupRepository extends JpaRepository<studygroup, Integer>  {
-
-    @Query("SELECT s FROM studygroup s WHERE s.studyGroup_id = ?1")
-    studygroup findByStudyGroup_id(BigInteger studyGroup_id);
+public interface StudygroupRepository extends JpaRepository<studygroup, BigInteger>  {
 
     List<studygroup> findByTitleContaining(String keyword);
 
@@ -41,11 +38,5 @@ public interface StudygroupRepository extends JpaRepository<studygroup, Integer>
             int currentNum,
             LocalDate startDate,
             LocalDate endDate);
-
-
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM studygroup s WHERE s.studyGroup_id = ?1")
-    void deleteByStudyGroup_id(BigInteger id);
 
 }

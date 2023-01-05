@@ -21,8 +21,9 @@ public interface StudygroupService {
 
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
     List<learningmaterial> findAllLearningMaterial();
-    void insert(studygroup studygroupInfo) throws Exception;
+    void insert(studygroup studygroupInfo);
 
     void update(@RequestBody studygroup studygroupInfo);
     void deleteByStudyGroup_id(int id);
+
     }
