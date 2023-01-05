@@ -25,10 +25,10 @@ public class OrderController {
     }
 
     //http://localhost:8081/studygroup/startDate
-//    @GetMapping("startDate")
-//    //스터디 시작일 순 리스트 출력
-//    public List<studygroup> startDate(){
-//        return studygroupService.findAll();
-//    }
+    @GetMapping("startDate")
+    //스터디 시작일 순 리스트 출력
+    public List<studygroup> startDate(){
+        return orderService.startDate();
+    }
 
 }
