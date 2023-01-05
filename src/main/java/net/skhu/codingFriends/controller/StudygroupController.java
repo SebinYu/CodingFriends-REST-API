@@ -69,17 +69,24 @@ public class StudygroupController {
         }
     }
 
-    // UPDATE
-    // 해당 ID의 사용자 이름을 갱신한 뒤 그 결과를 반환
-    @PutMapping(value = "edit")
-    public void update(@RequestBody studygroup studygroupInfo) {
-        studygroupService.update(studygroupInfo);
+    //http://localhost:8081/studygroup/edit
+    @GetMapping("edit")
+    public studygroup updateGet(@RequestParam BigInteger studyGroup_id){
+        return studygroupService.findOneStudygroupInfo(studyGroup_id);
     }
-    // DELETE
-    // 해당 ID의 사용자를 삭제
-//    @DeleteMapping
-//    public void delete(@RequestParam Long id) {
-//        userRepository.delete(id);
-//    }
+
+    //http://localhost:8081/studygroup/edit
+    @PutMapping(value = "edit")
+    public ActionResult updatePut(@RequestBody studygroup studygroupInfo) {
+        studygroupService.update(studygroupInfo);
+
+        return new ActionResult(true);
+    }
+
+    @DeleteMapping("delete")
+    public ActionResult delete(@RequestParam int studyGroup_id) {
+        studygroupService.deleteByStudyGroup_id(studyGroup_id);
+        return new ActionResult(true);
+    }
 
 }

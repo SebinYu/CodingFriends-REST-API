@@ -77,6 +77,10 @@ public class StudygroupServiceImpl implements StudygroupService {
                 currentNum,
                 startDate,
                 endDate);
+    }
 
-    }
-    }
+    public void deleteByStudyGroup_id(int id){
+        studygroupRepository.deleteByStudyGroup_id(BigInteger.valueOf(id));
+    };
+
+}
