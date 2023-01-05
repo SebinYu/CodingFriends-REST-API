@@ -43,7 +43,7 @@ public class UserController {
 
     @PostMapping("register")
     public ActionResult registerPost(
-            @RequestBody UserRegistration userRegistration, BindingResult bindingResult)
+            @RequestBody @Valid UserRegistration userRegistration, BindingResult bindingResult)
     {
         if (userService.hasErrors(userRegistration, bindingResult)) {
             return new ActionResult(false);
