@@ -50,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/").permitAll()
-                .antMatchers("/gitLogin").permitAll()
                 .antMatchers("/studygroup/**").permitAll();
 
 
@@ -69,14 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout_processing"))
                 .logoutSuccessUrl("/studygroup/list")
                 .invalidateHttpSession(true);
-
-
-//       소셜 로그인
-        http.exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-
-//        http.oauth2Login();
-
     }
 
 

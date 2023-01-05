@@ -38,19 +38,18 @@ public class UserController {
 
     @GetMapping("register")
     public ActionResult registerGet() {
-//        model.addAttribute(new UserRegistration());
         return new ActionResult(true);
     }
 
     @PostMapping("register")
-    public String registerPost(
-            @Valid UserRegistration userRegistration, BindingResult bindingResult)
+    public ActionResult registerPost(
+            @RequestBody UserRegistration userRegistration, BindingResult bindingResult)
     {
         if (userService.hasErrors(userRegistration, bindingResult)) {
-            return "home/register";
+            return new ActionResult(false);
         }
         userService.save(userRegistration);
-        return "home/login";
+        return new ActionResult(true);
     }
 
     @GetMapping("registerSuccess")
