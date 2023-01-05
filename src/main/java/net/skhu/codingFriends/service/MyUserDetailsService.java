@@ -1,5 +1,6 @@
-package net.skhu.codingFriends.config;
+package net.skhu.codingFriends.service;
 
+import net.skhu.codingFriends.config.MyUserDetails;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
