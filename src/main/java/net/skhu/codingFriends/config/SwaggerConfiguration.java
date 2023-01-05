@@ -17,6 +17,8 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
+    //swagger api 확인 사이트 링크
+    //http://localhost:8081/swagger-ui.html#/
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
