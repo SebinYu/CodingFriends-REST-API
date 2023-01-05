@@ -7,6 +7,7 @@ import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,9 +18,9 @@ import java.util.List;
 
 @Service
 public class StudygroupServiceImpl implements StudygroupService {
-
     @Autowired
     public StudygroupRepository studygroupRepository;
+
 
     @Autowired
     public LearningmaterialRepository learningmaterialRepository;
@@ -79,7 +80,9 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     public void deleteByStudyGroup_id(int id){
         studygroupRepository.deleteById(BigInteger.valueOf(id));
-//        studygroupRepository.deleteByStudyGroup_id(BigInteger.valueOf(id));
-    };
+    }
 
+    public List<studygroup> updateDate(){
+        return studygroupRepository.findAll(Sort.by(Sort.Direction.DESC, "updateDate")) ;
+    }
 }

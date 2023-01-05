@@ -26,4 +26,5 @@ public interface StudygroupService {
     void update(@RequestBody studygroup studygroupInfo);
     void deleteByStudyGroup_id(int id);
 
-    }
+    List<studygroup> updateDate();
+}
