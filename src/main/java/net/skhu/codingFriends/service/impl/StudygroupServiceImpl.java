@@ -1,6 +1,6 @@
 package net.skhu.codingFriends.service.impl;
 
-import net.skhu.codingFriends.dto.ActionResult;
+import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.repository.LearningmaterialRepository;
@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,8 +27,11 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     // 전체 게시물 조회
     @Transactional(readOnly = true)
-    public List<studygroup> findAll(){
-        return studygroupRepository.findAll();
+    public List<StudygroupDto> getStudygroups() {
+        List<studygroup> studygroups = studygroupRepository.findAll();
+        List<StudygroupDto> StudygroupDtos = new ArrayList<>();
+        studygroups.forEach(s -> StudygroupDtos.add(StudygroupDto.toDto(s)));
+        return StudygroupDtos;
     }
 
     // 개별 게시물 조회

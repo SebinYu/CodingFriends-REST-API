@@ -25,10 +25,9 @@ public class StudygroupController {
     @ApiOperation(value = "전체 게시글 보기", notes = "전체 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("list")
-    public List<studygroup> list(){
-        return studygroupService.findAll();
+    public Response getBoards() {
+        return new Response("성공", "전체 게시물 리턴", studygroupService.getStudygroups());
     }
-
     @ApiOperation(value = "개별 게시글 보기", notes = "개별 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail")

@@ -37,4 +37,7 @@ public class studygroup implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate endDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID")
+    user user;
 }
