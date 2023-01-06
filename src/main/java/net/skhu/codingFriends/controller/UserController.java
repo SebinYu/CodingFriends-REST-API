@@ -42,41 +42,8 @@ public class UserController {
     @ApiOperation(value = "회원가입", notes="회원가입 진행")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/auth")
-    public Response<?> register(@RequestBody @Valid UserRegistration userRegistration, BindingResult bindingResult) {
+    public Response<?> register(@RequestBody @Valid UserRegistration userRegistration) {
         return new Response<>("true", "가입 성공", userService.register(userRegistration));
-    }
-
-
-
-    @GetMapping("/")
-    public ActionResult index(Model model) {
-        return new ActionResult(true);
-    }
-
-    @GetMapping("userInfo")
-    public List<user> userInfo() {
-        return userService.findAll();
-    }
-
-    @GetMapping("register")
-    public ActionResult registerGet() {
-        return new ActionResult(true);
-    }
-
-//    @PostMapping("register")
-//    public ActionResult registerPost(
-//            @RequestBody @Valid UserRegistration userRegistration, BindingResult bindingResult)
-//    {
-//        if (userService.hasErrors(userRegistration, bindingResult)) {
-//            return new ActionResult(false);
-//        }
-//        userService.save(userRegistration);
-//        return new ActionResult(true);
-//    }
-
-    @GetMapping("registerSuccess")
-    public ActionResult registerSurccess() {
-        return new ActionResult(true);
     }
 
 }

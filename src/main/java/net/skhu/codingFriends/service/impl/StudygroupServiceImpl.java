@@ -9,6 +9,7 @@ import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigInteger;
@@ -25,11 +26,18 @@ public class StudygroupServiceImpl implements StudygroupService {
     @Autowired
     public LearningmaterialRepository learningmaterialRepository;
 
+    // 전체 게시물 조회
+    @Transactional(readOnly = true)
     public List<studygroup> findAll(){
         return studygroupRepository.findAll();
     }
 
+    // 개별 게시물 조회
+    @Transactional(readOnly = true)
     public studygroup findOneStudygroupInfo(BigInteger studyGroup_id){
+        studygroupRepository.findById(studyGroup_id).orElseThrow(() -> {
+            return new IllegalArgumentException("Studygroup Id를 찾을 수 없습니다.");
+        });
         return studygroupRepository.findById(studyGroup_id).get();
     }
 
@@ -46,6 +54,9 @@ public class StudygroupServiceImpl implements StudygroupService {
         return learningmaterialRepository.findAllLearningMaterial();
     }
 
+
+    // 게시물 작성
+    @Transactional
     public void insert(studygroup studygroup) {
         studygroupRepository.save(studygroup);
     }

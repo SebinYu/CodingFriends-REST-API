@@ -36,4 +36,5 @@ public class studygroup implements Serializable {
     LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate endDate;
+
 }
