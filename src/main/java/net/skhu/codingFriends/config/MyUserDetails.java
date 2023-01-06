@@ -32,7 +32,7 @@ public class MyUserDetails implements UserDetails {
             case "관리자": authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT")); break;
         }
         if (user.isAdmin()) authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        this.username = user.getUserid();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.isEnabled = user.isEnabled();
 

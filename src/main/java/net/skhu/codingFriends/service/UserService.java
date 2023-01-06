@@ -27,7 +27,7 @@ public class UserService {
             bindingResult.rejectValue("passwd2", null, "비밀번호가 일치하지 않습니다.");
             return true;
         }
-        user user = userRepository.findByUserid(userRegistration.getUserid());
+        user user = userRepository.findByUsername(userRegistration.getUserid());
         if (user != null) {
             bindingResult.rejectValue("userid", null, "사용자 아이디가 중복됩니다.");
             return true;
@@ -37,9 +37,9 @@ public class UserService {
 
 
 
-    public user createEntity(UserRegistration userRegistration) {
+    public user register(UserRegistration userRegistration) {
         user user = new user();
-        user.setUserid(userRegistration.getUserid());
+        user.setUsername(userRegistration.getUserid());
         user.setPassword(passwordEncoder.encode(userRegistration.getPasswd1()));
         user.setName(userRegistration.getName());
         user.setEmail(userRegistration.getEmail());
@@ -47,12 +47,14 @@ public class UserService {
         user.setUserType("사용자");
         user.setAddress(userRegistration.getAddress());
         user.setAddress(userRegistration.getAddress());
-        return user;
+        return userRepository.save(user);
     }
 
-    public void save(UserRegistration userRegistration) {
-        user user = createEntity(userRegistration);
-        userRepository.save(user);
-    }
 
+
+    public user findUser(int id) {
+        return userRepository.findById(id).orElseThrow(()-> {
+            return new IllegalArgumentException("User ID를 찾을 수 없습니다.");
+        });
+    }
 }
