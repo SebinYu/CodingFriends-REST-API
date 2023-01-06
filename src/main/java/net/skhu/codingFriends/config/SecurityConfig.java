@@ -1,75 +1,55 @@
 package net.skhu.codingFriends.config;
 
+import net.skhu.codingFriends.config.CorsConfig;
+import net.skhu.codingFriends.config.jwt.JwtAuthenticationFilter;
+import net.skhu.codingFriends.config.jwt.JwtAuthorizationFilter;
+import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled=true, jsr250Enabled=true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    @Autowired UserDetailsService userDetailsService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CorsConfig corsConfig;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder encoder() {
+        // DB 패스워드 암호화
         return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/res/**");
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http
+                .addFilter(corsConfig.corsFilter())
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin().disable()
+                .httpBasic().disable()
 
-        http.csrf().disable();
-
-        http.authorizeRequests()
-                .antMatchers("/user/**").authenticated()
-                .antMatchers("/").permitAll()
-                .antMatchers("/studygroup/**").permitAll();
-
-
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-
-        http.formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login_processing")
-                .failureUrl("/login?error")
-                .defaultSuccessUrl("/studygroup/list", true)
-                .usernameParameter("userid")
-                .passwordParameter("passwd");
-
-        http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout_processing"))
-                .logoutSuccessUrl("/studygroup/list")
-                .invalidateHttpSession(true);
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
+                .authorizeRequests()
+                .antMatchers("/api/v1/user/**")
+                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/v1/manager/**")
+                .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/v1/admin/**")
+                .access("hasRole('ROLE_ADMIN')")
+                .anyRequest().permitAll();
     }
-
-
-
 }

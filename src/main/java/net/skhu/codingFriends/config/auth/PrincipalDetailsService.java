@@ -1,25 +1,25 @@
-package net.skhu.codingFriends.service;
+package net.skhu.codingFriends.config.auth;
 
-import net.skhu.codingFriends.config.MyUserDetails;
+import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+// http://localhost:8080/login => 여기서 동작을 안함 왜냐면 formLogin.disable() goqjfutj
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+@RequiredArgsConstructor
+public class PrincipalDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user user = userRepository.findByUsername(username);
-        if (user == null) throw new UsernameNotFoundException(username);
-        return new MyUserDetails(user);
+        user userEntity = userRepository.findByUsername(username);
+        return new PrincipalDetails(userEntity);
     }
-
 }
+
+
