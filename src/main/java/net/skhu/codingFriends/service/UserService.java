@@ -27,7 +27,7 @@ public class UserService {
             bindingResult.rejectValue("passwd2", null, "비밀번호가 일치하지 않습니다.");
             return true;
         }
-        user user = userRepository.findByUsername(userRegistration.getUserid());
+        user user = userRepository.findByUsername(userRegistration.getUsername());
         if (user != null) {
             bindingResult.rejectValue("userid", null, "사용자 아이디가 중복됩니다.");
             return true;
@@ -39,7 +39,7 @@ public class UserService {
 
     public user register(UserRegistration userRegistration) {
         user user = new user();
-        user.setUsername(userRegistration.getUserid());
+        user.setUsername(userRegistration.getUsername());
         user.setPassword(passwordEncoder.encode(userRegistration.getPasswd1()));
         user.setName(userRegistration.getName());
         user.setEmail(userRegistration.getEmail());

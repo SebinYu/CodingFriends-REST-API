@@ -12,7 +12,7 @@ public class UserRegistration {
 
     @NotEmpty(message="아이디를 입력하세요")
     @Size(min=3, max=15)
-    String userid;
+    String username;
 
     @NotEmpty(message="비밀번호를 입력하세요")
     @Size(min=6, max=12, message="6 자리 이상 12 자리 이하이어야 합니다.")
