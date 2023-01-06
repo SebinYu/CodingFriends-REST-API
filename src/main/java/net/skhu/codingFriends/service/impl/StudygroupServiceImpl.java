@@ -3,6 +3,7 @@ package net.skhu.codingFriends.service.impl;
 import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.service.StudygroupService;
@@ -36,11 +37,34 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     // 개별 게시물 조회
     @Transactional(readOnly = true)
-    public studygroup findOneStudygroupInfo(BigInteger studyGroup_id){
-        studygroupRepository.findById(studyGroup_id).orElseThrow(() -> {
+    public StudygroupDto getStudygroup(BigInteger id) {
+        studygroup studygroup = studygroupRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("Studygroup Id를 찾을 수 없습니다.");
         });
-        return studygroupRepository.findById(studyGroup_id).get();
+        StudygroupDto studygroupDto = StudygroupDto.toDto(studygroup);
+        return studygroupDto;
+    }
+
+
+    // 게시물 작성
+    @Transactional
+    public StudygroupDto write(StudygroupDto studygroupDto, user user) {
+        studygroup studygroup = new studygroup();
+        studygroup.setTitle(studygroupDto.getTitle());
+        studygroup.setContent(studygroupDto.getContent());
+        studygroup.setLearningMaterial_id(studygroupDto.getLearningMaterial_id());
+        studygroup.setWriter(user.getName());
+        studygroup.setX_map(studygroupDto.getX_map());
+        studygroup.setY_map(studygroupDto.getY_map());
+        studygroup.setTotalNum(studygroupDto.getTotalNum());
+        studygroup.setCurrentNum(studygroupDto.getCurrentNum());
+        studygroup.setStartDate(studygroupDto.getStartDate());
+        studygroup.setEndDate(studygroupDto.getEndDate());
+
+        studygroup.setUser(user);
+
+        studygroupRepository.save(studygroup);
+        return StudygroupDto.toDto(studygroup);
     }
 
 
