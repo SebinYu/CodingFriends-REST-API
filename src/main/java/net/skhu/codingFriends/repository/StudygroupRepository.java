@@ -1,6 +1,5 @@
 package net.skhu.codingFriends.repository;
 
-import net.skhu.codingFriends.dto.ActionResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import net.skhu.codingFriends.entity.studygroup;
@@ -23,7 +22,7 @@ public interface StudygroupRepository extends JpaRepository<studygroup, BigInteg
     @Modifying
     @Query("UPDATE studygroup s " +
             "SET s.title=?2, s.content=?3, s.learningMaterial_id=?4," +
-            "s.writer=?5, s.x_map=?6, s.y_map=?7, " +
+            "s.writer=?5, s.x_map=?6, s.y_map=?7," +
             "s.totalNum=?8, s.currentNum=?9, s.startDate=?10, s.endDate=?11" +
             "WHERE s.studyGroup_id = ?1")
     void update(

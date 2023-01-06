@@ -16,17 +16,14 @@ public interface StudygroupService {
     StudygroupDto getStudygroup(BigInteger studyGroup_id);
     StudygroupDto write(StudygroupDto studygroupDto, user user);
 
+    StudygroupDto update(Integer id, StudygroupDto studygroupDto);
+    void deleteByStudyGroup_id(int id);
 
-//    studygroup findOneStudygroupInfo(BigInteger studyGroup_id);
 
-//    List<studygroup> searchWithLearningMaterial_id(BigInteger learningMaterial_id);
     List<studygroup> searchWithKeyword(String keyword);
 
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
     List<learningmaterial> findAllLearningMaterial();
-    void insert(studygroup studygroupInfo);
 
-    void update(@RequestBody studygroup studygroupInfo);
-    void deleteByStudyGroup_id(int id);
 
 }

@@ -69,6 +69,7 @@ public class StudygroupController {
         return new Response("성공", "글 작성 성공", studygroupService.write(studygroupDto, user));
     }
 
+
     @ApiOperation(value = "게시글 수정 페이지 조회", notes = "게시글 수정 페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("edit")
@@ -79,18 +80,17 @@ public class StudygroupController {
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "edit")
-    public ActionResult updatePut(@RequestBody studygroup studygroupInfo) {
-        studygroupService.update(studygroupInfo);
-
-        return new ActionResult(true);
+    public Response<?> updatePut(@RequestBody StudygroupDto studygroupDto, @RequestParam Integer id) {
+        user user = userRepository.findById(13).get();
+        return new Response("성공", "글 수정 성공", studygroupService.update(id, studygroupDto));
     }
 
     @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제한다.")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete")
-    public ActionResult delete(@RequestParam int studyGroup_id) {
+    public Response delete(@RequestParam int studyGroup_id) {
         studygroupService.deleteByStudyGroup_id(studyGroup_id);
-        return new ActionResult(true);
+        return new Response("성공", "글 삭제 성공", null);
     }
 
     @ApiOperation(value = "키워드로 게시글 검색", notes = "키워드로 게시글 검색한다.")

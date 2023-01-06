@@ -1,14 +1,15 @@
 package net.skhu.codingFriends.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.StudygroupRepository;
+import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class StudygroupServiceImpl implements StudygroupService {
-    @Autowired
-    public StudygroupRepository studygroupRepository;
 
+    public final StudygroupRepository studygroupRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
     public LearningmaterialRepository learningmaterialRepository;
@@ -67,42 +70,38 @@ public class StudygroupServiceImpl implements StudygroupService {
         return StudygroupDto.toDto(studygroup);
     }
 
-
-    public List<studygroup> searchWithKeyword(String keyword){
-        return studygroupRepository.findByTitleContaining(keyword);
-    }
-
-    public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword){
-        return studygroupRepository.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
-    }
-
-    public List<learningmaterial> findAllLearningMaterial(){
-        return learningmaterialRepository.findAllLearningMaterial();
-    }
-
-
-    // 게시물 작성
+    // 게시물 수정
     @Transactional
-    public void insert(studygroup studygroup) {
-        studygroupRepository.save(studygroup);
-    }
+    public StudygroupDto update(Integer id, StudygroupDto studygroupDto) {
+        studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
+            return new IllegalArgumentException("studygroup Id를 찾을 수 없습니다!");
+        });
 
-    public void update(studygroup studygroupInfo) {
+        studygroup.setStudyGroup_id(BigInteger.valueOf(id));
+        studygroup.setTitle(studygroupDto.getTitle());
+        studygroup.setContent(studygroupDto.getContent());
+        studygroup.setLearningMaterial_id(studygroupDto.getLearningMaterial_id());
+        studygroup.setX_map(studygroupDto.getX_map());
+        studygroup.setY_map(studygroupDto.getY_map());
+        studygroup.setTotalNum(studygroupDto.getTotalNum());
+        studygroup.setCurrentNum(studygroupDto.getCurrentNum());
+        studygroup.setStartDate(studygroupDto.getStartDate());
+        studygroup.setEndDate(studygroupDto.getEndDate());
 
-        BigInteger studyGroup_id= studygroupInfo.getStudyGroup_id();
-        String title = studygroupInfo.getTitle();
-        String content = studygroupInfo.getContent();
-        int learningMaterial_id = studygroupInfo.getLearningMaterial_id();
-        String writer = studygroupInfo.getWriter();
-        Double x_map = studygroupInfo.getX_map();
-        Double y_map = studygroupInfo.getY_map();
-        int totalNum = studygroupInfo.getTotalNum();
-        int currentNum = studygroupInfo.getCurrentNum();
-        LocalDate startDate = studygroupInfo.getStartDate();
-        LocalDate endDate = studygroupInfo.getEndDate();
+        BigInteger studyGroup_id= studygroup.getStudyGroup_id();
+        String title = studygroup.getTitle();
+        String content = studygroup.getContent();
+        int learningMaterial_id = studygroup.getLearningMaterial_id();
+        String writer = studygroup.getWriter();
+        Double x_map = studygroup.getX_map();
+        Double y_map = studygroup.getY_map();
+        int totalNum = studygroup.getTotalNum();
+        int currentNum = studygroup.getCurrentNum();
+        LocalDate startDate = studygroup.getStartDate();
+        LocalDate endDate = studygroup.getEndDate();
 
-         studygroupRepository.update(
-                 studyGroup_id,
+        studygroupRepository.update(
+                studyGroup_id,
                 title,
                 content,
                 learningMaterial_id,
@@ -113,13 +112,32 @@ public class StudygroupServiceImpl implements StudygroupService {
                 currentNum,
                 startDate,
                 endDate);
+
+        return StudygroupDto.toDto(studygroup);
     }
 
+
+
     public void deleteByStudyGroup_id(int id){
+        studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
+            return new IllegalArgumentException("Studygroup Id를 찾을 수 없습니다.");
+        });
         studygroupRepository.deleteById(BigInteger.valueOf(id));
     }
 
-    public List<studygroup> updateDate(){
-        return studygroupRepository.findAll(Sort.by(Sort.Direction.DESC, "updateDate")) ;
+    //키워드로 검색
+    public List<studygroup> searchWithKeyword(String keyword){
+        return studygroupRepository.findByTitleContaining(keyword);
     }
+
+    //키워드, 학습자료로 검색
+    public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword){
+        return studygroupRepository.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
+    }
+
+    //학습자료 조회
+    public List<learningmaterial> findAllLearningMaterial(){
+        return learningmaterialRepository.findAllLearningMaterial();
+    }
+
 }
