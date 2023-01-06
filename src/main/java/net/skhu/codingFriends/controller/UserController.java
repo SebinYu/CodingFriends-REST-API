@@ -58,11 +58,6 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("login")
-    public ActionResult login() {
-        return new ActionResult(true);
-    }
-
     @GetMapping("register")
     public ActionResult registerGet() {
         return new ActionResult(true);
