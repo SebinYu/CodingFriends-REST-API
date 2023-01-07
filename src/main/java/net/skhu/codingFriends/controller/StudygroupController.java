@@ -38,26 +38,16 @@ public class StudygroupController {
 
     @ApiOperation(value = "개별 게시글 보기", notes = "개별 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("detail")
-    public Response<?> detailGet(@RequestParam BigInteger studyGroup_id){
+    @GetMapping("detail/{id}")
+    public Response<?> detailGet(@PathVariable("id") BigInteger studyGroup_id){
         return new Response<>("true", "개별 게시물 리턴", studygroupService.getStudygroup(studyGroup_id));
     }
 
-    //로그인 기능 추가이후-> 스터디 신청 기능 적용
-    @ApiOperation(value = "개별 게시글에서 스터디 참여신청", notes = "개별 게시글에서 스터디 참여신청한다.")
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("detail")
-    public Response<?> detailPost(@RequestParam BigInteger studyGroup_id){
-        return new Response<>("true", "개별 게시물 리턴", studygroupService.getStudygroup(studyGroup_id));
-    }
-
-
-    //게시글 생성
     @ApiOperation(value = "게시글 작성 페이지 조회", notes = "게시글 작성 페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("create")
-    public List<learningmaterial> createGet() {
-        return studygroupService.findAllLearningMaterial();
+    @GetMapping("create/{id}")
+    public BigInteger createGet(@PathVariable("id") BigInteger studyGroup_id) {
+        return studyGroup_id;
     }
 
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
