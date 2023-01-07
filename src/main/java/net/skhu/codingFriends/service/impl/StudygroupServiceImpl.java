@@ -88,17 +88,17 @@ public class StudygroupServiceImpl implements StudygroupService {
         studygroup.setStartDate(studygroupDto.getStartDate());
         studygroup.setEndDate(studygroupDto.getEndDate());
 
-        BigInteger studyGroup_id= studygroup.getStudyGroup_id();
-        String title = studygroup.getTitle();
-        String content = studygroup.getContent();
-        int learningMaterial_id = studygroup.getLearningMaterial_id();
-        String writer = studygroup.getWriter();
-        Double x_map = studygroup.getX_map();
-        Double y_map = studygroup.getY_map();
-        int totalNum = studygroup.getTotalNum();
-        int currentNum = studygroup.getCurrentNum();
-        LocalDate startDate = studygroup.getStartDate();
-        LocalDate endDate = studygroup.getEndDate();
+        BigInteger studyGroup_id= studygroupDto.getStudyGroup_id();
+        String title = studygroupDto.getTitle();
+        String content = studygroupDto.getContent();
+        int learningMaterial_id = studygroupDto.getLearningMaterial_id();
+        String writer = studygroupDto.getWriter();
+        Double x_map = studygroupDto.getX_map();
+        Double y_map = studygroupDto.getY_map();
+        int totalNum = studygroupDto.getTotalNum();
+        int currentNum = studygroupDto.getCurrentNum();
+        LocalDate startDate = studygroupDto.getStartDate();
+        LocalDate endDate = studygroupDto.getEndDate();
 
         studygroupRepository.update(
                 studyGroup_id,

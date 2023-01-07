@@ -2,6 +2,7 @@ package net.skhu.codingFriends.controller;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.dto.ActionResult;
 import net.skhu.codingFriends.dto.Response;
 import net.skhu.codingFriends.dto.StudygroupDto;
@@ -12,6 +13,7 @@ import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,11 +63,12 @@ public class StudygroupController {
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("create")
-    public Response createPost(@RequestBody StudygroupDto studygroupDto) {
+    public Response createPost(@RequestBody StudygroupDto studygroupDto, Authentication authentication) {
         // 원래 로그인을 하면, User 정보는 세션을 통해서 구하고 주면 되지만,
         // 지금은 핵심 개념을 알기 위해서, JWT 로그인은 생략하고, 임의로 findById 로 유저 정보를 넣어줬습니다.
 
-        user user = userRepository.findById(15).get();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
         return new Response("성공", "글 작성 성공", studygroupService.write(studygroupDto, user));
     }
 
