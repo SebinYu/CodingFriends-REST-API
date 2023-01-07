@@ -28,7 +28,7 @@ public class UserService {
         user.setEnabled(true);
         user.setUserType("ROLE_USER");
         user.setAddress(userRegistration.getAddress());
-        user.setAddress(userRegistration.getAddress());
+        user.setAddress_detail(userRegistration.getAddress_detail());
         return userRepository.save(user);
     }
 
