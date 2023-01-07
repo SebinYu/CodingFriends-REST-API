@@ -72,12 +72,11 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     // 게시물 수정
     @Transactional
-    public StudygroupDto update(Integer id, StudygroupDto studygroupDto) {
-        studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
+    public StudygroupDto update(Integer studyGroup_id, StudygroupDto studygroupDto) {
+        studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
             return new IllegalArgumentException("studygroup Id를 찾을 수 없습니다!");
         });
 
-        studygroup.setStudyGroup_id(BigInteger.valueOf(id));
         studygroup.setTitle(studygroupDto.getTitle());
         studygroup.setContent(studygroupDto.getContent());
         studygroup.setLearningMaterial_id(studygroupDto.getLearningMaterial_id());
@@ -87,31 +86,6 @@ public class StudygroupServiceImpl implements StudygroupService {
         studygroup.setCurrentNum(studygroupDto.getCurrentNum());
         studygroup.setStartDate(studygroupDto.getStartDate());
         studygroup.setEndDate(studygroupDto.getEndDate());
-
-        BigInteger studyGroup_id= studygroupDto.getStudyGroup_id();
-        String title = studygroupDto.getTitle();
-        String content = studygroupDto.getContent();
-        int learningMaterial_id = studygroupDto.getLearningMaterial_id();
-        String writer = studygroupDto.getWriter();
-        Double x_map = studygroupDto.getX_map();
-        Double y_map = studygroupDto.getY_map();
-        int totalNum = studygroupDto.getTotalNum();
-        int currentNum = studygroupDto.getCurrentNum();
-        LocalDate startDate = studygroupDto.getStartDate();
-        LocalDate endDate = studygroupDto.getEndDate();
-
-        studygroupRepository.update(
-                studyGroup_id,
-                title,
-                content,
-                learningMaterial_id,
-                writer,
-                x_map,
-                y_map,
-                totalNum,
-                currentNum,
-                startDate,
-                endDate);
 
         return StudygroupDto.toDto(studygroup);
     }
