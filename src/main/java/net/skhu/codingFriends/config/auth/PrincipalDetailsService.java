@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-// http://localhost:8080/login => 여기서 동작을 안함 왜냐면 formLogin.disable() goqjfutj
+// http://localhost:8080/login => 여기서 동작을 안함 왜냐면 formLogin.disable()
 @Service
 @RequiredArgsConstructor
 public class PrincipalDetailsService implements UserDetailsService {
