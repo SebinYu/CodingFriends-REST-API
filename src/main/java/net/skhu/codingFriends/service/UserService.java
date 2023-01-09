@@ -2,6 +2,7 @@ package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.dto.LoginRequestDto;
+import net.skhu.codingFriends.dto.RegisterDto;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.exception.LoginFailureException;
 import net.skhu.codingFriends.exception.MemberNotFoundException;
@@ -23,16 +24,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public user register(UserRegistration userRegistration) {
+    public user register(RegisterDto registerDto) {
         user user = new user();
-        user.setUsername(userRegistration.getUsername());
-        user.setPassword(bCryptPasswordEncoder.encode(userRegistration.getPasswd1()));
-        user.setName(userRegistration.getName());
-        user.setEmail(userRegistration.getEmail());
+        user.setUsername(registerDto.getUsername());
+        if (registerDto.getPasswd1().equals(registerDto.getPasswd2())) {
+            user.setPassword(bCryptPasswordEncoder.encode(registerDto.getPasswd1()));
+        }else {
+            throw new LoginFailureException();
+        }
+        user.setName(registerDto.getName());
+        user.setEmail(registerDto.getEmail());
         user.setEnabled(true);
         user.setUserType("ROLE_USER");
-        user.setAddress(userRegistration.getAddress());
-        user.setAddress_detail(userRegistration.getAddress_detail());
+        user.setAddress(registerDto.getAddress());
+        user.setAddress_detail(registerDto.getAddress_detail());
         return userRepository.save(user);
     }
 

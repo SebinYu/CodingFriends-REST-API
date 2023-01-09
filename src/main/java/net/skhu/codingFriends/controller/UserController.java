@@ -45,8 +45,9 @@ public class UserController {
     @ApiOperation(value = "회원가입", notes="회원가입 진행")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/auth")
-    public Response register(@RequestBody @Valid UserRegistration userRegistration) {
-        return success(userService.register(userRegistration));
+    public Response register(@RequestBody @Valid RegisterDto registerDto) {
+        return success(userService.register(registerDto));
     }
+
 
 }

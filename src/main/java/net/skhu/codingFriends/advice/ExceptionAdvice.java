@@ -7,6 +7,7 @@ import net.skhu.codingFriends.exception.UsernameAlreadyExistsException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
+import net.skhu.codingFriends.exception.user.PasswordVerificationException;
 import net.skhu.codingFriends.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -72,6 +73,14 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response memberNotFoundException() {
         return Response.failure(404, "요청한 회원을 찾을 수 없습니다.");
+    }
+
+    // 404 응답
+    // 요청한 유저를 찾을 수 없음
+    @ExceptionHandler(PasswordVerificationException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response passwordVerificationException() {
+        return Response.failure(404, "passwd1 와 passwd2가 다릅니다.");
     }
 
 }
