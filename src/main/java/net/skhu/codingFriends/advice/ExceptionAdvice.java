@@ -3,6 +3,7 @@ package net.skhu.codingFriends.advice;
 import lombok.extern.slf4j.Slf4j;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
+import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -37,12 +38,21 @@ public class ExceptionAdvice {
     }
 
     // 404 응답
+    // 요청한 StudygroupId 찾을 수 없음
+    @ExceptionHandler(StudygroupIdNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response studygroupIdNotFound() {
+        return Response.failure(404, "Studygroup Id를 찾을 수 없습니다.");
+    }
+
+    // 404 응답
     // 본인 게시물만 수정가능
     @ExceptionHandler(SelfOnlyModifiableException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response selfOnlyModifiableException() {
         return Response.failure(404, "본인 게시물만 수정할 수 있습니다.");
     }
+
 
     // 404 응답
     // 본인 게시물만 삭제가능

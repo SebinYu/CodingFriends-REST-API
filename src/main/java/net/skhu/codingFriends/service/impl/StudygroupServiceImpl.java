@@ -5,6 +5,7 @@ import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.repository.UserRepository;
@@ -42,7 +43,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     @Transactional(readOnly = true)
     public StudygroupDto getStudygroup(BigInteger id) {
         studygroup studygroup = studygroupRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException("Studygroup Id를 찾을 수 없습니다.");
+            return new StudygroupIdNotFound();
         });
         StudygroupDto studygroupDto = StudygroupDto.toDto(studygroup);
         return studygroupDto;
@@ -74,7 +75,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     @Transactional
     public StudygroupDto update(Integer studyGroup_id, StudygroupDto studygroupDto) {
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
-            return new IllegalArgumentException("studygroup Id를 찾을 수 없습니다!");
+            return new StudygroupIdNotFound();
         });
 
         studygroup.setTitle(studygroupDto.getTitle());
@@ -94,7 +95,7 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     public void deleteByStudyGroup_id(int id){
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
-            return new IllegalArgumentException("Studygroup Id를 찾을 수 없습니다.");
+            return new StudygroupIdNotFound();
         });
         studygroupRepository.deleteById(BigInteger.valueOf(id));
     }

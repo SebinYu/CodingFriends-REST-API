@@ -9,19 +9,19 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Response {
-    private boolean success;
+    private String success;
     private int code;
     private Result result;
 
     public static Response success() { // 4
-        return new Response(true, 0, null);
+        return new Response("성공", 0, null);
     }
 
     public static <T> Response success(T data) { // 5
-        return new Response(true, 0, new Success<>(data));
+        return new Response("성공", 0, new Success<>(data));
     }
 
     public static Response failure(int code, String msg) { // 6
-        return new Response(false, code, new Failure(msg));
+        return new Response("실패", code, new Failure(msg));
     }
 }
