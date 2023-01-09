@@ -36,10 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .addFilter(corsConfig.corsFilter())
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // 시큐리티는 기본적으로 세션을 사용
+                // 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
-
                 .httpBasic().disable()
 
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))

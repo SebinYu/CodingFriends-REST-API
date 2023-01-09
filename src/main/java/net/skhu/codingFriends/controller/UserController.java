@@ -35,8 +35,8 @@ public class UserController {
     @ApiOperation(value="유저 찾기", notes = "개별 유저 조회")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users/{id}")
-    public Response<?> findUser(@PathVariable("id") Integer id) {
-        return new Response<>("true", "조회 성공", userService.findUser(id));
+    public Response<?> findUser(@PathVariable("id") Long id) {
+        return new Response<>("true", "조회 성공", userService.findUser(Math.toIntExact(id)));
     }
 
     @ApiOperation(value = "회원가입", notes="회원가입 진행")

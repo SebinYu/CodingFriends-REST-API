@@ -3,18 +3,14 @@ package net.skhu.codingFriends.controller;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
-import net.skhu.codingFriends.dto.ActionResult;
 import net.skhu.codingFriends.dto.Response;
 import net.skhu.codingFriends.dto.StudygroupDto;
-import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
-import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -39,14 +35,14 @@ public class StudygroupController {
     @ApiOperation(value = "개별 게시글 보기", notes = "개별 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{id}")
-    public Response<?> detailGet(@PathVariable("id") BigInteger studyGroup_id){
-        return new Response<>("true", "개별 게시물 리턴", studygroupService.getStudygroup(studyGroup_id));
+    public Response<?> detailGet(@PathVariable("id") Long studyGroup_id){
+        return new Response<>("true", "개별 게시물 리턴", studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)));
     }
 
     @ApiOperation(value = "게시글 작성 페이지 조회", notes = "게시글 작성 페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("create/{id}")
-    public BigInteger createGet(@PathVariable("id") BigInteger studyGroup_id) {
+    public Long createGet(@PathVariable("id") Long studyGroup_id) {
         return studyGroup_id;
     }
 
@@ -62,23 +58,23 @@ public class StudygroupController {
 
     @ApiOperation(value = "게시글 수정 페이지 조회", notes = "게시글 수정 페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("edit")
-    public Response<?> updateGet(@RequestParam BigInteger studyGroup_id){
-        return new Response<>("true", "개별 게시물 리턴", studygroupService.getStudygroup(studyGroup_id));
+    @GetMapping("edit/{id}")
+    public Response<?> updateGet(@PathVariable("id") Long studyGroup_id){
+        return new Response<>("true", "개별 게시물 리턴", studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)));
     }
 
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "edit")
+    @PutMapping(value = "edit/{id}")
     public Response<?> updatePut(@RequestBody StudygroupDto studygroupDto,
-                                 @RequestParam Integer studygroup_id,
+                                 @PathVariable("id") Long studygroup_id,
                                  Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저의 글이 맞다면
 
-            return new Response("성공", "글 수정 성공", studygroupService.update(studygroup_id, studygroupDto));
+            return new Response("성공", "글 수정 성공", studygroupService.update(Math.toIntExact(studygroup_id), studygroupDto));
         } else {
             return new Response("실패", "본인 게시물만 수정할 수 있습니다.", null);
 
@@ -88,12 +84,12 @@ public class StudygroupController {
     @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제한다.")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete")
-    public Response delete(@RequestParam Integer studygroup_id, Authentication authentication) {
+    public Response delete(@PathVariable("id") Long studygroup_id, Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저가 글 작성자와 같다면
-            studygroupService.deleteByStudyGroup_id(studygroup_id); // 이 메소드는 반환값이 없으므로 따로 삭제 수행해주고, 리턴에는 null을 넣어줌
+            studygroupService.deleteByStudyGroup_id(Math.toIntExact(studygroup_id)); // 이 메소드는 반환값이 없으므로 따로 삭제 수행해주고, 리턴에는 null을 넣어줌
             return new Response("성공", "글 삭제 성공", null);
         } else {
             return new Response("실패", "본인 게시물만 삭제할 수 있습니다.", null);
