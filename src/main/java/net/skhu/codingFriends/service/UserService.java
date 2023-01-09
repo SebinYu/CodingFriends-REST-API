@@ -1,7 +1,11 @@
 package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.dto.LoginRequestDto;
 import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.exception.LoginFailureException;
+import net.skhu.codingFriends.exception.MemberNotFoundException;
+import net.skhu.codingFriends.exception.UsernameAlreadyExistsException;
 import net.skhu.codingFriends.model.UserRegistration;
 import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,22 +42,8 @@ public class UserService {
 
     public user findUser(int id) {
         return userRepository.findById(id).orElseThrow(()-> {
-            return new IllegalArgumentException("User ID를 찾을 수 없습니다.");
+            return new MemberNotFoundException();
         });
     }
 
-    public boolean hasErrors(UserRegistration userRegistration, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return true;
-        if (userRegistration.getPasswd1().equals(userRegistration.getPasswd2()) == false) {
-            bindingResult.rejectValue("passwd2", null, "비밀번호가 일치하지 않습니다.");
-            return true;
-        }
-        user user = userRepository.findByUsername(userRegistration.getUsername());
-        if (user != null) {
-            bindingResult.rejectValue("userid", null, "사용자 아이디가 중복됩니다.");
-            return true;
-        }
-        return false;
-    }
 }

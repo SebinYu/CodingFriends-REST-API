@@ -1,6 +1,9 @@
 package net.skhu.codingFriends.advice;
 
 import lombok.extern.slf4j.Slf4j;
+import net.skhu.codingFriends.exception.LoginFailureException;
+import net.skhu.codingFriends.exception.MemberNotFoundException;
+import net.skhu.codingFriends.exception.UsernameAlreadyExistsException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
@@ -37,6 +40,7 @@ public class ExceptionAdvice {
         return Response.failure(400, e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
+
     // 404 응답
     // 요청한 StudygroupId 찾을 수 없음
     @ExceptionHandler(StudygroupIdNotFound.class)
@@ -62,6 +66,12 @@ public class ExceptionAdvice {
         return Response.failure(404, "본인 게시물만 삭제할 수 있습니다.");
     }
 
-
+    // 404 응답
+    // 요청한 유저를 찾을 수 없음
+    @ExceptionHandler(MemberNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response memberNotFoundException() {
+        return Response.failure(404, "요청한 회원을 찾을 수 없습니다.");
+    }
 
 }
