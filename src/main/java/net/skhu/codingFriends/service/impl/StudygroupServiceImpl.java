@@ -7,6 +7,7 @@ import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.LearningmaterialRepository;
+import net.skhu.codingFriends.repository.StudygroupCustomRepositoryImpl;
 import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.service.StudygroupService;

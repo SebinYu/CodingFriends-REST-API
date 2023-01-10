@@ -2,22 +2,26 @@
 //
 //import io.swagger.annotations.ApiOperation;
 //import lombok.RequiredArgsConstructor;
-//import net.skhu.codingFriends.dto.Response;
+//import net.skhu.codingFriends.dto.RegisterDto;
+//import net.skhu.codingFriends.response.Response;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.web.bind.annotation.*;
 //
+//import javax.validation.Valid;
 //import java.math.BigInteger;
+//
+//import static net.skhu.codingFriends.response.Response.success;
 //
 //@RestController
 //@RequiredArgsConstructor
 //public class ApplyController {
 //
 //    @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping("/apply/{studygroup_id}")
-//    public Response<?> apply(@PathVariable("studygroup_id") BigInteger studygroup_id, Authentication authentication) {
-//        return new Response<>("true", "스터디 신청 성공", userService.findAll());
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping("/apply")
+//    public Response apply(@RequestBody @Valid RegisterDto registerDto) {
+//        return success(userService.register(registerDto));
 //    }
 //
 //}

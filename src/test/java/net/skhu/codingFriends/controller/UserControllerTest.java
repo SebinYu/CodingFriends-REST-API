@@ -3,10 +3,8 @@ package net.skhu.codingFriends.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.skhu.codingFriends.dto.RegisterDto;
 import net.skhu.codingFriends.service.UserService;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,8 +30,8 @@ class UserControllerTest {
     MockMvc mockMvc;
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+//    @Rule
+//    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeEach
     void beforeEach() {
