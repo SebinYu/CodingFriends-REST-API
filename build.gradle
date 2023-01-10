@@ -48,6 +48,10 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
 
+	// junit-vintage-engine
+	testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.8.2'
+
+
 	// Spring Security
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.7'
 

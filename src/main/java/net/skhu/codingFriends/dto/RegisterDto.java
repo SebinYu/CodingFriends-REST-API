@@ -26,7 +26,6 @@ public class RegisterDto {
     @Size(min=6, max=12, message="6 자리 이상 12 자리 이하이어야 합니다.")
     String passwd1;
 
-
     @NotBlank(message="비밀번호를 한번 더 입력하세요")
     String passwd2;
 

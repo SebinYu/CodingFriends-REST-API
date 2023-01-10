@@ -1,13 +1,12 @@
 package net.skhu.codingFriends.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import net.skhu.codingFriends.exception.LoginFailureException;
 import net.skhu.codingFriends.exception.MemberNotFoundException;
-import net.skhu.codingFriends.exception.UsernameAlreadyExistsException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.exception.user.PasswordVerificationException;
+import net.skhu.codingFriends.exception.user.RegisterFailureException;
 import net.skhu.codingFriends.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -26,6 +25,7 @@ public class ExceptionAdvice {
         log.info("e = {}", e.getMessage());
         return Response.failure(500, e.getMessage().toString());
     }
+
 
     // 400 에러
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -75,12 +75,11 @@ public class ExceptionAdvice {
         return Response.failure(404, "요청한 회원을 찾을 수 없습니다.");
     }
 
-    // 404 응답
-    // 요청한 유저를 찾을 수 없음
+    // 400 응답
     @ExceptionHandler(PasswordVerificationException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response passwordVerificationException() {
-        return Response.failure(404, "passwd1 와 passwd2가 다릅니다.");
+        return Response.failure(400, "passwd1 와 passwd2가 다릅니다.");
     }
 
 }

@@ -31,7 +31,7 @@ public class UserController {
     @ApiOperation(value = "전체 회원 보기", notes = "전체 회원을 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users")
-    public Response findAll() {
+    public Response findAllUsers() {
         return success(userService.findAll());
     }
 
