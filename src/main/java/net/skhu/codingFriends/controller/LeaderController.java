@@ -22,9 +22,19 @@ public class LeaderController {
 
     private final LeaderService leaderService;
 
-    @ApiOperation(value = "내 스터디모임 지원서 보기", notes = "스터디모임 지원서 조회한다.")
+    @ApiOperation(value = "조직장의 스터디모임 조회", notes = "조직장의 스터디모임 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("applicationManage/index")
+    public Response MyStudygroupGet(Authentication authentication) {
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+        return success(leaderService.getStudygroups(user));
+    }
+
+    @ApiOperation(value = "조직장의 스터디모임 지원서 보기", notes = "조직장의 스터디모임 지원서 조회한다.")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("applicationManage/detail")
     public Response applicationGet(Authentication authentication) {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
