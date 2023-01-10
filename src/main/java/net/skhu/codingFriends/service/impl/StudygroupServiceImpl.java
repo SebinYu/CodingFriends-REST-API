@@ -125,8 +125,8 @@ public class StudygroupServiceImpl implements StudygroupService {
         });
 
         apply apply = new apply();
-        apply.setUserId(String.valueOf(user.getUser_id()));
-        apply.setStudygroupId(String.valueOf(studyGroup_id));
+        apply.setUser(user);
+        apply.setStudygroup(studygroup);
         apply.setTitle(studygroup.getTitle());
         apply.setApplyStatus("신청");
         apply.setName(user.getName());

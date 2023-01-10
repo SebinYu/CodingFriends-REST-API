@@ -14,11 +14,20 @@ public class apply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     BigInteger apply_id;
 
-    String userId;
-    String studygroupId;
     String title;
     String applyStatus;
     String application;
     String name;
     LocalDateTime updateDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    user user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "studygroupId")
+    @JsonIgnore
+    studygroup studygroup;
+
 }

@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class ApplyDto {
     private BigInteger apply_id;
 
-    private String userId;
-    private String studygroupId;
+    private int userId;
+    private BigInteger studygroupId;
     private String title;
     private String applyStatus;
     private String application;
@@ -26,8 +26,8 @@ public class ApplyDto {
     public static ApplyDto toDto(apply apply) {
         return new ApplyDto(
                 apply.getApply_id(),
-                apply.getUserId(),
-                apply.getStudygroupId(),
+                apply.getUser().getUser_id(),
+                apply.getStudygroup().getStudyGroup_id(),
                 apply.getTitle(),
                 apply.getApplyStatus(),
                 apply.getApplication(),
