@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.repository;
+package net.skhu.codingFriends.repository.studygroup;
 
 import net.skhu.codingFriends.entity.studygroup;
 

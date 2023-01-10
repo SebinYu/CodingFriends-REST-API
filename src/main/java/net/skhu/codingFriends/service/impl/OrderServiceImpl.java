@@ -2,7 +2,6 @@ package net.skhu.codingFriends.service.impl;
 
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.repository.OrderRepository;
-import net.skhu.codingFriends.repository.StudygroupRepository;
 import net.skhu.codingFriends.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

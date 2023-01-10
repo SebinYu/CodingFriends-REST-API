@@ -1,14 +1,17 @@
 package net.skhu.codingFriends.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.dto.ApplyDto;
+import net.skhu.codingFriends.dto.RegisterDto;
 import net.skhu.codingFriends.dto.StudygroupDto;
+import net.skhu.codingFriends.entity.apply;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.LearningmaterialRepository;
-import net.skhu.codingFriends.repository.StudygroupCustomRepositoryImpl;
-import net.skhu.codingFriends.repository.StudygroupRepository;
+import net.skhu.codingFriends.repository.apply.ApplyRepository;
+import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
 import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     public final StudygroupRepository studygroupRepository;
 
-    private final UserRepository userRepository;
+    private final ApplyRepository applyRepository;
 
     @Autowired
     public LearningmaterialRepository learningmaterialRepository;
@@ -114,6 +116,25 @@ public class StudygroupServiceImpl implements StudygroupService {
     //학습자료 조회
     public List<learningmaterial> findAllLearningMaterial(){
         return learningmaterialRepository.findAllLearningMaterial();
+    }
+
+    @Transactional
+    public ApplyDto apply(ApplyDto ApplyDto, Long studyGroup_id, user user) {
+        studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
+            return new StudygroupIdNotFound();
+        });
+
+        apply apply = new apply();
+        apply.setUserId(String.valueOf(user.getUser_id()));
+        apply.setStudygroupId(String.valueOf(studyGroup_id));
+        apply.setTitle(studygroup.getTitle());
+        apply.setApplyStatus("신청");
+        apply.setName(user.getName());
+        apply.setApplication(ApplyDto.getApplication());
+
+        applyRepository.save(apply);
+
+        return ApplyDto.toDto(apply);
     }
 
 }

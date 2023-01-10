@@ -1,5 +1,7 @@
 package net.skhu.codingFriends.service;
 
+import net.skhu.codingFriends.dto.ApplyDto;
+import net.skhu.codingFriends.dto.RegisterDto;
 import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
@@ -24,6 +26,5 @@ public interface StudygroupService {
 
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
     List<learningmaterial> findAllLearningMaterial();
-
-
+    ApplyDto apply(ApplyDto applyDto, Long studyGroup_id, user user);
 }

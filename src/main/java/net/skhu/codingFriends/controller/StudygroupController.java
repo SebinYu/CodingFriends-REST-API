@@ -3,6 +3,8 @@ package net.skhu.codingFriends.controller;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
+import net.skhu.codingFriends.dto.ApplyDto;
+import net.skhu.codingFriends.dto.RegisterDto;
 import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
@@ -48,6 +50,7 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("create/{id}")
     public Long createGet(@PathVariable("id") Long studyGroup_id) {
+
         return studyGroup_id;
     }
 
@@ -115,6 +118,18 @@ public class StudygroupController {
             @PathVariable("keyword") String keyword){
 
         return studygroupService.searchWithLearningMaterial_idAndKeyword(Math.toIntExact(learningMaterial_id), keyword);
+    }
+
+    @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("apply/{id}")
+    public Response apply(@RequestBody ApplyDto applyDto,
+                          @PathVariable("id") Long studyGroup_id,
+                          Authentication authentication) {
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+        return success(studygroupService.apply(applyDto, studyGroup_id, user));
     }
 
 

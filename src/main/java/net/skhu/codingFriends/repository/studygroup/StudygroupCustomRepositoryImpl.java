@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.repository;
+package net.skhu.codingFriends.repository.studygroup;
 
 import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class StudygroupCustomRepositoryImpl implements StudygroupCustomRepository{
+public class StudygroupCustomRepositoryImpl implements StudygroupCustomRepository {
 
     private final JPAQueryFactory jPAQueryFactory;
 
