@@ -17,7 +17,6 @@ public class review {
     String studyGroupPartner;
     Double reviewScore;
     String reviewContents;
-    Double lectureScore;
     Integer objection;
     LocalDateTime updateDate;
 

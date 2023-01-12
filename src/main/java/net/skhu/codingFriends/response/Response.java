@@ -11,6 +11,7 @@ import lombok.Getter;
 public class Response {
     private String success;
     private int code;
+//    private String url;
     private Result result;
 
     public static Response success() { // 4
