@@ -3,6 +3,7 @@ package net.skhu.codingFriends.controller;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ApplyIdVO;
+import net.skhu.codingFriends.VO.ParticipationVO;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.dto.ParticipationDTO;
 import net.skhu.codingFriends.entity.user;
@@ -75,17 +76,17 @@ public class LeaderController {
 //    public Response MyStudygroupGet2(Authentication authentication) {
 //        return MyStudygroup(authentication);
 //    }
-//
-//    @ApiOperation(value = "주차별 스터디 참여내역 조회", notes = "주차별 스터디 참여내역 조회한다.")
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping("participantManage/detail")
-//    public Response participantInfo(Authentication authentication) {
-//        //스터디정보 ->  participantrate 조회
-//        //
+
+    @ApiOperation(value = "주차별 스터디 참여내역 조회", notes = "주차별 스터디 참여내역 조회한다.")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("participantManage/detail/{Studygroup_id}")
+    public Response participantInfo(@PathVariable("Studygroup_id") Long Studygroup_id, Authentication authentication) {
+        //스터디정보 ->  participantrate 조회
+
 //        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 //        user user = principalDetails.getUser();
-//        return success(leaderService.getApplications(user));
-//    }
+        return success(leaderService.getAttendance(Studygroup_id));
+    }
 
 
     @ApiOperation(value = "조직장의 스터디모임 조회", notes = "조직장의 스터디모임 조회한다.")
@@ -105,14 +106,44 @@ public class LeaderController {
         return success(leaderService.getParticipants(Studygroup_id));
     }
 
-//    @ApiOperation(value = "주차별 스터디 참여내역 조회", notes = "주차별 스터디 참여내역 조회한다.")
-//    @ResponseStatus(HttpStatus.OK)
-//    @PostMapping("attendance/detail")
-//    public Response attendanceCheckPost(@RequestBody ParticipationDTO participationDTO, Authentication authentication) {
-//        //스터디정보 ->  participantrate 조회
-//
-//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        user user = principalDetails.getUser();
-//        return success(leaderService.getApplications(participationDTO));
+    @ApiOperation(value = "주차별 참여율 입력", notes = "주차별 참여율 입력한다.")
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("attendance/detail")
+    public Response attendanceCheckPost(@RequestBody ParticipationVO participationVO) {
+
+        return success(leaderService.postAttendance(participationVO));
+    }
+
+    // http://localhost:8081/user/leader/attendance/detail
+    // 입력 값 예시
+
+//    {
+//        "participationDTOList": [
+//        {
+//            "participationRate_id": 461,
+//                "studentId": 12,
+//                "studygroupId": 99,
+//                "studyGroup_Leader": "세빈",
+//                "week": 0,
+//                "weeklyAttendance": "참여",
+//                "weeklyHomework": "미정",
+//                "lectureScore": null,
+//                "updateDate": null
+//        }
+//            ,
+//        {
+//            "participationRate_id": 461,
+//                "studentId": 15,
+//                "studygroupId": 99,
+//                "studyGroup_Leader": "타이름",
+//                "week": 0,
+//                "weeklyAttendance": "미정",
+//                "weeklyHomework": "미정",
+//                "lectureScore": null,
+//                "updateDate": null
+//        }
+//    ]
 //    }
+
+
 }

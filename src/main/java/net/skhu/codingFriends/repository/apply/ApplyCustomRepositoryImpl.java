@@ -3,8 +3,6 @@ package net.skhu.codingFriends.repository.apply;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
 
-import net.skhu.codingFriends.entity.apply;
-import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import org.springframework.stereotype.Repository;
 

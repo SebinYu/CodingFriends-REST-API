@@ -3,7 +3,6 @@ package net.skhu.codingFriends.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.skhu.codingFriends.entity.apply;
 import net.skhu.codingFriends.entity.participationrate;
 
 import java.math.BigInteger;
@@ -35,7 +34,7 @@ public class ParticipationDTO {
                 participationrate.getWeeklyHomework(),
                 participationrate.getLectureScore(),
                 participationrate.getUpdateDate()
-
         );
     }
+
 }
