@@ -1,10 +1,9 @@
 package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
-import net.skhu.codingFriends.VO.AcceptedApplyIdVO;
+import net.skhu.codingFriends.VO.ApplyIdVO;
 import net.skhu.codingFriends.dto.ApplyDto;
 import net.skhu.codingFriends.dto.ParticipationDTO;
-import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.apply;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +25,23 @@ public class LeaderService {
     private final StudygroupRepository studygroupRepository;
     private final ParticipationRepository participationRepository;
 
+
     @Transactional
-    public List<ParticipationDTO> accept(AcceptedApplyIdVO acceptedApplyIdVO, user user) {
-        int ApplyIdlength = acceptedApplyIdVO.getApply_id().length;
+    public List<apply> getApplications(user user) {
+        return applyRepository.findByUser(user);
+    }
+    @Transactional
+    public List<studygroup> getStudygroups(user user) {
+        return studygroupRepository.findByUserID(user);
+    }
+
+    @Transactional
+    public List<ParticipationDTO> accept(ApplyIdVO applyIdVO, user user) {
+        int ApplyIdlength = applyIdVO.getApply_id().length;
         List<ParticipationDTO> participationrateList = new ArrayList<>();
 
         for(int i = 0; i< ApplyIdlength; i++){
-            BigInteger[] applyIDs = acceptedApplyIdVO.getApply_id();
+            BigInteger[] applyIDs = applyIdVO.getApply_id();
             BigInteger applyID = applyIDs[i];
 
             net.skhu.codingFriends.entity.participationrate participationrate =  new participationrate();
@@ -58,12 +66,21 @@ public class LeaderService {
         return participationrateList;
 
     }
+
     @Transactional
-    public List<apply> getApplications(user user) {
-        return applyRepository.findByUser(user);
-    }
-    @Transactional
-    public List<studygroup> getStudygroups(user user) {
-        return studygroupRepository.findByUserID(user);
+    public List<ApplyDto> decline(ApplyIdVO applyIdVO) {
+        int ApplyIdlength = applyIdVO.getApply_id().length;
+        List<ApplyDto> declindedApplyList = new ArrayList<>();
+
+        for(int i = 0; i< ApplyIdlength; i++){
+            BigInteger[] applyIDs = applyIdVO.getApply_id();
+            BigInteger applyID = applyIDs[i];
+
+            List<apply> applyTemp =  applyRepository.findByApplierID(applyID);
+            declindedApplyList.add(ApplyDto.toDto(applyTemp.get(0)));
+
+            applyRepository.deleteById(applyID);
+        }
+        return declindedApplyList;
     }
 }

@@ -5,6 +5,6 @@ import lombok.Data;
 import java.math.BigInteger;
 
 @Data
-public class AcceptedApplyIdVO {
+public class ApplyIdVO {
      private BigInteger[] apply_id;
 }
