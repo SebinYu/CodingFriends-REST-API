@@ -29,6 +29,15 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
     }
 
     @Override
+    public long updateApplyStatus(net.skhu.codingFriends.entity.apply applyTemp) {
+        return jPAQueryFactory
+                .update(apply)
+                .set(apply.applyStatus, applyTemp.getApplyStatus())
+                .where(apply.apply_id.eq(applyTemp.getApply_id()))
+                .execute();
+    }
+
+    @Override
     public List<net.skhu.codingFriends.entity.apply> findByUser(user user1) {
         return jPAQueryFactory
                 .selectFrom(apply)

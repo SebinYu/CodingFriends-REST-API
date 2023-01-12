@@ -10,4 +10,6 @@ public interface ApplyCustomRepository {
 
     List<apply> findByUser(user user1);
     List<apply> findByApplierID(BigInteger id);
+
+    long updateApplyStatus(apply applyTemp);
 }

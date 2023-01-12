@@ -47,6 +47,12 @@ public class LeaderService {
 
             participationRepository.save(participationrate);
 
+            //신청상태 - "등록"으로 변경
+            apply applyTemp = new apply();
+            applyTemp.setApply_id(applyInfo.get(0).getApply_id());
+            applyTemp.setApplyStatus("등록");
+            applyRepository.updateApplyStatus(applyTemp);
+
             participationrateList.add(ParticipationDTO.toDto(participationrate));
         }
         return participationrateList;
