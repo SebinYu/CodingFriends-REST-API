@@ -2,6 +2,7 @@ package net.skhu.codingFriends.controller;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.VO.AcceptedApplyIdVO;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.dto.ApplyDto;
 import net.skhu.codingFriends.entity.user;
@@ -44,16 +45,19 @@ public class LeaderController {
         return success(leaderService.getApplications(user));
     }
 
-//    @ApiOperation(value = "스터디 신청 수락", notes = "스터디 신청 수락하기")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping("applicationManage/accept")
-//    public Response applyAccept(@RequestBody ApplyDto applyDto,
-//                          @PathVariable("id") Long studyGroup_id,
-//                          Authentication authentication) {
-//
-//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        user user = principalDetails.getUser();
-//        return success(studygroupService.apply(applyDto, studyGroup_id, user));
-//    }
+    // 필요 자료 _
+    // 학생,스터디 아이디
+    // 작성자 이름 등..
+    // participation - 미정 등록
+    // apply 상태 -> 등록으로 변경
+    @ApiOperation(value = "스터디 신청 수락", notes = "스터디 신청 수락하기")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("applicationManage/accept")
+    public Response Accept(@RequestBody AcceptedApplyIdVO acceptedApplyIdVO,
+                          Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+        return success(leaderService.accept(acceptedApplyIdVO, user));
+    }
 
 }

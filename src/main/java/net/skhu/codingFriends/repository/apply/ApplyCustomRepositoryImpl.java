@@ -6,6 +6,7 @@ import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
 import net.skhu.codingFriends.entity.user;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import static net.skhu.codingFriends.entity.Qapply.apply;
@@ -17,6 +18,14 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
 
     public ApplyCustomRepositoryImpl(JPAQueryFactory jPAQueryFactory) {
         this.jPAQueryFactory = jPAQueryFactory;
+    }
+
+    @Override
+    public List<net.skhu.codingFriends.entity.apply> findByApplierID(BigInteger id) {
+        return jPAQueryFactory
+                .selectFrom(apply)
+                .where(apply.apply_id.eq(id))
+                .fetch();
     }
 
     @Override
