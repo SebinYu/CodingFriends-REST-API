@@ -121,6 +121,8 @@ public class LeaderService {
             if(participationDTOTemp.getWeeklyHomework().equals("참여")){
                 lectureScore += 100.0;
             }
+
+            //참여도 점수평균 - (출석+과제) / 2
             Double finalLectureScore = lectureScore/2;
 
             participationrateTemp.setStudyGroup_Leader(participationDTOTemp.getStudyGroup_Leader());

@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.controller;
+package net.skhu.codingFriends.controller.user;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -49,9 +49,6 @@ public class LeaderController {
         return success(leaderService.getApplications(user));
     }
 
-
-    // participation - 등록
-    // apply 상태 -> 등록으로 변경
     @ApiOperation(value = "스터디 신청 수락", notes = "스터디 신청 수락하기")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("applicationManage/accept")
@@ -70,21 +67,21 @@ public class LeaderController {
     }
 
 
-//    @ApiOperation(value = "조직장의 스터디모임 조회", notes = "조직장의 스터디모임 조회한다.")
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping("participantManage/index")
-//    public Response MyStudygroupGet2(Authentication authentication) {
-//        return MyStudygroup(authentication);
-//    }
+
+
+
+    @ApiOperation(value = "조직장의 스터디모임 조회", notes = "조직장의 스터디모임 조회한다.")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("participantManage/index")
+    public Response MyStudygroupGet2(Authentication authentication) {
+        return MyStudygroup(authentication);
+    }
 
     @ApiOperation(value = "주차별 스터디 참여내역 조회", notes = "주차별 스터디 참여내역 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("participantManage/detail/{Studygroup_id}")
     public Response participantInfo(@PathVariable("Studygroup_id") Long Studygroup_id, Authentication authentication) {
         //스터디정보 ->  participantrate 조회
-
-//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        user user = principalDetails.getUser();
         return success(leaderService.getAttendance(Studygroup_id));
     }
 

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ParticipationCustomRepository {
     List<participationrate> findByStudygroup(studygroup studygroupTemp);
+
+    List<participationrate> findByStudygroupAndStatus(studygroup studygroupTemp);
 }

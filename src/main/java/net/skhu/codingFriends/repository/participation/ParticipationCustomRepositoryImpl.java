@@ -26,5 +26,12 @@ public class ParticipationCustomRepositoryImpl implements ParticipationCustomRep
                 .fetch();
     }
 
+    @Override
+    public List<net.skhu.codingFriends.entity.participationrate> findByStudygroupAndStatus(studygroup studygroupTemp) {
+        return jPAQueryFactory
+                .selectFrom(participationrate)
+                .where(participationrate.studygroup.eq(studygroupTemp), participationrate.weeklyAttendance.eq("미정"))
+                .fetch();    }
+
 
 }

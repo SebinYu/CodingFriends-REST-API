@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.skhu.codingFriends.controller.user.UserController;
 import net.skhu.codingFriends.dto.RegisterDto;
 import net.skhu.codingFriends.service.UserService;
 import org.junit.jupiter.api.*;

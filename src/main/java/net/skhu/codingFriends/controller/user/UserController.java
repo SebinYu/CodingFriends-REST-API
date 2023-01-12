@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.controller;
+package net.skhu.codingFriends.controller.user;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
