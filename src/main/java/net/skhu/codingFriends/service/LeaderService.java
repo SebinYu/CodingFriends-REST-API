@@ -8,6 +8,7 @@ import net.skhu.codingFriends.entity.apply;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.participation.ParticipationRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
@@ -82,5 +83,15 @@ public class LeaderService {
             applyRepository.deleteById(applyID);
         }
         return declindedApplyList;
+    }
+
+    public List<ApplyDto> getParticipants(Long studygroup_id) {
+        studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
+            return new StudygroupIdNotFound();
+        });
+        List<apply> applyTemp = applyRepository.findByStudygroup(studygroupTemp);
+        List<ApplyDto> ApplyDtos = new ArrayList<>();
+        applyTemp.forEach(s -> ApplyDtos.add(ApplyDto.toDto(s)));
+        return ApplyDtos;
     }
 }

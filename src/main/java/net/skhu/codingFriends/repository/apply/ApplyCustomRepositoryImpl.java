@@ -3,6 +3,8 @@ package net.skhu.codingFriends.repository.apply;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
 
+import net.skhu.codingFriends.entity.apply;
+import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +37,14 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
                 .set(apply.applyStatus, applyTemp.getApplyStatus())
                 .where(apply.apply_id.eq(applyTemp.getApply_id()))
                 .execute();
+    }
+
+    @Override
+    public List<net.skhu.codingFriends.entity.apply> findByStudygroup(net.skhu.codingFriends.entity.studygroup studygroup) {
+        return jPAQueryFactory
+                .selectFrom(apply)
+                .where(apply.studygroup.eq(studygroup), apply.applyStatus.eq("등록"))
+                .fetch();
     }
 
     @Override

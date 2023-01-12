@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.repository.apply;
 
 import net.skhu.codingFriends.entity.apply;
+import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 
 import java.math.BigInteger;
@@ -12,4 +13,6 @@ public interface ApplyCustomRepository {
     List<apply> findByApplierID(BigInteger id);
 
     long updateApplyStatus(apply applyTemp);
+
+    List<apply> findByStudygroup(studygroup studygroup_id);
 }
