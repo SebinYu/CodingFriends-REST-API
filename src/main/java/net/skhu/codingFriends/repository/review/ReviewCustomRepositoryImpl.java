@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.util.List;
 
+import static net.skhu.codingFriends.entity.Qapply.apply;
 import static net.skhu.codingFriends.entity.Qreview.review;
 
 @Repository
@@ -27,6 +28,14 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 .fetch();
     }
 
+    @Override
+    public long updateObjection(BigInteger review_id) {
+        return jPAQueryFactory
+                .update(review)
+                .set(review.objection, 1)
+                .where(review.review_id.eq(review_id))
+                .execute();
+    }
 
 
 }

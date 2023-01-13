@@ -3,7 +3,6 @@ package net.skhu.codingFriends.service;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ReviewInputVO;
 import net.skhu.codingFriends.dto.ParticipationDTO;
-import net.skhu.codingFriends.dto.ReviewDTO;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.review;
 import net.skhu.codingFriends.entity.studygroup;
@@ -47,7 +46,7 @@ public class ReviewService {
         participationrateList.forEach(s -> ParticipationDTOs.add(ParticipationDTO.toDto(s)));
         return ParticipationDTOs;
     }
-
+    @Transactional
     public ReviewInputVO getReviewInputInfo(Long studygroup_id, Long User_id) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -58,7 +57,7 @@ public class ReviewService {
         reviewInputVO.setUser(userTemp.get());
         return reviewInputVO;
     }
-
+    @Transactional
     public review postReview(Long studygroup_id, user user, Long User_id, review review) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -79,8 +78,25 @@ public class ReviewService {
 
         return reviewTemp;
     }
-
+    @Transactional
     public List<review> getMyReviews(user user) {
         return reviewRepository.findByUser(user);
+    }
+    @Transactional
+    public String postObjection(Long review_id, user user1) {
+        List<review> reviews = reviewRepository.findByUser(user1);
+        Integer totalNum = 0;
+        String response = "";
+        for(int i = 0; i<reviews.size(); i++){
+            totalNum += reviews.get(i).getObjection();
+        }
+
+        if(totalNum >= 3){
+            response = "3번 이의신청 기회를 소진하셨습니다.(내년부터 이의신청가능)";
+        }else {
+            response = "이의신청 완료";
+        }
+        reviewRepository.updateObjection(BigInteger.valueOf(review_id));
+        return response;
     }
 }

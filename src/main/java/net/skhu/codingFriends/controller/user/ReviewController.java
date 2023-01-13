@@ -62,4 +62,14 @@ public class ReviewController {
         user user = principalDetails.getUser();
         return success(reviewService.getMyReviews(user));
     }
+
+    @ApiOperation(value = "후기 이의제기 등록", notes = "후기 이의제기 등록한다.")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("objection/{review_id}")
+    public Response putObjection(@PathVariable("review_id") Long review_id,
+                                 Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+        return success(reviewService.postObjection(review_id, user));
+    }
 }

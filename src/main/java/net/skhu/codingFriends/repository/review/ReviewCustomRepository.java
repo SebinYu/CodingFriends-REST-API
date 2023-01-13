@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface ReviewCustomRepository {
         List<review> findByUser(user user);
+
+        long updateObjection(BigInteger review_id);
 }
