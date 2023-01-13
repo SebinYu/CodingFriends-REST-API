@@ -32,21 +32,21 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users")
     public Response findAllUsers() {
-        return success(userService.findAll());
+        return success(userService.findAll(), "/users");
     }
 
     @ApiOperation(value="유저 찾기", notes = "개별 유저 조회")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users/{id}")
     public Response findUser(@PathVariable("id") Long id) {
-        return success(userService.findUser(Math.toIntExact(id)));
+        return success(userService.findUser(Math.toIntExact(id)),"/users/{id}");
     }
 
     @ApiOperation(value = "회원가입", notes="회원가입 진행")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/auth")
     public Response register(@RequestBody @Valid RegisterDto registerDto) {
-        return success(userService.register(registerDto));
+        return success(userService.register(registerDto),"/auth");
     }
 
 

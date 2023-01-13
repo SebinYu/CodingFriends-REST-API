@@ -33,7 +33,7 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("list")
     public Response getlist() {
-        return success(studygroupService.getStudygroups());
+        return success(studygroupService.getStudygroups(),"/studygroup/list");
     }
 
 
@@ -41,7 +41,7 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{id}")
     public Response detailGet(@PathVariable("id") Long studyGroup_id){
-        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)));
+        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)),"/studygroup/detail/{id}");
     }
 
 
@@ -59,7 +59,7 @@ public class StudygroupController {
     public Response createPost(@RequestBody StudygroupDto studygroupDto, Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(studygroupService.write(studygroupDto, user));
+        return success(studygroupService.write(studygroupDto, user),"/studygroup/create");
     }
 
 
@@ -67,7 +67,7 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("edit/{id}")
     public Response updateGet(@PathVariable("id") Long studyGroup_id){
-        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)));
+        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)),"/studygroup/edit/{id}");
     }
 
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
@@ -80,7 +80,7 @@ public class StudygroupController {
         user user = principalDetails.getUser();
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저의 글이 맞다면
-            return success(studygroupService.update(Math.toIntExact(studygroup_id), studygroupDto));
+            return success(studygroupService.update(Math.toIntExact(studygroup_id), studygroupDto),"/studygroup/edit/{id}");
         } else {
             throw new SelfOnlyModifiableException();
 
@@ -96,7 +96,7 @@ public class StudygroupController {
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저가 글 작성자와 같다면
             studygroupService.deleteByStudyGroup_id(Math.toIntExact(studygroup_id)); // 이 메소드는 반환값이 없으므로 따로 삭제 수행해주고, 리턴에는 null을 넣어줌
-            return success(null);
+            return success("/studygroup/delete/{id}");
         } else {
             throw new SelfOnlyDeletableException();
         }
@@ -128,7 +128,7 @@ public class StudygroupController {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(studygroupService.apply(applyDto, studyGroup_id, user));
+        return success(studygroupService.apply(applyDto, studyGroup_id, user),"/studygroup/apply/{id}");
     }
 
 

@@ -29,7 +29,7 @@ public class LeaderController {
         private Response MyStudygroup (Authentication authentication){
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             user user = principalDetails.getUser();
-            return success(leaderService.getStudygroups(user));
+            return success(leaderService.getStudygroups(user),"/user/leader");
     }
 
     @ApiOperation(value = "조직장의 스터디모임 조회", notes = "조직장의 스터디모임 조회한다.")
@@ -46,7 +46,7 @@ public class LeaderController {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(leaderService.getApplications(user));
+        return success(leaderService.getApplications(user),"/user/leader/applicationManage/detail");
     }
 
     @ApiOperation(value = "스터디 신청 수락", notes = "스터디 신청 수락하기")
@@ -56,14 +56,14 @@ public class LeaderController {
                           Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(leaderService.accept(applyIdVO, user));
+        return success(leaderService.accept(applyIdVO, user),"/user/leader/applicationManage/accept");
     }
 
     @ApiOperation(value = "스터디 신청 거절", notes = "스터디 신청 수락하기")
     @ResponseStatus(HttpStatus.CREATED)
     @DeleteMapping("applicationManage/decline")
     public Response decline(@RequestBody ApplyIdVO applyIdVO) {
-        return success(leaderService.decline(applyIdVO));
+        return success(leaderService.decline(applyIdVO),"/user/leader/applicationManage/decline");
     }
 
 
@@ -82,7 +82,7 @@ public class LeaderController {
     @GetMapping("participantManage/detail/{Studygroup_id}")
     public Response participantInfo(@PathVariable("Studygroup_id") Long Studygroup_id, Authentication authentication) {
         //스터디정보 ->  participantrate 조회
-        return success(leaderService.getAttendance(Studygroup_id));
+        return success(leaderService.getAttendance(Studygroup_id),"/user/leader/participantManage/detail/{Studygroup_id}");
     }
 
 
@@ -100,7 +100,7 @@ public class LeaderController {
         //user id -> 스터디정보 ->  participantrate 조회
         // participantrate는 입력받음
 
-        return success(leaderService.getParticipants(Studygroup_id));
+        return success(leaderService.getParticipants(Studygroup_id),"/user/leader/attendance/detail/{Studygroup_id}");
     }
 
     @ApiOperation(value = "주차별 참여율 입력", notes = "주차별 참여율 입력한다.")
@@ -108,7 +108,7 @@ public class LeaderController {
     @PostMapping("attendance/detail")
     public Response attendanceCheckPost(@RequestBody ParticipationVO participationVO) {
 
-        return success(leaderService.postAttendance(participationVO));
+        return success(leaderService.postAttendance(participationVO),"/user/leader/attendance/detail");
     }
 
     // http://localhost:8081/user/leader/attendance/detail

@@ -23,7 +23,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 각 예외마다 상태 코드 지정
     public Response illegalArgumentExceptionAdvice(IllegalArgumentException e) {
         log.info("e = {}", e.getMessage());
-        return Response.failure(500, e.getMessage().toString());
+        return Response.failure(500, e.getMessage().toString(), null);
     }
 
 
@@ -31,14 +31,14 @@ public class ExceptionAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response methodArgumentNotValidException(MethodArgumentNotValidException e) { // 2
-        return Response.failure(400, e.getBindingResult().getFieldError().getDefaultMessage());
+        return Response.failure(400, e.getBindingResult().getFieldError().getDefaultMessage(), null);
     }
 
     // 400 에러
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response bindException(BindException e) {
-        return Response.failure(400, e.getBindingResult().getFieldError().getDefaultMessage());
+        return Response.failure(400, e.getBindingResult().getFieldError().getDefaultMessage(), null);
     }
 
 
@@ -47,7 +47,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(StudygroupIdNotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response studygroupIdNotFound() {
-        return Response.failure(404, "Studygroup Id를 찾을 수 없습니다.");
+        return Response.failure(404, "Studygroup Id를 찾을 수 없습니다.", null);
     }
 
     // 404 응답
@@ -55,7 +55,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(SelfOnlyModifiableException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response selfOnlyModifiableException() {
-        return Response.failure(404, "본인 게시물만 수정할 수 있습니다.");
+        return Response.failure(404, "본인 게시물만 수정할 수 있습니다.", null);
     }
 
 
@@ -64,7 +64,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(SelfOnlyDeletableException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response selfOnlyDeletableException() {
-        return Response.failure(404, "본인 게시물만 삭제할 수 있습니다.");
+        return Response.failure(404, "본인 게시물만 삭제할 수 있습니다.", null);
     }
 
     // 404 응답
@@ -72,14 +72,14 @@ public class ExceptionAdvice {
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response memberNotFoundException() {
-        return Response.failure(404, "요청한 회원을 찾을 수 없습니다.");
+        return Response.failure(404, "요청한 회원을 찾을 수 없습니다.", null);
     }
 
     // 400 응답
     @ExceptionHandler(PasswordVerificationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response passwordVerificationException() {
-        return Response.failure(400, "passwd1 와 passwd2가 다릅니다.");
+        return Response.failure(400, "passwd1 와 passwd2가 다릅니다.", null);
     }
 
 }

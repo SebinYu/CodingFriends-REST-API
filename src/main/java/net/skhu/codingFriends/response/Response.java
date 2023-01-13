@@ -11,18 +11,18 @@ import lombok.Getter;
 public class Response {
     private String success;
     private int code;
-//    private String url;
+    private String url;
     private Result result;
 
-    public static Response success() { // 4
-        return new Response("성공", 0, null);
+    public static Response success(String url) { // 4
+        return new Response("성공", 0, url, null);
     }
 
-    public static <T> Response success(T data) { // 5
-        return new Response("성공", 0, new Success<>(data));
+    public static <T> Response success(T data, String url) { // 5
+        return new Response("성공", 0, url, new Success<>(data));
     }
 
-    public static Response failure(int code, String msg) { // 6
-        return new Response("실패", code, new Failure(msg));
+    public static Response failure(int code, String msg ,String url) { // 6
+        return new Response("실패", code, url, new Failure(msg));
     }
 }

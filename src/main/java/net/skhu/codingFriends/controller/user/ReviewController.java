@@ -28,7 +28,7 @@ public class ReviewController {
         //내 이름 제외 스터디 참여자 조회
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(reviewService.getEXColleague(Studygroup_id, user));
+        return success(reviewService.getEXColleague(Studygroup_id, user),"/user/review/index/{Studygroup_id}");
     }
 
     @ApiOperation(value = "스터디원 후기 등록페이지 조회", notes = "스터디원 후기 등록페이지 조회한다.")
@@ -38,7 +38,7 @@ public class ReviewController {
                                    @PathVariable("User_id") Long User_id,
                                    Authentication authentication) {
 
-        return success(reviewService.getReviewInputInfo(Studygroup_id, User_id));
+        return success(reviewService.getReviewInputInfo(Studygroup_id, User_id),"/user/review/detail/{Studygroup_id}/{User_id}");
     }
 
     @ApiOperation(value = "스터디원 후기 등록", notes = "스터디원 후기 등록한다.")
@@ -51,7 +51,7 @@ public class ReviewController {
         //내 이름 제외 스터디 참여자 조회
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(reviewService.postReview(Studygroup_id, user, User_id ,review));
+        return success(reviewService.postReview(Studygroup_id, user, User_id ,review),"/user/review/index/{Studygroup_id}/{User_id}");
     }
 
     @ApiOperation(value = "스터디원 후기 등록페이지 조회", notes = "스터디원 후기 등록페이지 조회한다.")
@@ -60,7 +60,7 @@ public class ReviewController {
     public Response myReviews(Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(reviewService.getMyReviews(user));
+        return success(reviewService.getMyReviews(user),"/user/review/myReviews");
     }
 
     @ApiOperation(value = "후기 이의제기 등록", notes = "후기 이의제기 등록한다.")
@@ -70,6 +70,6 @@ public class ReviewController {
                                  Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(reviewService.postObjection(review_id, user));
+        return success(reviewService.postObjection(review_id, user),"/user/review/objection/{review_id}");
     }
 }
