@@ -119,9 +119,9 @@ public class StudygroupController {
 
     @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("apply/{id}")
+    @PostMapping("apply/{studyGroup_id}")
     public Response apply(@RequestBody ApplyRequsetDto applyRequsetDto,
-                          @PathVariable("id") Long studyGroup_id,
+                          @PathVariable("studyGroup_id") Long studyGroup_id,
                           Authentication authentication) {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();

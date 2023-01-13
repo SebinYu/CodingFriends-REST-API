@@ -76,7 +76,7 @@ public class LeaderController {
     @ApiOperation(value = "주차별 스터디 참여내역 조회", notes = "주차별 스터디 참여내역 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("participantManage/detail/{Studygroup_id}")
-    public Response participantInfo(@PathVariable("Studygroup_id") Long Studygroup_id, Authentication authentication) {
+    public Response participantInfo(@PathVariable("Studygroup_id") Long Studygroup_id) {
         //스터디정보 ->  participantrate 조회
         return success(leaderService.getAttendance(Studygroup_id),"/user/leader/participantManage/detail/{Studygroup_id}");
     }

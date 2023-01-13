@@ -12,14 +12,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApplyRequsetDto {
-    private BigInteger apply_id;
-
-    private int userId;
-    private BigInteger studygroupId;
-    private String title;
-    private String applyStatus;
     private String application;
-    private String name;
-    private LocalDateTime updateDate;
-
 }

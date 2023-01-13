@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,7 +131,7 @@ public class StudygroupServiceImpl implements StudygroupService {
         apply.setApplyStatus("신청");
         apply.setName(user.getName());
         apply.setApplication(ApplyRequsetDto.getApplication());
-
+        apply.setUpdateDate(LocalDateTime.now());
         applyRepository.save(apply);
 
         return ApplyResponseDto.toDto(apply);

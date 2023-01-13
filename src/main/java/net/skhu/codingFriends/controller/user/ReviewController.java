@@ -35,8 +35,7 @@ public class ReviewController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{Studygroup_id}/{User_id}")
     public Response reviewInputGet(@PathVariable("Studygroup_id") Long Studygroup_id,
-                                   @PathVariable("User_id") Long User_id,
-                                   Authentication authentication) {
+                                   @PathVariable("User_id") Long User_id) {
 
         return success(reviewService.getReviewInputInfo(Studygroup_id, User_id),"/user/review/detail/{Studygroup_id}/{User_id}");
     }
