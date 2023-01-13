@@ -1,10 +1,9 @@
-package net.skhu.codingFriends.dto;
+package net.skhu.codingFriends.dto.ResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.skhu.codingFriends.entity.apply;
-import net.skhu.codingFriends.entity.studygroup;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplyDto {
+public class ApplyResponseDto {
     private BigInteger apply_id;
 
     private int userId;
@@ -23,8 +22,8 @@ public class ApplyDto {
     private String name;
     private LocalDateTime updateDate;
 
-    public static ApplyDto toDto(apply apply) {
-        return new ApplyDto(
+    public static ApplyResponseDto toDto(apply apply) {
+        return new ApplyResponseDto(
                 apply.getApply_id(),
                 apply.getUser().getUser_id(),
                 apply.getStudygroup().getStudyGroup_id(),

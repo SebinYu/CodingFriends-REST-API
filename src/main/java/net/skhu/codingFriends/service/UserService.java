@@ -1,10 +1,9 @@
 package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
-import net.skhu.codingFriends.dto.RegisterDto;
+import net.skhu.codingFriends.dto.RequestDTO.RegisterRequsetDto;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.exception.user.PasswordVerificationException;
-import net.skhu.codingFriends.exception.user.RegisterFailureException;
 import net.skhu.codingFriends.exception.MemberNotFoundException;
 import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,19 +18,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public user register(RegisterDto registerDto){
+    public user register(RegisterRequsetDto registerRequsetDto){
         user user = new user();
-        user.setUsername(registerDto.getUsername());
-        if (!registerDto.getPasswd1().equals(registerDto.getPasswd2())) {
+        user.setUsername(registerRequsetDto.getUsername());
+        if (!registerRequsetDto.getPasswd1().equals(registerRequsetDto.getPasswd2())) {
             throw new PasswordVerificationException();
         }
-        user.setPassword(bCryptPasswordEncoder.encode(registerDto.getPasswd1()));
-        user.setName(registerDto.getName());
-        user.setEmail(registerDto.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(registerRequsetDto.getPasswd1()));
+        user.setName(registerRequsetDto.getName());
+        user.setEmail(registerRequsetDto.getEmail());
         user.setEnabled(true);
         user.setUserType("ROLE_USER");
-        user.setAddress(registerDto.getAddress());
-        user.setAddress_detail(registerDto.getAddress_detail());
+        user.setAddress(registerRequsetDto.getAddress());
+        user.setAddress_detail(registerRequsetDto.getAddress_detail());
         return userRepository.save(user);
     }
 

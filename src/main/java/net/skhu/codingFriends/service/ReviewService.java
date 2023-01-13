@@ -2,7 +2,8 @@ package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ReviewInputVO;
-import net.skhu.codingFriends.dto.ParticipationDTO;
+import net.skhu.codingFriends.dto.RequestDTO.ParticipationRequsetDTO;
+import net.skhu.codingFriends.dto.ResponseDTO.ParticipationResponseDTO;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.review;
 import net.skhu.codingFriends.entity.studygroup;
@@ -30,7 +31,7 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     @Transactional
-    public List<ParticipationDTO> getEXColleague(Long studygroup_id, user myUserInfo) {
+    public List<ParticipationResponseDTO> getEXColleague(Long studygroup_id, user myUserInfo) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
@@ -42,9 +43,9 @@ public class ReviewService {
                 participationrateList.remove(myUserInfo);
             }
         }
-        List<ParticipationDTO> ParticipationDTOs = new ArrayList<>();
-        participationrateList.forEach(s -> ParticipationDTOs.add(ParticipationDTO.toDto(s)));
-        return ParticipationDTOs;
+        List<ParticipationResponseDTO> participationRequsetDTOS = new ArrayList<>();
+        participationrateList.forEach(s -> participationRequsetDTOS.add(ParticipationResponseDTO.toDto(s)));
+        return participationRequsetDTOS;
     }
     @Transactional
     public ReviewInputVO getReviewInputInfo(Long studygroup_id, Long User_id) {

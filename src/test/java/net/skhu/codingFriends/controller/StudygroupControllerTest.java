@@ -1,7 +1,7 @@
 package net.skhu.codingFriends.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.skhu.codingFriends.dto.StudygroupDto;
+import net.skhu.codingFriends.dto.RequestDTO.StudygroupRequsetDto;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.service.StudygroupService;
 import net.skhu.codingFriends.service.UserService;
@@ -78,15 +78,15 @@ class StudygroupControllerTest {
         int id = 12;
         user user = userService.findUser(id);
 
-        StudygroupDto studygroupDto = new StudygroupDto(null, "제목", "설명", 1, null, 1.0, 1.0, 1, 1, null, null, null);
+        StudygroupRequsetDto studygroupRequsetDto = new StudygroupRequsetDto(null, "제목", "설명", 1, null, 1.0, 1.0, 1, 1, null, null, null);
 
         // when, then
         mockMvc.perform(
                         post("/studygroup/create")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(studygroupDto)))
+                                .content(objectMapper.writeValueAsString(studygroupRequsetDto)))
                 .andExpect(status().isCreated());
 
-        verify(studygroupService).write(studygroupDto, user);
+        verify(studygroupService).write(studygroupRequsetDto, user);
     }
 }
