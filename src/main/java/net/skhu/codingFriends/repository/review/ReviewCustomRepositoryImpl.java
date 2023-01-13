@@ -1,15 +1,14 @@
 package net.skhu.codingFriends.repository.review;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import net.skhu.codingFriends.entity.review;
 import net.skhu.codingFriends.entity.user;
-import net.skhu.codingFriends.repository.apply.ApplyCustomRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import static net.skhu.codingFriends.entity.Qapply.apply;
-import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
+import static net.skhu.codingFriends.entity.Qreview.review;
 
 @Repository
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
@@ -20,13 +19,14 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         this.jPAQueryFactory = jPAQueryFactory;
     }
 
-//    @Override
-//    public List<net.skhu.codingFriends.entity.apply> findByApplierID(BigInteger id) {
-//        return jPAQueryFactory
-//                .selectFrom(apply)
-//                .where(apply.apply_id.eq(id))
-//                .fetch();
-//    }
+    @Override
+    public List<review> findByUser(user user) {
+        return jPAQueryFactory
+                .selectFrom(review)
+                .where(review.user.eq(user))
+                .fetch();
+    }
+
 
 
 }

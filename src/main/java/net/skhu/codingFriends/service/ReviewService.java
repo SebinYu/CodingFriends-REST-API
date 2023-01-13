@@ -71,11 +71,16 @@ public class ReviewService {
         reviewTemp.setReviewScore(review.getReviewScore());
         reviewTemp.setReviewContents(review.getReviewContents());
         reviewTemp.setObjection(0);
+        //상대방
         reviewTemp.setUser(userTemp.get());
         reviewTemp.setStudygroup(studygroupTemp);
 
         reviewRepository.save(reviewTemp);
 
         return reviewTemp;
+    }
+
+    public List<review> getMyReviews(user user) {
+        return reviewRepository.findByUser(user);
     }
 }

@@ -53,4 +53,13 @@ public class ReviewController {
         user user = principalDetails.getUser();
         return success(reviewService.postReview(Studygroup_id, user, User_id ,review));
     }
+
+    @ApiOperation(value = "스터디원 후기 등록페이지 조회", notes = "스터디원 후기 등록페이지 조회한다.")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("myReviews")
+    public Response myReviews(Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+        return success(reviewService.getMyReviews(user));
+    }
 }
