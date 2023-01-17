@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"net.skhu.codingFriends.controller"})
 @ComponentScan(basePackages = {"net.skhu.codingFriends.repository"})
 @ComponentScan(basePackages = {"net.skhu.codingFriends.service"})
+@ComponentScan(basePackages = {"net.skhu.codingFriends.config"})
 @EnableEncryptableProperties
 public class BackendCodingFriendApplication {
 

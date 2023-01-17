@@ -1,9 +1,11 @@
 package net.skhu.codingFriends.service;
 
-import net.skhu.codingFriends.dto.ActionResult;
+import net.skhu.codingFriends.dto.ApplyDto;
+import net.skhu.codingFriends.dto.RegisterDto;
+import net.skhu.codingFriends.dto.StudygroupDto;
 import net.skhu.codingFriends.entity.learningmaterial;
 import net.skhu.codingFriends.entity.studygroup;
-import org.springframework.web.bind.annotation.PathVariable;
+import net.skhu.codingFriends.entity.user;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigInteger;
@@ -12,19 +14,17 @@ import java.util.List;
 
 public interface StudygroupService {
 
-    List<studygroup> findAll();
+    List<StudygroupDto> getStudygroups();
+    StudygroupDto getStudygroup(BigInteger studyGroup_id);
+    StudygroupDto write(StudygroupDto studygroupDto, user user);
 
-    studygroup findOneStudygroupInfo(BigInteger studyGroup_id);
+    StudygroupDto update(Integer id, StudygroupDto studygroupDto);
+    void deleteByStudyGroup_id(int id);
 
-//    List<studygroup> searchWithLearningMaterial_id(BigInteger learningMaterial_id);
+
     List<studygroup> searchWithKeyword(String keyword);
 
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
     List<learningmaterial> findAllLearningMaterial();
-    void insert(studygroup studygroupInfo);
-
-    void update(@RequestBody studygroup studygroupInfo);
-    void deleteByStudyGroup_id(int id);
-
-    List<studygroup> updateDate();
+    ApplyDto apply(ApplyDto applyDto, Long studyGroup_id, user user);
 }

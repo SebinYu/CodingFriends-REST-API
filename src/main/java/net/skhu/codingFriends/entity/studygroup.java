@@ -2,6 +2,7 @@ package net.skhu.codingFriends.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,4 +37,9 @@ public class studygroup implements Serializable {
     LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate endDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID")
+    @JsonIgnore
+    user user;
 }
