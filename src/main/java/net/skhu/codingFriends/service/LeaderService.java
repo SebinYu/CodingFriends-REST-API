@@ -3,8 +3,10 @@ package net.skhu.codingFriends.service;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ApplyIdVO;
 import net.skhu.codingFriends.VO.ParticipationVO;
-import net.skhu.codingFriends.dto.ApplyDto;
-import net.skhu.codingFriends.dto.ParticipationDTO;
+import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
+import net.skhu.codingFriends.dto.RequestDTO.ParticipationRequsetDTO;
+import net.skhu.codingFriends.dto.ResponseDTO.ApplyResponseDto;
+import net.skhu.codingFriends.dto.ResponseDTO.ParticipationResponseDTO;
 import net.skhu.codingFriends.entity.apply;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;
@@ -18,9 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +42,9 @@ public class LeaderService {
     }
 
     @Transactional
-    public List<ParticipationDTO> accept(ApplyIdVO applyIdVO, user user) {
+    public List<ParticipationResponseDTO> accept(ApplyIdVO applyIdVO, user user) {
         int ApplyIdlength = applyIdVO.getApply_id().length;
-        List<ParticipationDTO> participationrateList = new ArrayList<>();
+        List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
 
         for(int i = 0; i< ApplyIdlength; i++){
             BigInteger[] applyIDs = applyIdVO.getApply_id();
@@ -59,6 +61,7 @@ public class LeaderService {
             participationrate.setWeek(0);
             participationrate.setWeeklyAttendance("미정");
             participationrate.setWeeklyHomework("미정");
+            participationrate.setUpdateDate(LocalDateTime.now());
 
             participationRepository.save(participationrate);
 
@@ -68,23 +71,23 @@ public class LeaderService {
             applyTemp.setApplyStatus("등록");
             applyRepository.updateApplyStatus(applyTemp);
 
-            participationrateList.add(ParticipationDTO.toDto(participationrate));
+            participationrateList.add(ParticipationResponseDTO.toDto(participationrate));
         }
         return participationrateList;
 
     }
 
     @Transactional
-    public List<ApplyDto> decline(ApplyIdVO applyIdVO) {
+    public List<ApplyResponseDto> decline(ApplyIdVO applyIdVO) {
         int ApplyIdlength = applyIdVO.getApply_id().length;
-        List<ApplyDto> declindedApplyList = new ArrayList<>();
+        List<ApplyResponseDto> declindedApplyList = new ArrayList<>();
 
         for(int i = 0; i< ApplyIdlength; i++){
             BigInteger[] applyIDs = applyIdVO.getApply_id();
             BigInteger applyID = applyIDs[i];
 
             List<apply> applyTemp =  applyRepository.findByApplierID(applyID);
-            declindedApplyList.add(ApplyDto.toDto(applyTemp.get(0)));
+            declindedApplyList.add(ApplyResponseDto.toDto(applyTemp.get(0)));
 
             applyRepository.deleteById(applyID);
         }
@@ -92,51 +95,53 @@ public class LeaderService {
     }
 
     @Transactional
-    public List<ApplyDto> getParticipants(Long studygroup_id) {
+    public List<ApplyResponseDto> getParticipants(Long studygroup_id) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
         List<apply> applyTemp = applyRepository.findByStudygroup(studygroupTemp);
-        List<ApplyDto> applyDtos = new ArrayList<>();
-        applyTemp.forEach(s -> applyDtos.add(ApplyDto.toDto(s)));
-        return applyDtos;
+        List<ApplyResponseDto> applyResponseDtos = new ArrayList<>();
+        applyTemp.forEach(s -> applyResponseDtos.add(ApplyResponseDto.toDto(s)));
+        return applyResponseDtos;
     }
 
     @Transactional
-    public List<ParticipationDTO> postAttendance(ParticipationVO participationVO) {
+    public List<ParticipationResponseDTO> postAttendance(ParticipationVO participationVO) {
 
-        ParticipationDTO[] participationDTOs = participationVO.getParticipationDTOList();
-        List<ParticipationDTO> participationrateList = new ArrayList<>();
+        ParticipationRequsetDTO[] participationRequsetDTOS = participationVO.getParticipationRequsetDTOList();
+        List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
 
-        for(int i = 0; i < participationDTOs.length; i++){
-            ParticipationDTO participationDTOTemp = participationDTOs[i];
+        for(int i = 0; i < participationRequsetDTOS.length; i++){
+            ParticipationRequsetDTO participationRequsetDTOTemp = participationRequsetDTOS[i];
             participationrate participationrateTemp = new participationrate();
 
             Double lectureScore = 0.0;
 
-            if(participationDTOTemp.getWeeklyAttendance().equals("참여")){
+            if(participationRequsetDTOTemp.getWeeklyAttendance().equals("참여")){
                 lectureScore += 100.0;
             }
 
-            if(participationDTOTemp.getWeeklyHomework().equals("참여")){
+            if(participationRequsetDTOTemp.getWeeklyHomework().equals("참여")){
                 lectureScore += 100.0;
             }
+
+            //참여도 점수평균 - (출석+과제) / 2
             Double finalLectureScore = lectureScore/2;
 
-            participationrateTemp.setStudyGroup_Leader(participationDTOTemp.getStudyGroup_Leader());
-            participationrateTemp.setWeek(participationDTOTemp.getWeek());
-            participationrateTemp.setWeeklyAttendance(participationDTOTemp.getWeeklyAttendance());
-            participationrateTemp.setWeeklyHomework(participationDTOTemp.getWeeklyHomework());
+            participationrateTemp.setStudyGroup_Leader(participationRequsetDTOTemp.getStudyGroup_Leader());
+            participationrateTemp.setWeek(participationRequsetDTOTemp.getWeek());
+            participationrateTemp.setWeeklyAttendance(participationRequsetDTOTemp.getWeeklyAttendance());
+            participationrateTemp.setWeeklyHomework(participationRequsetDTOTemp.getWeeklyHomework());
             participationrateTemp.setLectureScore(finalLectureScore);
 
-            Integer userID = participationDTOTemp.getStudentId();
+            Integer userID = participationRequsetDTOTemp.getStudentId();
             user userTemp = userRepository.findById(userID).orElseThrow(() -> {
                 return new StudygroupIdNotFound();
             });
             participationrateTemp.setUser(userTemp);
 
 
-            BigInteger studygroupID = participationDTOTemp.getStudygroupId();
+            BigInteger studygroupID = participationRequsetDTOTemp.getStudygroupId();
             studygroup studygroupTemp = studygroupRepository.findById(studygroupID).orElseThrow(() -> {
                 return new StudygroupIdNotFound();
             });
@@ -144,18 +149,18 @@ public class LeaderService {
 
             participationRepository.save(participationrateTemp);
 
-            participationrateList.add(ParticipationDTO.toDto(participationrateTemp));
+            participationrateList.add(ParticipationResponseDTO.toDto(participationrateTemp));
         }
         return participationrateList;
     }
 
-    public List<ParticipationDTO> getAttendance(Long studygroup_id) {
+    public List<ParticipationResponseDTO> getAttendance(Long studygroup_id) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
         List<participationrate> participationTemp = participationRepository.findByStudygroup(studygroupTemp);
-        List<ParticipationDTO> ParticipationDTOs = new ArrayList<>();
-        participationTemp.forEach(s -> ParticipationDTOs.add(ParticipationDTO.toDto(s)));
-        return ParticipationDTOs;
+        List<ParticipationResponseDTO> participationResponseDTOs = new ArrayList<>();
+        participationTemp.forEach(s -> participationResponseDTOs.add(ParticipationResponseDTO.toDto(s)));
+        return participationResponseDTOs;
     }
 }

@@ -1,7 +1,8 @@
 package net.skhu.codingFriends.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.skhu.codingFriends.dto.RegisterDto;
+import net.skhu.codingFriends.controller.user.UserController;
+import net.skhu.codingFriends.dto.RequestDTO.RegisterRequsetDto;
 import net.skhu.codingFriends.service.UserService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,7 +74,7 @@ class UserControllerTest {
         @DisplayName("성공 테스트")
         void registerTest_success() throws Exception {
             // given
-            RegisterDto req = new RegisterDto("username", "passwd1", "passwd1", "name", "email@gmail.com", "userType", "address", "address_detail");
+            RegisterRequsetDto req = new RegisterRequsetDto("username", "passwd1", "passwd1", "name", "email@gmail.com", "userType", "address", "address_detail");
 
             // when, then
             mockMvc.perform(
@@ -92,7 +93,7 @@ class UserControllerTest {
         @DisplayName("실패 테스트")
         void registerTest_error() throws Exception {
 
-            RegisterDto req2 = new RegisterDto("testID2", "tes4", "test1234", "name", "email@gmail.com", "userType", "address", "address_detail");
+            RegisterRequsetDto req2 = new RegisterRequsetDto("testID2", "tes4", "test1234", "name", "email@gmail.com", "userType", "address", "address_detail");
 //            assertThrows(PasswordVerificationException.class, () -> userService.register(req2));
             mockMvc.perform(
                             post("/auth")

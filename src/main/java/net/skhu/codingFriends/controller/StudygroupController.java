@@ -3,14 +3,12 @@ package net.skhu.codingFriends.controller;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
-import net.skhu.codingFriends.dto.ApplyDto;
-import net.skhu.codingFriends.dto.RegisterDto;
-import net.skhu.codingFriends.dto.StudygroupDto;
+import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
+import net.skhu.codingFriends.dto.RequestDTO.StudygroupRequsetDto;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
-import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.http.HttpStatus;
@@ -33,7 +31,7 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("list")
     public Response getlist() {
-        return success(studygroupService.getStudygroups());
+        return success(studygroupService.getStudygroups(),"/studygroup/list");
     }
 
 
@@ -41,7 +39,7 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{id}")
     public Response detailGet(@PathVariable("id") Long studyGroup_id){
-        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)));
+        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)),"/studygroup/detail/{id}");
     }
 
 
@@ -56,10 +54,10 @@ public class StudygroupController {
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("create")
-    public Response createPost(@RequestBody StudygroupDto studygroupDto, Authentication authentication) {
+    public Response createPost(@RequestBody StudygroupRequsetDto studygroupRequsetDto, Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(studygroupService.write(studygroupDto, user));
+        return success(studygroupService.write(studygroupRequsetDto, user),"/studygroup/create");
     }
 
 
@@ -67,20 +65,20 @@ public class StudygroupController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("edit/{id}")
     public Response updateGet(@PathVariable("id") Long studyGroup_id){
-        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)));
+        return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)),"/studygroup/edit/{id}");
     }
 
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "edit/{id}")
-    public Response updatePut(@RequestBody StudygroupDto studygroupDto,
+    public Response updatePut(@RequestBody StudygroupRequsetDto studygroupRequsetDto,
                                  @PathVariable("id") Long studygroup_id,
                                  Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저의 글이 맞다면
-            return success(studygroupService.update(Math.toIntExact(studygroup_id), studygroupDto));
+            return success(studygroupService.update(Math.toIntExact(studygroup_id), studygroupRequsetDto),"/studygroup/edit/{id}");
         } else {
             throw new SelfOnlyModifiableException();
 
@@ -96,7 +94,7 @@ public class StudygroupController {
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저가 글 작성자와 같다면
             studygroupService.deleteByStudyGroup_id(Math.toIntExact(studygroup_id)); // 이 메소드는 반환값이 없으므로 따로 삭제 수행해주고, 리턴에는 null을 넣어줌
-            return success(null);
+            return success("/studygroup/delete/{id}");
         } else {
             throw new SelfOnlyDeletableException();
         }
@@ -121,14 +119,14 @@ public class StudygroupController {
 
     @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("apply/{id}")
-    public Response apply(@RequestBody ApplyDto applyDto,
-                          @PathVariable("id") Long studyGroup_id,
+    @PostMapping("apply/{studyGroup_id}")
+    public Response apply(@RequestBody ApplyRequsetDto applyRequsetDto,
+                          @PathVariable("studyGroup_id") Long studyGroup_id,
                           Authentication authentication) {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(studygroupService.apply(applyDto, studyGroup_id, user));
+        return success(studygroupService.apply(applyRequsetDto, studyGroup_id, user),"/studygroup/apply/{id}");
     }
 
 

@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.dto;
+package net.skhu.codingFriends.dto.ResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParticipationDTO {
+public class ParticipationResponseDTO {
     BigInteger participationRate_id;
 
     private int studentId;
@@ -23,8 +23,8 @@ public class ParticipationDTO {
     Double lectureScore;
     private LocalDateTime updateDate;
 
-    public static ParticipationDTO toDto(participationrate participationrate) {
-        return new ParticipationDTO(
+    public static ParticipationResponseDTO toDto(participationrate participationrate) {
+        return new ParticipationResponseDTO(
                 participationrate.getParticipationRate_id(),
                 participationrate.getUser().getUser_id(),
                 participationrate.getStudygroup().getStudyGroup_id(),

@@ -1,10 +1,9 @@
 package net.skhu.codingFriends.VO;
 
 import lombok.Data;
-import net.skhu.codingFriends.dto.ParticipationDTO;
-import net.skhu.codingFriends.entity.participationrate;
+import net.skhu.codingFriends.dto.RequestDTO.ParticipationRequsetDTO;
 
 @Data
 public class ParticipationVO {
-    ParticipationDTO[] participationDTOList;
+    ParticipationRequsetDTO[] participationRequsetDTOList;
 }

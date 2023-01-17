@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
-import net.skhu.codingFriends.dto.LoginRequestDto;
+import net.skhu.codingFriends.dto.RequestDTO.LoginRequestDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
