@@ -28,7 +28,6 @@ import static net.skhu.codingFriends.response.Response.success;
 public class StudygroupController {
 
     private final StudygroupService studygroupService;
-    private final UserRepository userRepository;
 
     @ApiOperation(value = "전체 게시글 보기", notes = "전체 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)

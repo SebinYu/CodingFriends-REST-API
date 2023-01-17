@@ -95,7 +95,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
 
-
+    @Transactional
     public void deleteByStudyGroup_id(int id){
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -104,16 +104,19 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     //키워드로 검색
+    @Transactional
     public List<studygroup> searchWithKeyword(String keyword){
         return studygroupRepository.findByTitleContaining(keyword);
     }
 
     //키워드, 학습자료로 검색
+    @Transactional
     public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword){
         return studygroupRepository.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
     }
 
     //학습자료 조회
+    @Transactional
     public List<learningmaterial> findAllLearningMaterial(){
         return learningmaterialRepository.findAllLearningMaterial();
     }
@@ -125,8 +128,8 @@ public class StudygroupServiceImpl implements StudygroupService {
         });
 
         apply apply = new apply();
-        apply.setUserId(String.valueOf(user.getUser_id()));
-        apply.setStudygroupId(String.valueOf(studyGroup_id));
+        apply.setUser(user);
+        apply.setStudygroup(studygroup);
         apply.setTitle(studygroup.getTitle());
         apply.setApplyStatus("신청");
         apply.setName(user.getName());

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigInteger;
 
-public interface ApplyRepository extends JpaRepository<apply, BigInteger> {
+public interface ApplyRepository extends JpaRepository<apply, BigInteger>, ApplyCustomRepository {
 
 
 }

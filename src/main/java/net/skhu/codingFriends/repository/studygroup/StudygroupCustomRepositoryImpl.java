@@ -3,6 +3,7 @@ package net.skhu.codingFriends.repository.studygroup;
 import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.user;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,5 +28,13 @@ public class StudygroupCustomRepositoryImpl implements StudygroupCustomRepositor
     @Override
     public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword) {
         return null;
+    }
+
+    @Override
+    public List<net.skhu.codingFriends.entity.studygroup> findByUserID(user user1) {
+        return jPAQueryFactory
+                .selectFrom(studygroup)
+                .where(studygroup.user.eq(user1))
+                .fetch();
     }
 }
