@@ -105,7 +105,7 @@ public class LeaderService {
         return applyResponseDtos;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ParticipationResponseDTO> postAttendance(ParticipationVO participationVO) {
 
         ParticipationRequsetDTO[] participationRequsetDTOS = participationVO.getParticipationRequsetDTOList();
