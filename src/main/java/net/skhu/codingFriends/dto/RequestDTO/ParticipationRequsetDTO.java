@@ -20,8 +20,4 @@ public class ParticipationRequsetDTO {
     Integer week;
     String weeklyAttendance;
     String weeklyHomework;
-    Double lectureScore;
-    private LocalDateTime updateDate;
-
-
 }

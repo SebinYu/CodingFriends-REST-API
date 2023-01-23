@@ -105,14 +105,8 @@ public class LeaderService {
         return applyResponseDtos;
     }
 
-    @Transactional
-    public List<ParticipationResponseDTO> postAttendance(ParticipationVO participationVO) {
+    public participationrate setParticipationrateTemp(ParticipationRequsetDTO participationRequsetDTOTemp){
 
-        ParticipationRequsetDTO[] participationRequsetDTOS = participationVO.getParticipationRequsetDTOList();
-        List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
-
-        for(int i = 0; i < participationRequsetDTOS.length; i++){
-            ParticipationRequsetDTO participationRequsetDTOTemp = participationRequsetDTOS[i];
             participationrate participationrateTemp = new participationrate();
 
             Double lectureScore = 0.0;
@@ -133,6 +127,8 @@ public class LeaderService {
             participationrateTemp.setWeeklyAttendance(participationRequsetDTOTemp.getWeeklyAttendance());
             participationrateTemp.setWeeklyHomework(participationRequsetDTOTemp.getWeeklyHomework());
             participationrateTemp.setLectureScore(finalLectureScore);
+            participationrateTemp.setUpdateDate(LocalDateTime.now());
+
 
             Integer userID = participationRequsetDTOTemp.getStudentId();
             user userTemp = userRepository.findById(userID).orElseThrow(() -> {
@@ -146,6 +142,22 @@ public class LeaderService {
                 return new StudygroupIdNotFound();
             });
             participationrateTemp.setStudygroup(studygroupTemp);
+
+        return participationrateTemp;
+    }
+
+
+    @Transactional
+    public List<ParticipationResponseDTO> postAttendance(ParticipationVO participationVO) {
+
+        //인덱스 별, 참여율 등록
+        ParticipationRequsetDTO[] participationRequsetDTOS = participationVO.getParticipationRequsetDTOList();
+        List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
+
+        for(int i = 0; i < participationRequsetDTOS.length; i++){
+            ParticipationRequsetDTO participationRequsetDTOTemp = participationRequsetDTOS[i];
+
+            participationrate participationrateTemp = setParticipationrateTemp(participationRequsetDTOTemp);
 
             participationRepository.save(participationrateTemp);
 
