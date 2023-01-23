@@ -32,11 +32,11 @@ public class LeaderService {
     private final ParticipationRepository participationRepository;
     private final UserRepository userRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<apply> getApplications(user user) {
         return applyRepository.findByUser(user);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public List<studygroup> getStudygroups(user user) {
         return studygroupRepository.findByUserID(user);
     }
@@ -94,7 +94,7 @@ public class LeaderService {
         return declindedApplyList;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ApplyResponseDto> getParticipants(Long studygroup_id) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -105,7 +105,7 @@ public class LeaderService {
         return applyResponseDtos;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<ParticipationResponseDTO> postAttendance(ParticipationVO participationVO) {
 
         ParticipationRequsetDTO[] participationRequsetDTOS = participationVO.getParticipationRequsetDTOList();
@@ -154,6 +154,7 @@ public class LeaderService {
         return participationrateList;
     }
 
+    @Transactional(readOnly = true)
     public List<ParticipationResponseDTO> getAttendance(Long studygroup_id) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();

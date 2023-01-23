@@ -8,6 +8,7 @@ import net.skhu.codingFriends.exception.MemberNotFoundException;
 import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     public user register(RegisterRequsetDto registerRequsetDto){
         user user = new user();
         user.setUsername(registerRequsetDto.getUsername());
@@ -34,10 +36,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     public List<user> findAll() {
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public user findUser(int id) {
         return userRepository.findById(id).orElseThrow(()-> {
             return new MemberNotFoundException();
