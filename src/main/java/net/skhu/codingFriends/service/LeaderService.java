@@ -11,6 +11,8 @@ import net.skhu.codingFriends.entity.apply;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.enums.MyStatus;
+import net.skhu.codingFriends.exception.UncorrectStatusInputForm;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
@@ -59,8 +61,9 @@ public class LeaderService {
             participationrate.setStudygroup(applyInfo.get(0).getStudygroup());
             participationrate.setStudyGroup_Leader(user.getName());
             participationrate.setWeek(0);
-            participationrate.setWeeklyAttendance("미정");
-            participationrate.setWeeklyHomework("미정");
+
+            participationrate.setWeeklyAttendance(MyStatus.Undefined.value());
+            participationrate.setWeeklyHomework(MyStatus.Undefined.value());
             participationrate.setUpdateDate(LocalDateTime.now());
 
             participationRepository.save(participationrate);
@@ -68,7 +71,7 @@ public class LeaderService {
             //신청상태 - "등록"으로 변경
             apply applyTemp = new apply();
             applyTemp.setApply_id(applyInfo.get(0).getApply_id());
-            applyTemp.setApplyStatus("등록");
+            applyTemp.setApplyStatus(MyStatus.Accepted.value());
             applyRepository.updateApplyStatus(applyTemp);
 
             participationrateList.add(ParticipationResponseDTO.toDto(participationrate));
@@ -105,17 +108,18 @@ public class LeaderService {
         return applyResponseDtos;
     }
 
+
     public participationrate setParticipationrateTemp(ParticipationRequsetDTO participationRequsetDTOTemp){
 
             participationrate participationrateTemp = new participationrate();
 
             Double lectureScore = 0.0;
 
-            if(participationRequsetDTOTemp.getWeeklyAttendance().equals("참여")){
+            if(participationRequsetDTOTemp.getWeeklyAttendance().equals(MyStatus.Accepted.value())){
                 lectureScore += 100.0;
             }
 
-            if(participationRequsetDTOTemp.getWeeklyHomework().equals("참여")){
+            if(participationRequsetDTOTemp.getWeeklyHomework().equals(MyStatus.Accepted.value())){
                 lectureScore += 100.0;
             }
 
@@ -124,8 +128,17 @@ public class LeaderService {
 
             participationrateTemp.setStudyGroup_Leader(participationRequsetDTOTemp.getStudyGroup_Leader());
             participationrateTemp.setWeek(participationRequsetDTOTemp.getWeek());
-            participationrateTemp.setWeeklyAttendance(participationRequsetDTOTemp.getWeeklyAttendance());
-            participationrateTemp.setWeeklyHomework(participationRequsetDTOTemp.getWeeklyHomework());
+            MyStatus tempAttendance = MyStatus.from(participationRequsetDTOTemp.getWeeklyAttendance());
+            if(tempAttendance == null){
+                throw new UncorrectStatusInputForm();
+            }
+            participationrateTemp.setWeeklyAttendance(tempAttendance.value());
+            MyStatus tempHomework = MyStatus.from(participationRequsetDTOTemp.getWeeklyHomework());
+
+            if(tempHomework == null){
+                    throw new UncorrectStatusInputForm();
+                }
+            participationrateTemp.setWeeklyHomework(tempHomework.value());
             participationrateTemp.setLectureScore(finalLectureScore);
             participationrateTemp.setUpdateDate(LocalDateTime.now());
 

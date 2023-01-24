@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.skhu.codingFriends.entity.participationrate;
+import net.skhu.codingFriends.enums.MyStatus;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
