@@ -30,7 +30,7 @@ public class ReviewService {
     private final StudygroupRepository studygroupRepository;
     private final UserRepository userRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ParticipationResponseDTO> getEXColleague(Long studygroup_id, user myUserInfo) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -47,7 +47,9 @@ public class ReviewService {
         participationrateList.forEach(s -> participationRequsetDTOS.add(ParticipationResponseDTO.toDto(s)));
         return participationRequsetDTOS;
     }
-    @Transactional
+
+
+    @Transactional(readOnly = true)
     public ReviewInputVO getReviewInputInfo(Long studygroup_id, Long User_id) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -58,6 +60,8 @@ public class ReviewService {
         reviewInputVO.setUser(userTemp.get());
         return reviewInputVO;
     }
+
+
     @Transactional
     public review postReview(Long studygroup_id, user user, Long User_id, review review) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
@@ -79,10 +83,14 @@ public class ReviewService {
 
         return reviewTemp;
     }
-    @Transactional
+
+
+    @Transactional(readOnly = true)
     public List<review> getMyReviews(user user) {
         return reviewRepository.findByUser(user);
     }
+
+
     @Transactional
     public String postObjection(Long review_id, user user1) {
         List<review> reviews = reviewRepository.findByUser(user1);

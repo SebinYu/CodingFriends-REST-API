@@ -31,8 +31,8 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     private final ApplyRepository applyRepository;
 
-    @Autowired
-    public LearningmaterialRepository learningmaterialRepository;
+
+    public final LearningmaterialRepository learningmaterialRepository;
 
     // 전체 게시물 조회
     @Transactional(readOnly = true)
@@ -101,19 +101,19 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     //키워드로 검색
-    @Transactional
+    @Transactional(readOnly = true)
     public List<studygroup> searchWithKeyword(String keyword){
         return studygroupRepository.findByTitleContaining(keyword);
     }
 
     //키워드, 학습자료로 검색
-    @Transactional
+    @Transactional(readOnly = true)
     public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword){
         return studygroupRepository.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
     }
 
     //학습자료 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public List<learningmaterial> findAllLearningMaterial(){
         return learningmaterialRepository.findAllLearningMaterial();
     }
