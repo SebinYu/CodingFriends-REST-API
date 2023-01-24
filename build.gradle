@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'net.skhu'
-version = '0.0.1-SNAPSHOT'
+version = '2.7.8-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
