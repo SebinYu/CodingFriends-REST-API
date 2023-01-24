@@ -24,7 +24,7 @@ plugins {
 }
 
 group = 'net.skhu'
-version = '0.0.1-SNAPSHOT'
+version = '2.7.8-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
@@ -37,6 +37,8 @@ repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
+	
+	gradlePluginPortal()
 }
 
 dependencies {
@@ -105,6 +107,9 @@ compileQuerydsl {
 test {
 	useJUnitPlatform()
 }
+
+
+
 
 tasks.named('test') {
 	useJUnitPlatform()
