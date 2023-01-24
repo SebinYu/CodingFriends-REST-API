@@ -113,18 +113,20 @@ public class LeaderService {
 
             participationrate participationrateTemp = new participationrate();
 
+            //참여도 점수 계산
             Double lectureScore = 0.0;
 
-            if(participationRequsetDTOTemp.getWeeklyAttendance().equals(MyStatus.Accepted.value())){
+            if(participationRequsetDTOTemp.getWeeklyAttendance().equals(MyStatus.Checked.value())){
                 lectureScore += 100.0;
             }
 
-            if(participationRequsetDTOTemp.getWeeklyHomework().equals(MyStatus.Accepted.value())){
+            if(participationRequsetDTOTemp.getWeeklyHomework().equals(MyStatus.Checked.value())){
                 lectureScore += 100.0;
             }
 
             //참여도 점수평균 - (출석+과제) / 2
             Double finalLectureScore = lectureScore/2;
+
 
             participationrateTemp.setStudyGroup_Leader(participationRequsetDTOTemp.getStudyGroup_Leader());
             participationrateTemp.setWeek(participationRequsetDTOTemp.getWeek());
@@ -137,7 +139,7 @@ public class LeaderService {
 
             if(tempHomework == null){
                     throw new UncorrectStatusInputForm();
-                }
+            }
             participationrateTemp.setWeeklyHomework(tempHomework.value());
             participationrateTemp.setLectureScore(finalLectureScore);
             participationrateTemp.setUpdateDate(LocalDateTime.now());
