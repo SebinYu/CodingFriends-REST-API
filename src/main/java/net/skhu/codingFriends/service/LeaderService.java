@@ -116,11 +116,11 @@ public class LeaderService {
             //참여도 점수 계산
             Double lectureScore = 0.0;
 
-            if(participationRequsetDTOTemp.getWeeklyAttendance().equals(MyStatus.Checked.value())){
+            if(participationRequsetDTOTemp.getWeeklyAttendance() == MyStatus.Checked){
                 lectureScore += 100.0;
             }
 
-            if(participationRequsetDTOTemp.getWeeklyHomework().equals(MyStatus.Checked.value())){
+            if(participationRequsetDTOTemp.getWeeklyHomework() == MyStatus.Checked){
                 lectureScore += 100.0;
             }
 
@@ -130,12 +130,12 @@ public class LeaderService {
 
             participationrateTemp.setStudyGroup_Leader(participationRequsetDTOTemp.getStudyGroup_Leader());
             participationrateTemp.setWeek(participationRequsetDTOTemp.getWeek());
-            MyStatus tempAttendance = MyStatus.from(participationRequsetDTOTemp.getWeeklyAttendance());
+            MyStatus tempAttendance = participationRequsetDTOTemp.getWeeklyAttendance();
             if(tempAttendance == null){
                 throw new UncorrectStatusInputForm();
             }
             participationrateTemp.setWeeklyAttendance(tempAttendance.value());
-            MyStatus tempHomework = MyStatus.from(participationRequsetDTOTemp.getWeeklyHomework());
+            MyStatus tempHomework = participationRequsetDTOTemp.getWeeklyHomework();
 
             if(tempHomework == null){
                     throw new UncorrectStatusInputForm();

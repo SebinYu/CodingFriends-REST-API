@@ -19,6 +19,6 @@ public class ParticipationRequsetDTO {
     private BigInteger studygroupId;
     String studyGroup_Leader;
     Integer week;
-    String weeklyAttendance;
-    String weeklyHomework;
+    MyStatus weeklyAttendance;
+    MyStatus weeklyHomework;
 }
