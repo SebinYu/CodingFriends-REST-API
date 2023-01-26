@@ -1,30 +1,27 @@
 package net.skhu.codingFriends.controller;//package net.skhu.controller;
 
-import net.skhu.codingFriends.dto.MailDTO;
+import net.skhu.codingFriends.config.auth.PrincipalDetails;
+import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import static net.skhu.codingFriends.response.Response.success;
 
 
 @RestController
-@RequestMapping("/mail")
 public class MailController {
 
     @Autowired
     private MailService mailService;
 
-    @PostMapping("/")
-    public String mail(MailDTO data, HttpServletRequest request) {
-//        String[] name = request.getParameterValues("name");
-//        String[] email = request.getParameterValues("email");
-//
-//            data.setName(name[0]);
-//            data.setEmail(email[0]);
-//            String res = this.mailService.sendSimpleMessage(data);
-//
-//        return res;
-        return null;
+    @PostMapping("/mailForLeader/{Studygroup_id}")
+    public Response mail(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+
+        return success(mailService.sendSimpleMessage(user, Studygroup_id),"/mail");
     }
 }

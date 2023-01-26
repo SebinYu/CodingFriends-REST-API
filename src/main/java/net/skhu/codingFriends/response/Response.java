@@ -22,7 +22,7 @@ public class Response {
         return new Response("성공", 0, url, new Success<>(data));
     }
 
-    public static Response failure(int code, String msg ,String url) { // 6
+    public static Response failure(int code, String msg ,String url) {
         return new Response("실패", code, url, new Failure(msg));
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.verify;
+import static org.mockito.Mockito.never;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,8 +32,6 @@ class UserControllerTest {
     MockMvc mockMvc;
     ObjectMapper objectMapper = new ObjectMapper();
 
-//    @Rule
-//    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeEach
     void beforeEach() {
@@ -67,7 +66,7 @@ class UserControllerTest {
     }
 
     @Nested
-    @DisplayName("회원가입")
+    @DisplayName("회원가입 연결 테스트")
     class registerTest {
 
         @Test
@@ -84,23 +83,27 @@ class UserControllerTest {
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.success", is("성공")));
 
-
             verify(userService).register(req);
         }
 
 
         @Test
-        @DisplayName("실패 테스트")
-        void registerTest_error() throws Exception {
+        @DisplayName("비밀번호 불일치 테스트")
+        void registerTest_passwordMismatch() throws Exception {
+            // given
+            RegisterRequsetDto req = new RegisterRequsetDto("username", "passwd1", "5", "name", "email@gmail.com", "userType", "address", "address_detail");
 
-            RegisterRequsetDto req2 = new RegisterRequsetDto("testID2", "tes4", "test1234", "name", "email@gmail.com", "userType", "address", "address_detail");
-//            assertThrows(PasswordVerificationException.class, () -> userService.register(req2));
+            // when, then
             mockMvc.perform(
                             post("/auth")
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .content(objectMapper.writeValueAsString(req2)))
-                    .andExpect(status().isBadRequest()); //400에러
+                                    .content(objectMapper.writeValueAsString(req)))
+                    .andExpect(status().isBadRequest());
+
+            //verify that the service method is not called
+            verify(userService, never()).register(req);
         }
+
 
     }
 }
