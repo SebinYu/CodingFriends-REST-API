@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.service.mailMessage.To;
+package net.skhu.codingFriends.service.mailMessage.to;
 
 import net.skhu.codingFriends.entity.user;
 

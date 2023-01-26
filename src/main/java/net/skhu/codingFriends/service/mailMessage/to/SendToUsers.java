@@ -1,6 +1,5 @@
-package net.skhu.codingFriends.service.mailMessage.To;
+package net.skhu.codingFriends.service.mailMessage.to;
 
-import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
