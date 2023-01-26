@@ -25,8 +25,9 @@ public class UserService {
         user.setUsername(registerRequsetDto.getUsername());
         if (!registerRequsetDto.getPasswd1().equals(registerRequsetDto.getPasswd2())) {
             throw new PasswordVerificationException();
+        }else{
+            user.setPassword(bCryptPasswordEncoder.encode(registerRequsetDto.getPasswd1()));
         }
-        user.setPassword(bCryptPasswordEncoder.encode(registerRequsetDto.getPasswd1()));
         user.setName(registerRequsetDto.getName());
         user.setEmail(registerRequsetDto.getEmail());
         user.setEnabled(true);
