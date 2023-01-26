@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.service.mailMessage.to;
+package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to;
 
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;

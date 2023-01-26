@@ -1,8 +1,8 @@
-package net.skhu.codingFriends.service.mailMessage;
+package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage;
 
-import net.skhu.codingFriends.service.mailMessage.subject.SubjectStrategy;
-import net.skhu.codingFriends.service.mailMessage.text.TextStrategy;
-import net.skhu.codingFriends.service.mailMessage.to.SendToStrategy;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.SubjectStrategy;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.TextStrategy;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to.SendToStrategy;
 
 import net.skhu.codingFriends.entity.user;
 

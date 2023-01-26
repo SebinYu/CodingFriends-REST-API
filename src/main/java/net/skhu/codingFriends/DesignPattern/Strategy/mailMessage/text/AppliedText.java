@@ -1,13 +1,6 @@
-package net.skhu.codingFriends.service.mailMessage.text;
+package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
-import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
-
-import java.math.BigInteger;
-import java.util.Optional;
 
 public class AppliedText implements TextStrategy {
 

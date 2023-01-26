@@ -1,16 +1,19 @@
 package net.skhu.codingFriends.service;
 
 
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Accepted;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Rejected;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.AcceptedText;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.AppliedText;
 import net.skhu.codingFriends.dto.ResponseDTO.MailResponseDTO;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
-import net.skhu.codingFriends.service.mailMessage.MailInfo;
-import net.skhu.codingFriends.service.mailMessage.subject.Accepted;
-import net.skhu.codingFriends.service.mailMessage.subject.Applied;
-import net.skhu.codingFriends.service.mailMessage.text.AppliedText;
-import net.skhu.codingFriends.service.mailMessage.text.RejectedText;
-import net.skhu.codingFriends.service.mailMessage.to.SendToOneUser;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.MailInfo;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Applied;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.RejectedText;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to.SendToOneUser;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -30,13 +33,40 @@ public class MailService {
     private final JavaMailSender emailSender;
     private final StudygroupRepository studygroupRepository;
 
-
     @Transactional(readOnly = true)
-    public MailResponseDTO sendSimpleMessage(user user, Long studygroup_id) {
-
+    public MailResponseDTO sendmailToLeader(user user, Long studygroup_id) {
 
         //이메일 보내기 전략방식
-        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied(), new RejectedText());
+        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied(), new AppliedText());
+        SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
+
+        //json 리턴값
+        MailResponseDTO mailResponseDTO = setMailResponseDTO(fullMessage);
+
+        return mailResponseDTO;
+    }
+
+
+
+    @Transactional(readOnly = true)
+    public MailResponseDTO sendmailToApplierAccepted(user user, Long studygroup_id) {
+
+        //이메일 보내기 전략방식
+        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Accepted(), new AcceptedText());
+        SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
+
+        //json 리턴값
+        MailResponseDTO mailResponseDTO = setMailResponseDTO(fullMessage);
+
+        return mailResponseDTO;
+    }
+
+
+    @Transactional(readOnly = true)
+    public MailResponseDTO sendmailToApplierRejected(user user, Long studygroup_id) {
+
+        //이메일 보내기 전략방식
+        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Rejected(), new RejectedText());
         SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
 
         //json 리턴값
@@ -48,10 +78,11 @@ public class MailService {
 
 
 
-
     public SimpleMailMessage sendMail(MailInfo mailInfo,user user, Long studygroup_id){
-        Optional<studygroup> studygroupOne = studygroupRepository.findById(BigInteger.valueOf(studygroup_id));
-        String studyTitle = studygroupOne.get().getTitle();
+        studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
+            return new StudygroupIdNotFound();
+        });
+        String studyTitle = studygroup.getTitle();
 
         SimpleMailMessage message = new SimpleMailMessage();
 

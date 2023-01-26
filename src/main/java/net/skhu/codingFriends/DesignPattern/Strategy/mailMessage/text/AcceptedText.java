@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.service.mailMessage.text;
+package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text;
 
 import net.skhu.codingFriends.entity.user;
 

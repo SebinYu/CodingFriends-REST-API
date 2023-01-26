@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.service.mailMessage.subject;
+package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject;
 
 public class Accepted implements SubjectStrategy {
     @Override
