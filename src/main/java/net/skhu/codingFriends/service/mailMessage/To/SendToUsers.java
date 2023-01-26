@@ -23,6 +23,7 @@ public class SendToUsers implements SendToStrategy{
 
     @Override
     public String[] to(user user, Long studygroup_id) {
+        //studygroupRepository.findById - .NullPointerException 확인
         Optional<studygroup> studygroup = studygroupRepository.findById(BigInteger.valueOf(studygroup_id));
         List<participationrate> participationrates = participationRepository.findByStudygroup(studygroup.get());
 
