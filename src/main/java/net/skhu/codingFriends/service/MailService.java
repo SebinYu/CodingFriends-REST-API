@@ -8,6 +8,8 @@ import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
 import net.skhu.codingFriends.service.mailMessage.MailInfo;
 import net.skhu.codingFriends.service.mailMessage.subject.Accepted;
 import net.skhu.codingFriends.service.mailMessage.subject.Applied;
+import net.skhu.codingFriends.service.mailMessage.text.AppliedText;
+import net.skhu.codingFriends.service.mailMessage.text.RejectedText;
 import net.skhu.codingFriends.service.mailMessage.to.SendToOneUser;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -32,8 +34,9 @@ public class MailService {
     @Transactional(readOnly = true)
     public MailResponseDTO sendSimpleMessage(user user, Long studygroup_id) {
 
+
         //이메일 보내기 전략방식
-        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied());
+        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied(), new RejectedText());
         SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
 
         //json 리턴값
@@ -55,10 +58,7 @@ public class MailService {
         message.setTo(mailInfo.to(user, studygroup_id));
         message.setFrom("codingfriend7@gmail.com");
         message.setSubject(mailInfo.subject());
-        message.setText("안녕하세요, 스터디원 연결 서비스 코딩프렌즈입니다. " + System.lineSeparator() +
-                "지난번 공지하신 ["+ studyTitle +"] 스터디에 [" + user.getName() + "]님이 참여신청하였습니다."+ System.lineSeparator() +
-                "조직장 페이지에서 확인 부탁드립니다."+ System.lineSeparator() + System.lineSeparator() +
-                "감사합니다.");
+        message.setText(mailInfo.text(user, studyTitle));
 
         emailSender.send(message);
 
