@@ -5,6 +5,9 @@ import net.skhu.codingFriends.dto.ResponseDTO.MailResponseDTO;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
+import net.skhu.codingFriends.service.mailMessage.MailInfo;
+import net.skhu.codingFriends.service.mailMessage.To.SendToOneUser;
+import net.skhu.codingFriends.service.mailMessage.To.SendToUsers;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,10 @@ public class MailService {
         Optional<studygroup> studygroupOne = studygroupRepository.findById(BigInteger.valueOf(studygroup_id));
         String studyTitle = studygroupOne.get().getTitle();
 
+        MailInfo mailInfo = new MailInfo(new SendToUsers());
+
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getEmail());
+        message.setTo(mailInfo.to(user, studygroup_id));
         message.setFrom("codingfriend7@gmail.com");
         message.setSubject("스터디 신청 안내");
         message.setText("안녕하세요, 스터디원 연결 서비스 코딩프렌즈입니다. " + System.lineSeparator() +
@@ -37,9 +42,13 @@ public class MailService {
                 "감사합니다.");
 
         emailSender.send(message);
+
+
+        //message 객체 필드값 json형태 출력
         MailResponseDTO mailResponseDTO = new MailResponseDTO();
-        mailResponseDTO.setTo(String.valueOf(message.getTo()));
+        mailResponseDTO.setTo(message.getTo());
         mailResponseDTO.setFrom(message.getFrom());
+        mailResponseDTO.setSubject(message.getSubject());
         mailResponseDTO.setText(message.getText());
 
         return mailResponseDTO;

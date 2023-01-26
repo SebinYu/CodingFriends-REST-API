@@ -31,7 +31,10 @@ public class ParticipationCustomRepositoryImpl implements ParticipationCustomRep
         return jPAQueryFactory
                 .selectFrom(participationrate)
                 .where(participationrate.studygroup.eq(studygroupTemp), participationrate.weeklyAttendance.eq("미정"))
-                .fetch();    }
+                .fetch();
+    }
+
+
 
 
 }
