@@ -28,7 +28,7 @@ public class ReviewController {
         //내 이름 제외 스터디 참여자 조회
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
-        return success(reviewService.getEXColleague(Studygroup_id, user),"/user/review/index/{Studygroup_id}");
+        return success(reviewService.getEXStudygroupFriend(Studygroup_id, user),"/user/review/index/{Studygroup_id}");
     }
 
     @ApiOperation(value = "스터디원 후기 등록페이지 조회", notes = "스터디원 후기 등록페이지 조회한다.")

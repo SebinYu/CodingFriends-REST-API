@@ -6,5 +6,5 @@ import java.math.BigInteger;
 
 @Data
 public class ApplyIdVO {
-     private BigInteger[] apply_id;
+     private BigInteger[] apply_ids;
 }
