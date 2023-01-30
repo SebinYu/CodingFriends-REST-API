@@ -18,9 +18,10 @@ buildscript {
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8-SNAPSHOT'
+	//의존성 관리 플러그인
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	// querydsl 추가
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'net.skhu'
