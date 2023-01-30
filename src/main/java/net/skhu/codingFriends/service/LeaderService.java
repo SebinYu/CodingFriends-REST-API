@@ -45,11 +45,11 @@ public class LeaderService {
 
     @Transactional
     public List<ParticipationResponseDTO> accept(ApplyIdVO applyIdVO, user user) {
-        int ApplyIdlength = applyIdVO.getApply_id().length;
+        int ApplyIdlength = applyIdVO.getApply_ids().length;
         List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
 
         for(int i = 0; i< ApplyIdlength; i++){
-            BigInteger[] applyIDs = applyIdVO.getApply_id();
+            BigInteger[] applyIDs = applyIdVO.getApply_ids();
             BigInteger applyID = applyIDs[i];
 
             net.skhu.codingFriends.entity.participationrate participationrate =  new participationrate();
@@ -82,11 +82,11 @@ public class LeaderService {
 
     @Transactional
     public List<ApplyResponseDto> decline(ApplyIdVO applyIdVO) {
-        int ApplyIdlength = applyIdVO.getApply_id().length;
+        int ApplyIdlength = applyIdVO.getApply_ids().length;
         List<ApplyResponseDto> declindedApplyList = new ArrayList<>();
 
         for(int i = 0; i< ApplyIdlength; i++){
-            BigInteger[] applyIDs = applyIdVO.getApply_id();
+            BigInteger[] applyIDs = applyIdVO.getApply_ids();
             BigInteger applyID = applyIDs[i];
 
             List<apply> applyTemp =  applyRepository.findByApplierID(applyID);
