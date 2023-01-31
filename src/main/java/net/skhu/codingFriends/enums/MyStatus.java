@@ -11,7 +11,7 @@ public enum MyStatus {
     Checked("참여"),
     NotChecked("불참");
 
-    @Getter
+//    @Getter
     private final String value;
 
     MyStatus(String value) {
