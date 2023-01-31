@@ -2,7 +2,6 @@ package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ReviewInputVO;
-import net.skhu.codingFriends.dto.RequestDTO.ParticipationRequsetDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.ParticipationResponseDTO;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.review;
@@ -31,7 +30,7 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<ParticipationResponseDTO> getEXColleague(Long studygroup_id, user myUserInfo) {
+    public List<ParticipationResponseDTO> getEXStudygroupFriend(Long studygroup_id, user myUserInfo) {
         studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });

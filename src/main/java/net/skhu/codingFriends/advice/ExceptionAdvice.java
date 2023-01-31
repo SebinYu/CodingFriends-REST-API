@@ -2,6 +2,7 @@ package net.skhu.codingFriends.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import net.skhu.codingFriends.exception.MemberNotFoundException;
+import net.skhu.codingFriends.exception.UncorrectEmailInputForm;
 import net.skhu.codingFriends.exception.UncorrectStatusInputForm;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
@@ -89,5 +90,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response uncorrectStatusInputForm() {
         return Response.failure(404, "올바르지 못한 status 입력값입니다.", null);
+    }
+
+    // 400 응답
+    @ExceptionHandler(UncorrectEmailInputForm.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Response uncorrectEmailInputForm() {
+        return Response.failure(404, "올바르지 못한 이메일 형식입니다.", null);
     }
 }

@@ -18,9 +18,10 @@ buildscript {
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8-SNAPSHOT'
+	//의존성 관리 플러그인
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	// querydsl 추가
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'net.skhu'
@@ -35,6 +36,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	jcenter()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
 
@@ -46,6 +48,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'junit:junit:4.13.1'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
