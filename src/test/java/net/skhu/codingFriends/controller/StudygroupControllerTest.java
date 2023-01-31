@@ -48,7 +48,7 @@ class StudygroupControllerTest {
 
     @Test
     @DisplayName("전체 게시글 조회")
-    public void 전체_게시글_조회() throws Exception {
+    public void findBoardsTest() throws Exception {
         // given
 
         // when, then
