@@ -63,4 +63,4 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
-      run: aws deploy create-deployment --application-name codingFriends --deployment-group-name codingFriends-group --file-exists-behavior OVERWRITE --s3-location bucket=mys3bucketyu,bundleType=zip,key=coinTalk.zip --region ap-northeast-2
+      run: aws deploy create-deployment --application-name codingFriends --deployment-group-name codingFriends-group --s3-location bucket=mys3bucketyu,bundleType=zip,key=coinTalk.zip --region ap-northeast-2
