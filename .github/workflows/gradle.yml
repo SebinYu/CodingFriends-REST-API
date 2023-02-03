@@ -14,7 +14,7 @@ on:
     branches: [ "master" ]
 
 env:
-  S3_BUCKET_NAME: mys3bucketyu
+  S3_BUCKET_NAME: my-github-action-s3-bucketyu
 
 permissions:
   contents: read
