@@ -13,6 +13,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  S3_BUCKET_NAME: mys3bucketyu
+
 permissions:
   contents: read
 
