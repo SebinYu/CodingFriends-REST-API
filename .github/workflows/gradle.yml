@@ -61,8 +61,8 @@ jobs:
       # Deploy
     - name: Deploy
       env:
-        CICD_ACCESS_KEY: ${{ secrets.CICD_ACCESS_KEY }}
-        CICD_SECRET_KEY: ${{ secrets.CICD_SECRET_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
       run: |
         aws deploy create-deployment \
         --application-name codingFriends \
