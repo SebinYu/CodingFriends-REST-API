@@ -64,4 +64,4 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
-      run: aws deploy create-deployment --application-name my-codedeploy-app --deployment-group-name my-codedeploy-deployment-group --file-exists-behavior OVERWRITE --s3-location bucket=my-github-action-s3-bucketyu,bundleType=zip,key=coinTalk.zip --region ap-northeast-2
+      run: aws deploy create-deployment --application-name my-codedeploy-app --deployment-group-name my-codedeploy-deployment-group --s3-location bucket=my-github-action-s3-bucketyu,bundleType=zip,key=coinTalk.zip --region ap-northeast-2
