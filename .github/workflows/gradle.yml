@@ -58,15 +58,10 @@ jobs:
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./coinTalk.zip s3://$S3_BUCKET_NAME/
       
-      # Deploy
+    # Deploy
     - name: Deploy
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
       run: |
-        aws deploy create-deployment 
-        --application-name codingFriends 
-        --deployment-group-name codingFriends-group 
-        --file-exists-behavior OVERWRITE 
-        --s3-location bucket=mys3bucketyu,bundleType=zip,key=coinTalk.zip 
-        --region ap-northeast-2
+        aws deploy create-deployment --application-name codingFriends --deployment-group-name codingFriends-group --file-exists-behavior OVERWRITE --s3-location bucket=mys3bucketyu,bundleType=zip,key=coinTalk.zip --region ap-northeast-2
