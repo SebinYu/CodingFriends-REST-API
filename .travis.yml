@@ -50,3 +50,7 @@ notifications:
   email:
     recipients:
       - sebinyu72@gmail.com
+
+
+before_install:
+  - chmod +x ./gradlew
