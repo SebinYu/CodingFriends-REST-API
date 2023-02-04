@@ -21,6 +21,8 @@ public class apply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     BigInteger apply_id;
 
+    BigInteger userIdtemp;
+    BigInteger studyIdTemp;
     String title;
     String applyStatus;
     String application;
