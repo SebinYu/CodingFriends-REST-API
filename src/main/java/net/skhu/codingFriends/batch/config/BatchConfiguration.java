@@ -57,7 +57,7 @@ public class BatchConfiguration {
     public Step emailSenderStep() {
         return this.stepBuilderFactory
                 .get(STEP_NAME)
-                .<apply, apply>chunk(1)
+                .<apply, apply>chunk(100)
                 .reader(activeOrderReader())
                 .processor(orderItemProcessor())
                 .writer(orderWriter())

@@ -13,6 +13,8 @@ public interface ApplyCustomRepository {
     List<apply> findByApplierID(BigInteger id);
 
     long updateApplyStatus(apply applyTemp);
+    long updateMail_Sent(apply applyTemp);
+
 
     List<apply> findByStudygroup(studygroup studygroup_id);
 }
