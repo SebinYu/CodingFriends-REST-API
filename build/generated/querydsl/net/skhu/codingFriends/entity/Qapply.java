@@ -9,6 +9,8 @@ import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
+import java.util.List;
+
 
 /**
  * Qapply is a Querydsl query type for apply
@@ -37,6 +39,7 @@ public class Qapply extends EntityPathBase<apply> {
     public final DateTimePath<java.time.LocalDateTime> updateDate = createDateTime("updateDate", java.time.LocalDateTime.class);
 
     public final Quser user;
+    public List<? extends Path<?>> mail_sent;
 
     public Qapply(String variable) {
         this(apply.class, forVariable(variable), INITS);
