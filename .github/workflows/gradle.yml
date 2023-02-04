@@ -58,12 +58,7 @@ jobs:
         aws-region: ap-northeast-2
 
     - name: Upload to AWS S3
-      run: |
-        aws deploy push \
-          --application-name ${{ env.my-codedeploy-app }} \
-          --ignore-hidden-files \
-          --s3-location s3://mys3bucketyu/coinTalk.zip \
-          --source .
+      run: aws deploy push --application-name ${{ env.my-codedeploy-app }} --ignore-hidden-files --s3-location s3://mys3bucketyu/coinTalk.zip --source .
       
       
     # Deploy
