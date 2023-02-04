@@ -47,7 +47,7 @@ jobs:
       run: cp ./build/libs/*.jar ./deploy
 
     - name: Make zip file
-      run: zip -r ./coinTalk.zip ./deploy
+      run: zip -r -qq -j ./coinTalk.zip ./deploy
       shell: bash
 
     - name: Configure AWS credentials
@@ -57,8 +57,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.CICD_SECRET_KEY }}
         aws-region: ap-northeast-2
 
-    - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./coinTalk.zip s3://$S3_BUCKET_NAME/
+    - name: Upload to AWS S3
+      run: |
+        aws deploy push \
+          --application-name ${{ env.my-codedeploy-app }} \
+          --ignore-hidden-files \
+          --s3-location s3://mys3bucketyu/coinTalk.zip \
+          --source .
       
       
     # Deploy
