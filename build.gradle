@@ -93,6 +93,8 @@ dependencies {
 	//batch
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-batch'
 
+
+
 }
 
 // querydsl 세팅 시작
