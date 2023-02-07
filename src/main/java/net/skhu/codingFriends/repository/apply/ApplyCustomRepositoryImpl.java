@@ -7,6 +7,7 @@ import net.skhu.codingFriends.entity.user;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,4 +64,5 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
                 .where(apply.apply_id.eq(applyTemp.getApply_id()))
                 .execute();
     }
+
 }
