@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.config.redis.CacheKey;
 import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
 import net.skhu.codingFriends.dto.RequestDTO.StudygroupRequsetDto;
 import net.skhu.codingFriends.dto.ResponseDTO.ApplyResponseDto;
@@ -14,7 +15,8 @@ import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
 import net.skhu.codingFriends.service.StudygroupService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,11 +38,12 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     // 전체 게시물 조회
     @Transactional(readOnly = true)
+    @Cacheable(value = CacheKey.POST, cacheManager = "cacheManager")
     public List<StudygroupResponseDto> getStudygroups() {
         List<studygroup> studygroups = studygroupRepository.findAll();
-        List<StudygroupResponseDto> studygroupRequsetDtos = new ArrayList<>();
-        studygroups.forEach(s -> studygroupRequsetDtos.add(StudygroupResponseDto.toDto(s)));
-        return studygroupRequsetDtos;
+        List<StudygroupResponseDto> studygroupResponseDto = new ArrayList<>();
+        studygroups.forEach(s -> studygroupResponseDto.add(StudygroupResponseDto.toDto(s)));
+        return studygroupResponseDto;
     }
 
     // 개별 게시물 조회

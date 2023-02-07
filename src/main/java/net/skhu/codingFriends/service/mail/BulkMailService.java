@@ -33,7 +33,7 @@ public class BulkMailService {
     //쿼리 적용 메일전송 메서드 (0)
     // @Scheduled/@Async 적용 (0)
     @Async
-    @Scheduled(fixedRate=1000) // 단위: ms
+    @Scheduled(fixedRate=100000000) // 단위: ms
     @Transactional(readOnly = true)
     public void sendMailToNoticeEventBulkUsers() {
 
