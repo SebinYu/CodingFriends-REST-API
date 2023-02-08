@@ -15,6 +15,7 @@ import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
 import net.skhu.codingFriends.service.StudygroupService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,7 @@ public class StudygroupServiceImpl implements StudygroupService {
 
 
     // 게시물 작성
+    @CacheEvict(value = CacheKey.POST, cacheManager = "cacheManager")
     @Transactional
     public StudygroupResponseDto write(StudygroupRequsetDto studygroupRequsetDto, user user) {
         studygroup studygroup = new studygroup();
@@ -77,6 +79,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     // 게시물 수정
+    @CacheEvict(value = CacheKey.POST, cacheManager = "cacheManager")
     @Transactional
     public StudygroupResponseDto update(Integer studyGroup_id, StudygroupRequsetDto studygroupRequsetDto) {
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
@@ -95,6 +98,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
 
+    @CacheEvict(value = CacheKey.POST, cacheManager = "cacheManager")
     @Transactional
     public void deleteByStudyGroup_id(int id){
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
