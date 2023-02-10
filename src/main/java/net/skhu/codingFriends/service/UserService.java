@@ -10,8 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,8 +34,6 @@ public class UserService {
         user.setUserType("ROLE_USER");
         user.setAddress(registerRequsetDto.getAddress());
         user.setAddress_detail(registerRequsetDto.getAddress_detail());
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        user.setUpdateDate(currentDateTime);
         return userRepository.save(user);
     }
 

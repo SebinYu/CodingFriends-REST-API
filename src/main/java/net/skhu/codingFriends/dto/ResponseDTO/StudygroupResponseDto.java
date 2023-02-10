@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.skhu.codingFriends.entity.studygroup;
 
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudygroupResponseDto implements Serializable {
+public class StudygroupResponseDto {
     BigInteger studyGroup_id;
 
     String title;

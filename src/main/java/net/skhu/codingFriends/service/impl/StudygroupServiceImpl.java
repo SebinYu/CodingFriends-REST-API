@@ -1,7 +1,6 @@
 package net.skhu.codingFriends.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import net.skhu.codingFriends.config.redis.CacheKey;
 import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
 import net.skhu.codingFriends.dto.RequestDTO.StudygroupRequsetDto;
 import net.skhu.codingFriends.dto.ResponseDTO.ApplyResponseDto;
@@ -15,9 +14,7 @@ import net.skhu.codingFriends.repository.LearningmaterialRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
 import net.skhu.codingFriends.service.StudygroupService;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,12 +36,11 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     // 전체 게시물 조회
     @Transactional(readOnly = true)
-    @Cacheable(value = CacheKey.POST, cacheManager = "cacheManager")
     public List<StudygroupResponseDto> getStudygroups() {
         List<studygroup> studygroups = studygroupRepository.findAll();
-        List<StudygroupResponseDto> studygroupResponseDto = new ArrayList<>();
-        studygroups.forEach(s -> studygroupResponseDto.add(StudygroupResponseDto.toDto(s)));
-        return studygroupResponseDto;
+        List<StudygroupResponseDto> studygroupRequsetDtos = new ArrayList<>();
+        studygroups.forEach(s -> studygroupRequsetDtos.add(StudygroupResponseDto.toDto(s)));
+        return studygroupRequsetDtos;
     }
 
     // 개별 게시물 조회
@@ -59,7 +55,6 @@ public class StudygroupServiceImpl implements StudygroupService {
 
 
     // 게시물 작성
-    @CacheEvict(value = CacheKey.POST, cacheManager = "cacheManager")
     @Transactional
     public StudygroupResponseDto write(StudygroupRequsetDto studygroupRequsetDto, user user) {
         studygroup studygroup = new studygroup();
@@ -79,7 +74,6 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     // 게시물 수정
-    @CacheEvict(value = CacheKey.POST, cacheManager = "cacheManager")
     @Transactional
     public StudygroupResponseDto update(Integer studyGroup_id, StudygroupRequsetDto studygroupRequsetDto) {
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
@@ -98,7 +92,6 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
 
-    @CacheEvict(value = CacheKey.POST, cacheManager = "cacheManager")
     @Transactional
     public void deleteByStudyGroup_id(int id){
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
