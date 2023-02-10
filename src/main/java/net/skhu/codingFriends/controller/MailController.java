@@ -30,20 +30,20 @@ public class MailController {
     @ApiOperation(value = "조직장에게 신청자 알림 메일 전송", notes = "조직장에게 신청자 알림 이메일 전송한다.")
     @PostMapping("/toLeader/{Studygroup_id}")
     public Response mailToLeader(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
-        return success(mailService.sendmailTo(findUserInfo(authentication), "", Studygroup_id),"/toLeader/"+ Studygroup_id);
+        return success(mailService.sendmailTo(findUserInfo(authentication), "", Studygroup_id),"/mail/toLeader/"+ Studygroup_id);
     }
 
-//    @ApiOperation(value = "신청자에게 스터디 신청 수락 메일 전송", notes = "신청자에게 스터디 신청 수락 메일 전송한다.")
-//    @PostMapping("/toApplier/accepted/{Studygroup_id}")
-//    public Response mailToAcceptedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
-//        return success(mailService.sendmailTo(findUserInfo(authentication), Studygroup_id),"/toApplier/accepted/"+ Studygroup_id);
-//    }
-//
-//    @ApiOperation(value = "신청자에게 스터디 신청 거절 메일 전송", notes = "신청자에게 스터디 신청 거절 메일 전송한다.")
-//    @PostMapping("/toApplier/rejected/{Studygroup_id}")
-//    public Response mailToRejectedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
-//        return success(mailService.sendmailTo(findUserInfo(authentication), Studygroup_id),"/toApplier/rejected/"+ Studygroup_id);
-//    }
+    @ApiOperation(value = "신청자에게 스터디 신청 수락 메일 전송", notes = "신청자에게 스터디 신청 수락 메일 전송한다.")
+    @PostMapping("/toApplier/accepted/{Studygroup_id}")
+    public Response mailToAcceptedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
+        return success(mailService.sendmailTo(findUserInfo(authentication), "accepted", Studygroup_id),"/mail/toApplier/accepted/"+ Studygroup_id);
+    }
+
+    @ApiOperation(value = "신청자에게 스터디 신청 거절 메일 전송", notes = "신청자에게 스터디 신청 거절 메일 전송한다.")
+    @PostMapping("/toApplier/rejected/{Studygroup_id}")
+    public Response mailToRejectedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
+        return success(mailService.sendmailTo(findUserInfo(authentication), "rejected", Studygroup_id),"/mail/toApplier/rejected/"+ Studygroup_id);
+    }
 
     @ApiOperation(value = "다수 인원에게 이벤트 안내 메일 전송", notes = "다수 인원에게 이벤트 안내 메일 전송한다.")
     @GetMapping("/toBulkUsers/noticeEvent")
