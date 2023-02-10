@@ -95,6 +95,10 @@ dependencies {
 	// io.lettuce/lettuce-core
 	implementation group: 'io.lettuce', name: 'lettuce-core', version: '6.1.8.RELEASE'
 
+	//Redisson-동시성 처리
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 }
 
 // querydsl 세팅 시작

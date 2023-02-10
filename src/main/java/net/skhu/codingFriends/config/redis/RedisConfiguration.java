@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableCaching
+//@EnableCaching
 public class RedisConfiguration {
 
     @Value("${spring.redis.host}")

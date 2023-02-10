@@ -30,7 +30,7 @@ public class EventController {
     }
 
     @PostMapping("/{eventId}/tickets")
-    public ResponseEntity<EventTicketResponseDTO> createEventTicket(@PathVariable final Long eventId) {
+    public ResponseEntity<EventTicketResponseDTO> createEventTicket(@PathVariable final Long eventId) throws InterruptedException {
         EventTicketResponseDTO response = eventService.createEventTicket(eventId);
 
         return ResponseEntity

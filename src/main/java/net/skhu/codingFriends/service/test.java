@@ -30,6 +30,8 @@ public class test {
             executorService.submit(() -> {
                 try {
                     eventService.createEventTicket(eventId);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     countDownLatch.countDown();
                 }
