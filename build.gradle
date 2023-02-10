@@ -88,6 +88,13 @@ dependencies {
 
 	//mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//redis
+	implementation 'org.springframework.session:spring-session-data-redis'
+	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.1'
+	// io.lettuce/lettuce-core
+	implementation group: 'io.lettuce', name: 'lettuce-core', version: '6.1.8.RELEASE'
+
 }
 
 // querydsl 세팅 시작

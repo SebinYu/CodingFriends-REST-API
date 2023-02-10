@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.response.Response;
-import net.skhu.codingFriends.service.MailService;
+import net.skhu.codingFriends.service.mail.BulkMailService;
+import net.skhu.codingFriends.service.mail.MailService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import static net.skhu.codingFriends.response.Response.success;
 public class MailController {
 
     private final MailService mailService;
+    private final BulkMailService bulkMailService;
 
     public user findUserInfo(Authentication authentication){
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -41,5 +43,16 @@ public class MailController {
     @PostMapping("/toApplier/rejected/{Studygroup_id}")
     public Response mailToRejectedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
         return success(mailService.sendmailToApplierRejected(findUserInfo(authentication), Studygroup_id),"/toApplier/rejected/"+ Studygroup_id);
+    }
+
+    @ApiOperation(value = "다수 인원에게 이벤트 안내 메일 전송", notes = "다수 인원에게 이벤트 안내 메일 전송한다.")
+    @GetMapping("/toBulkUsers/noticeEvent")
+    public String mailToNoticeEventBulkUsers() {
+        try{
+            bulkMailService.sendMailToNoticeEventBulkUsers();
+            return "이벤트 안내 성공";
+        }catch (Exception e){
+            return "이벤트 안내 에러 발생";
+        }
     }
 }
