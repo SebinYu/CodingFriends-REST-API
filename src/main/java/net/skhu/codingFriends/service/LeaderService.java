@@ -19,6 +19,7 @@ import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.participation.ParticipationRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
+import org.apache.el.parser.Node;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,11 +46,6 @@ public class LeaderService {
     @Transactional(readOnly = true)
     public List<studygroup> getStudygroups(user user) {
         return studygroupRepository.findByUserID(user);
-    }
-
-
-    public void setCurrentParticipationNum(studygroup studygroup){
-
     }
 
 
@@ -212,4 +211,6 @@ public class LeaderService {
         participationTemp.forEach(s -> participationResponseDTOs.add(ParticipationResponseDTO.toDto(s)));
         return participationResponseDTOs;
     }
+
+
 }

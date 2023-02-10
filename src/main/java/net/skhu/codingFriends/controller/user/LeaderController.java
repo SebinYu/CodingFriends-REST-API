@@ -8,9 +8,14 @@ import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.LeaderService;
+import net.skhu.codingFriends.service.test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static net.skhu.codingFriends.response.Response.success;
 
@@ -20,6 +25,7 @@ import static net.skhu.codingFriends.response.Response.success;
 public class LeaderController {
 
     private final LeaderService leaderService;
+    private final test test;
 
     //조직장의 스터디모임 조회 기능 자주사용 -> 함수화
         private Response MyStudygroup (Authentication authentication){
@@ -62,7 +68,16 @@ public class LeaderController {
         return success(leaderService.decline(applyIdVO),"/user/leader/applicationManage/decline");
     }
 
+    @ApiOperation(value = "스터디 신청 수락", notes = "스터디 신청 수락하기")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("applicationManage/acceptTest")
+    public Response acceptTest(
+                           Authentication authentication) {
 
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        user user = principalDetails.getUser();
+        return success(test.acceptTest(user),"/user/leader/applicationManage/accept");
+    }
 
 
 
