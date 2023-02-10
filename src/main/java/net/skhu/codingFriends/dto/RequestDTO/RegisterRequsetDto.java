@@ -35,8 +35,6 @@ public class RegisterRequsetDto {
     @Email(message="이메일 주소가 올바르지 않습니다")
     String email;
 
-    String userType;
-
     @NotBlank(message="도로명 주소를 입력하세요")
     String address;
 

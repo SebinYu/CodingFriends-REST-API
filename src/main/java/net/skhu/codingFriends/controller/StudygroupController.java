@@ -11,6 +11,8 @@ import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.StudygroupService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,7 @@ import static net.skhu.codingFriends.response.Response.success;
 public class StudygroupController {
 
     private final StudygroupService studygroupService;
+
 
     @ApiOperation(value = "전체 게시글 보기", notes = "전체 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
