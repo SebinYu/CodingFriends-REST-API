@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.service.mail;
 
 
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.MailType;
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Accepted;
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Rejected;
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.AcceptedText;
@@ -34,11 +35,27 @@ public class MailService {
     private final JavaMailSender emailSender;
     private final StudygroupRepository studygroupRepository;
 
+//    @Transactional(readOnly = true)
+//    public MailResponseDTO sendmailToLeader(user user, Long studygroup_id) {
+//
+//        //이메일 보내기 전략방식
+//        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied(), new AppliedText());
+//        SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
+//
+//        //json 리턴값
+//        MailResponseDTO mailResponseDTO = setMailResponseDTO(fullMessage);
+//
+//        return mailResponseDTO;
+//    }
+
+
+
     @Transactional(readOnly = true)
-    public MailResponseDTO sendmailToLeader(user user, Long studygroup_id) {
+    public MailResponseDTO sendmailTo(user user, String mailType, Long studygroup_id) {
+        MailType type = MailType.find(mailType);
 
         //이메일 보내기 전략방식
-        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied(), new AppliedText());
+        MailInfo mailInfo = new MailInfo(type.getSendToStrategy(), type.getSubjectStrategy(), type.getTextStrategy());
         SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
 
         //json 리턴값
@@ -46,37 +63,6 @@ public class MailService {
 
         return mailResponseDTO;
     }
-
-
-
-    @Transactional(readOnly = true)
-    public MailResponseDTO sendmailToApplierAccepted(user user, Long studygroup_id) {
-
-        //이메일 보내기 전략방식
-        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Accepted(), new AcceptedText());
-        SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
-
-        //json 리턴값
-        MailResponseDTO mailResponseDTO = setMailResponseDTO(fullMessage);
-
-        return mailResponseDTO;
-    }
-
-
-    @Transactional(readOnly = true)
-    public MailResponseDTO sendmailToApplierRejected(user user, Long studygroup_id) {
-
-        //이메일 보내기 전략방식
-        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Rejected(), new RejectedText());
-        SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
-
-        //json 리턴값
-        MailResponseDTO mailResponseDTO = setMailResponseDTO(fullMessage);
-
-        return mailResponseDTO;
-    }
-
-
 
 
     public SimpleMailMessage sendMail(MailInfo mailInfo,user user, Long studygroup_id){
