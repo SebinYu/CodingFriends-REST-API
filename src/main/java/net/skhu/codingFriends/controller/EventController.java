@@ -40,6 +40,6 @@ public class EventController {
 
     @PostMapping("/{eventId}/ticketsTest")
     public void ticketsTest(@PathVariable final Long eventId) {
-        test.createEventTicketTest(eventId);
+         test.createEventTicketTest(eventId);
     }
 }

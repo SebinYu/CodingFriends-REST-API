@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.repository;
+package net.skhu.codingFriends.repository.event;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
