@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.service.event;
 
 import net.skhu.codingFriends.dto.ResponseDTO.EventResponseDTO;
+import net.skhu.codingFriends.dto.ResponseDTO.EventTicketResponseDTO;
 import net.skhu.codingFriends.entity.event.event;
 import net.skhu.codingFriends.entity.event.eventTicket;
 import net.skhu.codingFriends.repository.event.EventRepository;
@@ -32,7 +33,7 @@ public class EventService {
     }
 
     @Transactional
-    public void createEventTicket(final Long eventId) {
+    public EventTicketResponseDTO createEventTicket(final Long eventId) {
         event event = eventRepository.findById(eventId).orElseThrow();
         if (event.isClosed()) {
             throw new RuntimeException("마감 되었습니다.");
@@ -40,6 +41,12 @@ public class EventService {
         eventTicket eventTicket = new eventTicket();
         eventTicket.setEvent(event);
         eventTicket savedEventTicket = eventTicketRepository.save(eventTicket);
-//        return new EventTicketResponse(savedEventTicket.getId(), savedEventTicket.getEvent().getId());
+
+        EventTicketResponseDTO eventTicketResponseDTO = new EventTicketResponseDTO();
+        eventTicketResponseDTO.setId(savedEventTicket.getId());
+        eventTicketResponseDTO.setEvent(savedEventTicket.getEvent());
+        return eventTicketResponseDTO;
     }
+
+
 }

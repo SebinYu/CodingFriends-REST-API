@@ -68,16 +68,6 @@ public class LeaderController {
         return success(leaderService.decline(applyIdVO),"/user/leader/applicationManage/decline");
     }
 
-    @ApiOperation(value = "스터디 신청 수락", notes = "스터디 신청 수락하기")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("applicationManage/acceptTest")
-    public Response acceptTest(
-                           Authentication authentication) {
-
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
-        return success(test.acceptTest(user),"/user/leader/applicationManage/accept");
-    }
 
 
 

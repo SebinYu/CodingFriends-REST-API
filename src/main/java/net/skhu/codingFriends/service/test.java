@@ -7,6 +7,7 @@ import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.participation.ParticipationRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
+import net.skhu.codingFriends.service.event.EventService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -17,16 +18,9 @@ import java.util.concurrent.Executors;
 @Service
 @RequiredArgsConstructor
 public class test {
+    private final EventService eventService;
 
-    private final ApplyRepository applyRepository;
-    private final StudygroupRepository studygroupRepository;
-    private final ParticipationRepository participationRepository;
-    private final UserRepository userRepository;
-    private final LeaderService leaderService;
-
-    public Object acceptTest(user user) {
-        ApplyIdVO applyIdVO = new ApplyIdVO();
-        applyIdVO.setApply_ids(new BigInteger[]{BigInteger.valueOf(67), BigInteger.valueOf(69)});
+    public void createEventTicketTest(Long eventId) {
 
         ExecutorService executorService = Executors.newFixedThreadPool(100);
         CountDownLatch countDownLatch = new CountDownLatch(100);
@@ -35,13 +29,12 @@ public class test {
         for (int i = 0; i < 100; i++) {
             executorService.submit(() -> {
                 try {
-                    leaderService.accept(applyIdVO, user);
+                    eventService.createEventTicket(eventId);
                 } finally {
                     countDownLatch.countDown();
                 }
             });
         }
-        return null;
     }
 
 }
