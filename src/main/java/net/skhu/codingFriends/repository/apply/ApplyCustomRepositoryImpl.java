@@ -7,10 +7,6 @@ import net.skhu.codingFriends.entity.user;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
-
-import java.time.LocalDate;
-import java.util.Collections;
-
 import java.util.List;
 
 import static net.skhu.codingFriends.entity.Qapply.apply;
@@ -57,15 +53,5 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
                 .where(studygroup.user.eq(user1))
                 .fetch();
     }
-
-    @Override
-    public long updateMail_Sent(net.skhu.codingFriends.entity.apply applyTemp) {
-        return jPAQueryFactory
-                .update(apply)
-                .set(apply.mail_sent, Collections.singletonList(1))
-                .where(apply.apply_id.eq(applyTemp.getApply_id()))
-                .execute();
-    }
-
 
 }

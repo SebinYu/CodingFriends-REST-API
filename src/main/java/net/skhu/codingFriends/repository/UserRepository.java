@@ -2,13 +2,11 @@ package net.skhu.codingFriends.repository;
 
 import net.skhu.codingFriends.entity.user;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-
-import java.util.Collection;
-import java.util.List;
-
+import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<user, Integer>  {
     user findByUsername(String userid);
-    List<user> findByAddressLike(String address);
+
+    public boolean existsByUsername(String username);
+
 }

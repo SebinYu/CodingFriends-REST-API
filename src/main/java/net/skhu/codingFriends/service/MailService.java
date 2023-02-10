@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.service.mail;
+package net.skhu.codingFriends.service;
 
 
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Accepted;
@@ -16,7 +16,6 @@ import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.RejectedTe
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to.SendToOneUser;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -109,6 +108,4 @@ public class MailService {
 
         return mailResponseDTO;
     }
-
-
 }
