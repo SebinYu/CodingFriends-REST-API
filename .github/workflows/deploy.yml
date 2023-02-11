@@ -13,6 +13,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
+# 해당 yml 내에서 사용할 key - value
+env:
+  S3_BUCKET_NAME: kbsat-cicd-bucket
+  PROJECT_NAME: codingFriends
+
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -33,4 +38,22 @@ jobs:
         run : ./gradlew clean build --exclude-task test
         shell: bash
 
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+      # script files 복사
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy
+      
+      # S3에 업로드
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
   
