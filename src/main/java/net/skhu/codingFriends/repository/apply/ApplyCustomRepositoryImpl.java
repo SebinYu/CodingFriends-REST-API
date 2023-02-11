@@ -58,14 +58,5 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
                 .fetch();
     }
 
-    @Override
-    public long updateMail_Sent(net.skhu.codingFriends.entity.apply applyTemp) {
-        return jPAQueryFactory
-                .update(apply)
-                .set(apply.mail_sent, Collections.singletonList(1))
-                .where(apply.apply_id.eq(applyTemp.getApply_id()))
-                .execute();
-    }
-
 
 }

@@ -1,9 +1,7 @@
 package net.skhu.codingFriends.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import net.skhu.codingFriends.exception.MemberNotFoundException;
-import net.skhu.codingFriends.exception.UncorrectEmailInputForm;
-import net.skhu.codingFriends.exception.UncorrectStatusInputForm;
+import net.skhu.codingFriends.exception.*;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
@@ -77,6 +75,14 @@ public class ExceptionAdvice {
         return Response.failure(404, "요청한 회원을 찾을 수 없습니다.", null);
     }
 
+    // 404 응답
+    // 요청한 유저를 찾을 수 없음
+    @ExceptionHandler(ApplyInfoNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response applyInfoNotFoundException() {
+        return Response.failure(404, "요청된 apply 정보를 찾을 수 없습니다.", null);
+    }
+
     // 400 응답
     @ExceptionHandler(PasswordVerificationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -98,4 +104,11 @@ public class ExceptionAdvice {
     public Response uncorrectEmailInputForm() {
         return Response.failure(404, "올바르지 못한 이메일 형식입니다.", null);
     }
+    // 400 응답
+    @ExceptionHandler(ParticipationFullException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Response participationFullException() {
+        return Response.failure(400, "현재 스터디 정원이 초과되어 신청할 수 없습니다.", null);
+    }
+
 }

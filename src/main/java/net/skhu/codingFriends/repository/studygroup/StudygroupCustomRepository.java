@@ -12,4 +12,6 @@ public interface StudygroupCustomRepository {
     List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
 
     List<studygroup> findByUserID(user user1);
+
+    long updateCurrentNum(studygroup updatedStudygroup);
 }

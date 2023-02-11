@@ -3,7 +3,6 @@ package net.skhu.codingFriends.service;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ApplyIdVO;
 import net.skhu.codingFriends.VO.ParticipationVO;
-import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
 import net.skhu.codingFriends.dto.RequestDTO.ParticipationRequsetDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.ApplyResponseDto;
 import net.skhu.codingFriends.dto.ResponseDTO.ParticipationResponseDTO;
@@ -12,12 +11,15 @@ import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.enums.MyStatus;
+import net.skhu.codingFriends.exception.ApplyInfoNotFoundException;
+import net.skhu.codingFriends.exception.ParticipationFullException;
 import net.skhu.codingFriends.exception.UncorrectStatusInputForm;
 import net.skhu.codingFriends.exception.studygroup.StudygroupIdNotFound;
 import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.participation.ParticipationRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
+import org.apache.el.parser.Node;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,9 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +48,7 @@ public class LeaderService {
         return studygroupRepository.findByUserID(user);
     }
 
+
     @Transactional
     public List<ParticipationResponseDTO> accept(ApplyIdVO applyIdVO, user user) {
         int ApplyIdlength = applyIdVO.getApply_ids().length;
@@ -54,27 +60,41 @@ public class LeaderService {
 
             net.skhu.codingFriends.entity.participationrate participationrate =  new participationrate();
             List<apply> applyInfo = applyRepository.findByApplierID(applyID);
-//            if(applyInfo == null){
-//                return "";
-//            }
-            participationrate.setUser(applyInfo.get(0).getUser());
-            participationrate.setStudygroup(applyInfo.get(0).getStudygroup());
-            participationrate.setStudyGroup_Leader(user.getName());
-            participationrate.setWeek(0);
+            if(applyInfo.size() != 0){
+                studygroup studygroup = applyInfo.get(0).getStudygroup();
 
-            participationrate.setWeeklyAttendance(MyStatus.Undefined.value());
-            participationrate.setWeeklyHomework(MyStatus.Undefined.value());
-            participationrate.setUpdateDate(LocalDateTime.now());
+                int totalNum = studygroup.getTotalNum();
+                int currentNum = studygroup.getCurrentNum();
+                if(currentNum < totalNum){
+                    studygroup.setCurrentNum(currentNum++);
+                    studygroupRepository.updateCurrentNum(studygroup);
 
-            participationRepository.save(participationrate);
+                    participationrate.setUser(applyInfo.get(0).getUser());
+                    participationrate.setStudygroup(applyInfo.get(0).getStudygroup());
+                    participationrate.setStudyGroup_Leader(user.getName());
+                    participationrate.setWeek(0);
 
-            //신청상태 - "등록"으로 변경
-            apply applyTemp = new apply();
-            applyTemp.setApply_id(applyInfo.get(0).getApply_id());
-            applyTemp.setApplyStatus(MyStatus.Accepted.value());
-            applyRepository.updateApplyStatus(applyTemp);
+                    participationrate.setWeeklyAttendance(MyStatus.Undefined.value());
+                    participationrate.setWeeklyHomework(MyStatus.Undefined.value());
+                    participationrate.setUpdateDate(LocalDateTime.now());
 
-            participationrateList.add(ParticipationResponseDTO.toDto(participationrate));
+                    participationRepository.save(participationrate);
+
+                    //신청상태 - "등록"으로 변경
+                    apply applyTemp = new apply();
+                    applyTemp.setApply_id(applyInfo.get(0).getApply_id());
+                    applyTemp.setApplyStatus(MyStatus.Accepted.value());
+                    applyRepository.updateApplyStatus(applyTemp);
+
+                    participationrateList.add(ParticipationResponseDTO.toDto(participationrate));
+                } else{
+                    throw new ParticipationFullException();
+                }
+
+            }else{
+                throw new ApplyInfoNotFoundException();
+            }
+
         }
         return participationrateList;
 
@@ -191,4 +211,6 @@ public class LeaderService {
         participationTemp.forEach(s -> participationResponseDTOs.add(ParticipationResponseDTO.toDto(s)));
         return participationResponseDTOs;
     }
+
+
 }

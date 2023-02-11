@@ -1,6 +1,5 @@
 package net.skhu.codingFriends.dto.RequestDTO;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +13,12 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class RegisterRequsetDto {
 
-    @ApiModelProperty(value = "아이디", notes = "아이디를 입력해주세요", required = true, example = "sosow0212")
+   // @ApiModelProperty(value = "아이디", notes = "아이디를 입력해주세요", required = true, example = "sosow0212")
     @NotBlank(message="아이디를 입력하세요")
     @Size(min=3, max=15,message = "사용자 이름이 너무 짧습니다.")
     String username;
 
-    @ApiModelProperty(value = "비밀번호", required = true, example = "123456")
+  //  @ApiModelProperty(value = "비밀번호", required = true, example = "123456")
     @NotBlank(message="비밀번호를 입력하세요")
     @Size(min=6, max=12, message="6 자리 이상 12 자리 이하이어야 합니다.")
     String passwd1;

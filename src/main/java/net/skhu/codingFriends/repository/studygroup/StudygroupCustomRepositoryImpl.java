@@ -37,4 +37,12 @@ public class StudygroupCustomRepositoryImpl implements StudygroupCustomRepositor
                 .where(studygroup.user.eq(user1))
                 .fetch();
     }
+
+    public long updateCurrentNum(studygroup updatedStudygroup) {
+        return jPAQueryFactory
+                .update(studygroup)
+                .set(studygroup.currentNum, updatedStudygroup.getCurrentNum())
+                .where(studygroup.studyGroup_id.eq(updatedStudygroup.getStudyGroup_id()))
+                .execute();
+    }
 }

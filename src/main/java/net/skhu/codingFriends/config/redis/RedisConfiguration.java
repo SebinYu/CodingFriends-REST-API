@@ -1,6 +1,9 @@
 package net.skhu.codingFriends.config.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -23,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableCaching
+//@EnableCaching
 public class RedisConfiguration {
 
     @Value("${spring.redis.host}")
@@ -61,5 +64,15 @@ public class RedisConfiguration {
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory).cacheDefaults(configuration)
                 .withInitialCacheConfigurations(cacheConfigurations).build();
+    }
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config redisConfig = new Config();
+        redisConfig.useSingleServer()
+                .setAddress("redis://127.0.0.1:6379")
+                .setConnectionMinimumIdleSize(5)
+                .setConnectionPoolSize(5);
+        return Redisson.create(redisConfig);
     }
 }

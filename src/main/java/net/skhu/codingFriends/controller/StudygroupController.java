@@ -1,6 +1,6 @@
 package net.skhu.codingFriends.controller;
 
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
@@ -30,7 +30,7 @@ public class StudygroupController {
     private final StudygroupService studygroupService;
 
 
-    @ApiOperation(value = "전체 게시글 보기", notes = "전체 게시글 조회한다.")
+   // @ApiOperation(value = "전체 게시글 보기", notes = "전체 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("list")
     public Response getlist() {
@@ -38,7 +38,7 @@ public class StudygroupController {
     }
 
 
-    @ApiOperation(value = "개별 게시글 보기", notes = "개별 게시글 조회한다.")
+ //   @ApiOperation(value = "개별 게시글 보기", notes = "개별 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{id}")
     public Response detailGet(@PathVariable("id") Long studyGroup_id){
@@ -46,7 +46,7 @@ public class StudygroupController {
     }
 
 
-    @ApiOperation(value = "게시글 작성 페이지 조회", notes = "게시글 작성 페이지 조회한다.")
+  //  @ApiOperation(value = "게시글 작성 페이지 조회", notes = "게시글 작성 페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("create/{id}")
     public Long createGet(@PathVariable("id") Long studyGroup_id) {
@@ -54,7 +54,7 @@ public class StudygroupController {
         return studyGroup_id;
     }
 
-    @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
+  //  @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("create")
     public Response createPost(@RequestBody StudygroupRequsetDto studygroupRequsetDto, Authentication authentication) {
@@ -64,14 +64,14 @@ public class StudygroupController {
     }
 
 
-    @ApiOperation(value = "게시글 수정 페이지 조회", notes = "게시글 수정 페이지 조회한다.")
+ //   @ApiOperation(value = "게시글 수정 페이지 조회", notes = "게시글 수정 페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("edit/{id}")
     public Response updateGet(@PathVariable("id") Long studyGroup_id){
         return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)),"/studygroup/edit/{id}");
     }
 
-    @ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
+    //@ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "edit/{id}")
     public Response updatePut(@RequestBody StudygroupRequsetDto studygroupRequsetDto,
@@ -88,7 +88,7 @@ public class StudygroupController {
         }
     }
 
-    @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제한다.")
+ //   @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제한다.")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete/{id}")
     public Response delete(@PathVariable("id") Long studygroup_id, Authentication authentication) {
@@ -103,14 +103,14 @@ public class StudygroupController {
         }
     }
 
-    @ApiOperation(value = "키워드로 게시글 검색", notes = "키워드로 게시글 검색한다.")
+ //   @ApiOperation(value = "키워드로 게시글 검색", notes = "키워드로 게시글 검색한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("search-With-Keyword/{keyword}")
     public List<studygroup> searchWithKeyword(@PathVariable("keyword") String keyword){
         return studygroupService.searchWithKeyword(keyword);
     }
 
-    @ApiOperation(value = "키워드/학습자료로 게시글 검색", notes = "키워드로 게시글 검색한다.")
+  //  @ApiOperation(value = "키워드/학습자료로 게시글 검색", notes = "키워드로 게시글 검색한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("search-With-LearningMaterial_idAndKeyword/{learningMaterial_id}/{keyword}")
     public List<studygroup> searchWithLearningMaterial_idAndKeyword(
@@ -120,7 +120,7 @@ public class StudygroupController {
         return studygroupService.searchWithLearningMaterial_idAndKeyword(Math.toIntExact(learningMaterial_id), keyword);
     }
 
-    @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
+  //  @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("apply/{studyGroup_id}")
     public Response apply(@RequestBody ApplyRequsetDto applyRequsetDto,

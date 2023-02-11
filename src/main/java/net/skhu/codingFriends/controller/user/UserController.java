@@ -1,6 +1,6 @@
 package net.skhu.codingFriends.controller.user;
 
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.dto.RequestDTO.RegisterRequsetDto;
 import net.skhu.codingFriends.response.Response;
@@ -20,21 +20,21 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @ApiOperation(value = "전체 회원 보기", notes = "전체 회원을 조회한다.")
+//    @ApiOperation(value = "전체 회원 보기", notes = "전체 회원을 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users")
     public Response findAllUsers() {
         return success(userService.findAll(), "/users");
     }
 
-    @ApiOperation(value="유저 찾기", notes = "개별 유저 조회")
+//    @ApiOperation(value="유저 찾기", notes = "개별 유저 조회")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users/{id}")
     public Response findUser(@PathVariable("id") Long id) {
         return success(userService.findUser(Math.toIntExact(id)),"/users/{id}");
     }
 
-    @ApiOperation(value = "회원가입", notes="회원가입 진행")
+//    @ApiOperation(value = "회원가입", notes="회원가입 진행")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/auth")
     public Response register(@RequestBody @Valid RegisterRequsetDto registerRequsetDto) {
