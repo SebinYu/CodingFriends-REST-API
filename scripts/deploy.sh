@@ -13,4 +13,5 @@ echo ">kill -15 $CURRNET_PID"
 kill -15 $CURRENT_PID
 
 echo "> 새 애플리케이션 배포"
-nohup java -jar $PROJECT > $REPOSITORY/nohup.out 2>&1 &
+nohup java -jar $PROJECT &
+nohup java -jar $PROJECT>> /home/ubuntu/deploy.log 2>&1 &
