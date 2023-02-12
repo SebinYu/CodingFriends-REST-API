@@ -55,7 +55,8 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile('org.springframework.session:spring-session-data-redis')
 	//jasypt
 	implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4")
 
