@@ -75,4 +75,6 @@ public class RedisConfiguration {
                 .setConnectionPoolSize(5);
         return Redisson.create(redisConfig);
     }
+
+
 }
