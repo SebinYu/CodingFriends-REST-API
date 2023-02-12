@@ -1,22 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
+PROJECT=codingFriends-2.7.8-SNAPSHOT.jar
 REPOSITORY=/home/ubuntu/codingFriends
+
+echo "> jar 파일 위치로 이동"
 cd $REPOSITORY
+cd build/libs
 
-APP_NAME=codingFriends
-JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep '.jar' | tail -n 1)
-JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
+echo "> 현재 구동중인 애플리케이션 pid 확인"
+CURRNET_PID=$(pgrep -f $PROJECT)
+echo ">kill -15 $CURRNET_PID"
+kill -15 $CURRENT_PID
 
-CURRENT_PID=$(pgrep -f $APP_NAME)
+echo "> 새 애플리케이션 배포"
+nohup java -jar $PROJECT &
 
-if [ -z $CURRENT_PID ]
-then
-  echo "> 종료할것 없음."
-else
-  echo "> kill -9 $CURRENT_PID"
-  kill -9 $CURRENT_PID
-  sleep 5
-fi
-
-echo "> $JAR_PATH 배포"
-nohup java -jar  $JAR_PATH
