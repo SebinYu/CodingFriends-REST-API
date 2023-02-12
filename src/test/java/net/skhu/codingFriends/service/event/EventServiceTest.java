@@ -24,7 +24,6 @@
 //    EventService eventService;
 //    @Mock
 //    EventTicketRepository eventTicketRepository;
-//
 //    @Mock
 //    EventRepository eventRepository;
 //
