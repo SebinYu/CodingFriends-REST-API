@@ -1,6 +1,7 @@
 package net.skhu.codingFriends.controller;
 
 import lombok.RequiredArgsConstructor;
+import net.skhu.codingFriends.config.redis.RedisConfiguration;
 import net.skhu.codingFriends.dto.RequestDTO.EventRequestDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.EventResponseDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.EventTicketResponseDTO;
