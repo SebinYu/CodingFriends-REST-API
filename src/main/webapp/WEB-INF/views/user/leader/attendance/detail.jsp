@@ -29,14 +29,14 @@
         td {
             text-align: center;
             min-width: 320px;
-            height: 55px;
+            height: 65px;
             border: 1px #1e1f26;
 
         }
 
         td:nth-child(1) { text-align: center; min-width: 180px; }
         th:nth-child(1) {
-            height: 55px;
+            height: 105px;
             padding: 20px 10px 20px 18px;
             border-radius: 25px 0px 0px 25px;
         }
@@ -85,7 +85,10 @@
         td:nth-child(4) { background: rgba(233, 234, 238, 0.4);}
 
 
-
+        input::placeholder {
+            color: red;
+            font-style: italic;
+        }
     </style>
     <script src="https://kit.fontawesome.com/c30dd58b89.js" crossorigin="anonymous"></script>
 
@@ -111,54 +114,51 @@
         </div>
         </c:forEach>
 <hr>
-       <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)">${StudygroupTitlePara}</h2>
+       <h2 style="font-weight: bold; margin-left: 50px; margin-top:50px; color: rgba(101,101,101,0.65)" name="StudygroupTitle" id="StudygroupTitle">${StudygroupTitlePara}<span id="result"></span></h2>
         <div class="container" style="margin-left: 70px; margin-top: 30px ">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    주차
-                </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a href="detail?StudygroupTitle=${StudygroupTitle.title}" style="color: rgba(0,0,0,0.57);text-decoration: none; font-weight: bold;">${StudygroupTitle.title}</a>
                     <c:forEach var="WeekInfo" items="${ WeekInfoList }">
-                        <a href="detail?week=${ WeekInfo.week }&&StudygroupTitle=${StudygroupTitlePara}" class="dropdown-item"  name="week">${ WeekInfo.week }주차</a>
+                        <a href="detail?week=${ WeekInfo.week }&&StudygroupTitle=${StudygroupTitlePara}" class="dropdown-item">${ WeekInfo.week }주차</a>
                         <br>
                     </c:forEach>
                 </div>
             </div>
 <%--        스터디 지원자_ 신청 허가창--%>
-        <div class="container" style="text-align: center">
-            <form method="post" action="/attendanceProcess">
-            <table class="list" >
+        <div class="container">
+            <form method="post" action="/attendanceProcess" onsubmit="return false">
+                <div style="margin-left: 30px">
+                    <input type="number" oninput="myFunction()" name="weekInput" id="weekInput" placeholder="주차 입력" min="1" class="form-control" style="width:120px;font-size: 15px; float: left; text-align:center; font-weight: bold" ;
+                            required/>
+                </div>
+                <div style="color: #0d6efc; float: left; margin-left: 20px">
+                    ***몇 주차 내역인지 입력해주세요***
+                </div>
+                <table class="list"  style="text-align: center">
                 <thead style="">
                 <tr>
+                    <th>스터디원 ID</th>
                     <th>이름</th>
-                    <th>
-                        주차
-                    </th>
                     <th>출석</th>
                     <th>과제실행</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="Participant" items="${ ParticipationList }">
-
                 <tr>
+                        <td>${Participant.userId}</td>
                         <td>${ Participant.name }</td>
-                        <td>1주차</td>
-                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value=${Participant.userId}/>${Participant.userId}</td>
-                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value=${Participant.userId}/>${Participant.userId}</td>
-                        <td><input type="hidden" class="form-control" name="studentId" value="${Participant.userId}" readonly></td>
-                        <td><input type="hidden" class="form-control" name="studygroupID" value="${studygroupID}" readonly></td>
-                        <td><input type="hidden" class="form-control" name="attendanceChecked" value="x" readonly></td>
-                        <td><input type="hidden" class="form-control" name="homeworkChecked" value="x" readonly></td>
-
+                        <td><input type="checkbox" style="accent-color: green; zoom:1.8;" name="attendanceChecked" id="input_attendanceCheck" value=${Participant.userId}></td>
+                        <td><input type="checkbox" style="accent-color: red; zoom:1.8;" name="homeworkChecked" id="input_homeworkCheck" value=${Participant.userId}></td>
+                        <td><input type="hidden" class="form-control" id="studentId" value="${Participant.userId}" readonly studentId></td>
+                        <td><input type="hidden" class="form-control" id="studygroupID" value="${studygroupID}" readonly studygroupID></td>
                     </tr>
                     </c:forEach>
 
                 </tbody>
             </table>
-
-                <button type="submit" id="checkButton" class="btn btn-info" style="color: white; font-weight: bold; width: 20%" name="cmd" value="check">등록</button>
+                <button id="checkButton" class="btn btn-info" style="margin-left: 320px; color: white; font-weight: bold; width: 50%" name="cmd" value="check" checkButton>등록</button>
             </form>
         </div>
 
@@ -177,69 +177,79 @@
             return confirm("삭제하시겠습니까?");
         })
 
-    })
+    });
+
+
+    function myFunction(){
+        var x = document.getElementById("weekInput").value;
+        document.getElementById("result").innerHTML = ": " + x + "주차";
+    }
 
 
 
 
-    var  attendanceCheckedArr = [];
-    var  homeworkCheckedArr = [];
+        $("[checkButton]").click(function () {
 
 
-        $("#checkButton").click(function (){
-            alert(1);
+            var studentId = [];
+            $("[studentId]").each(function (index) {
+                studentId.push($(this).val());
+            });
+
+            var studygroupID = [];
+            $("[studygroupID]").each(function (index) {
+                studygroupID.push($(this).val());
+            });
+
+
+            var attendanceCheckedArr = [];
+            var homeworkCheckedArr = [];
 
             $('input:checkbox[name="attendanceChecked"]:not(:checked)').each(function (index) {
                 attendanceCheckedArr.push(0);
             })
 
-            alert(2);
-
             $('input:checkbox[name="attendanceChecked"]:checked').each(function (index) {
                 attendanceCheckedArr.push($(this).val());
             })
 
-            alert(3);
-
             $('input:checkbox[name="homeworkChecked"]:not(:checked)').each(function (index) {
                 homeworkCheckedArr.push(0);
             })
-            alert(4);
 
             $('input:checkbox[name="homeworkChecked"]:checked').each(function (index) {
                 homeworkCheckedArr.push($(this).val());
 
             })
 
-            alert(5);
-            var data = {"attendanceCheckedArr":attendanceCheckedArr,"homeworkCheckedArr": homeworkCheckedArr}
-            console.log(data);
-            alert(6);
+            var xWeekInput = document.getElementById("weekInput").value;
+            var StudygroupTitle = document.getElementsByName("StudygroupTitle").value;
+            var overlapError = 0;
 
+
+            var data = {"attendanceCheckedArr":attendanceCheckedArr,
+                        "homeworkCheckedArr": homeworkCheckedArr,
+                        "studentId":studentId,
+                        "studygroupID":studygroupID,
+                        "xWeekInput": xWeekInput,
+                        "StudygroupTitle": StudygroupTitle,
+                        }
 
             $.ajax({
-                type : "POST",
-                url : "/attendanceProcess", //요청 할 URL
-                traditional: true,	// ajax 배열 넘기기 옵션!
-                data : {
-                    "attendanceCheckedArr" : attendanceCheckedArr,
-                    "homeworkCheckedArr": homeworkCheckedArr}, //넘길 파라미터
+                url : "/user/leader/attendance/detail", //요청 할 URL
+                type: "post",
+                data:JSON.stringify(data),
+                dataType: "json",
+                contentType:"application/json;",
                 success: function(data){
                     window.alert("성공");
                 },
-                // error:function(request,status,error){
-                //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+                error:function(request,status,error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
             });
+
+
         });
-
-
-
-
-
-
-
-
-
-
 </script>
 </html>

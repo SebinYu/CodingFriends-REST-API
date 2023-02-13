@@ -55,7 +55,7 @@
 	text-align: center;
 
 	/* background:black; */
-	background-image: url('../imgs/bannerImg.jpg');
+	background-image: url('../../imgs/bannerImg.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;">
     <br><br><br><br><br><br><br><br><br><br><br>

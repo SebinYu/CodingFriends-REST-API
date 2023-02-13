@@ -12,7 +12,10 @@
             margin:10px
         }
         td{
-            width: 70px;
+            width: 120px;
+        }
+        .textRight{
+            text-align: right;
         }
     </style>
 </head>
@@ -26,22 +29,24 @@
 
 <div class="container" style="margin-top: 7px">
 <div style="clear:both"></div>
-<div class="profile" style="width:25%;">
+<div class="profile" style="width:28%;">
     <div class="container-p">
         <div class="box">
-            <h2 style="text-align: center; margin-bottom: 20px">내 프로필</h2>
+            <h2 style="text-align: center; margin-bottom: 20px;color: #00b0d9; margin-bottom:20px;font-weight: bold">"<sec:authentication property="principal.name" />"님<br>프로필</h2>
             <table>
                 <tr>
-                    <td>아이디</td>
-                    <td><sec:authentication property="name"/></td>
+                    <td class="textRight">아이디: </td>
+                    <td style="text-align: center"><sec:authentication property="name"/></td>
+                    <td><br></td>
                 </tr>
                 <tr>
-                    <td>이름</td>
-                    <td><sec:authentication property="principal.name" /></td>
+                    <td class="textRight">이름: </td>
+                    <td style="text-align: center"><sec:authentication property="principal.name" /></td>
+                    <td><br></td>
                 </tr>
                 <tr>
-                    <td>이메일</td>
-                    <td><sec:authentication property="principal.email" /></td>
+                    <td class="textRight">이메일: </td>
+                    <td style="font-size: 16px; text-align: center;"> <sec:authentication property="principal.email" /></td>
                 </tr>
 
             </table>
@@ -62,47 +67,59 @@
         </c:forEach>
     </div>
 
-<%--    <div class="list-group" style="margin-bottom: 30px">--%>
-<%--        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">--%>
-<%--            참여 중--%>
-<%--        </a>--%>
-<%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
-<%--            <a href="#" class="list-group-item list-group-item-action">${ ParticipantTitle.title }</a>--%>
-<%--        </c:forEach>--%>
-<%--    </div>--%>
     <div class="list-group" >
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            참여완료 (후기를 남겨주세요!)
+            참여완료
         </a>
         <c:forEach var="EndDateTitleList" items="${ EndDateTitleLists }">
-        <a href="review/index?StudygroupTitle=${EndDateTitleList.title}" class="list-group-item list-group-item-action">${ EndDateTitleList.title }</a>
+        <a href="review/index?StudygroupTitle=${EndDateTitleList.title}" class="list-group-item list-group-item-action" style="font-weight: bold">"${ EndDateTitleList.title }" 후기 남기기 </a>
         </c:forEach>
     </div>
 </div>
 <div class="profile">
     <div class="list-group" >
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #59be7e; border: #59be7e">
-            내 스터디 평점
+            전체 스터디 평점
         </a>
-        <a class="list-group-item list-group-item-action disabled">
-            밑바닥부터 시작하는 딥러닝
-            ⭐⭐⭐⭐⭐</a>
-<%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
-<%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
-<%--        </c:forEach>--%>
+        <a href="#" class="list-group-item"  >
+            <table>
+                <tr style="margin-bottom: 10px">
+                    <td>참여도 점수: </td>
+                    <td>${lectureScoreAvg}</td>
+                </tr>
+                <tr style="margin-bottom: 10px">
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td>스터디원 평가: </td>
+                    <td>
+                        <c:if test="${ reivewAvg == null }">
+                             후기 입력 전
+                        </c:if>
+                        <c:if test="${ reivewAvg == 1 }">
+                            ${reivewAvg}점 ⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 2 }">
+                            ${reivewAvg}점 ⭐⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 3 }">
+                            ${reivewAvg}점 ⭐⭐⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 4 }">
+                            ${reivewAvg}점 ⭐⭐⭐⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 5 }">
+                            ${reivewAvg}점 ⭐⭐⭐⭐⭐
+                        </c:if>
+                        </td>
+                </tr>
+            </table>
+            </a>
+        <button id="request" class="list-group-item list-group-item-action" style="text-align: center; color: #0d6efc; font-weight: bold">내 후기 더보기</button>
+
+
     </div>
 
-    <div class="list-group" style="margin-top: 50px" >
-        <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #59be7e; border: #59be7e">
-            내가 남긴 후기
-        </a>
-        <a class="list-group-item list-group-item-action disabled">
-            밑바닥부터 시작하는 딥러닝
-            ⭐⭐⭐⭐⭐</a>
-        <%--        <c:forEach var="ParticipantTitle" items="${ ParticipantTitles }">--%>
-        <%--            <input type="text" name="endDate" value="${ ParticipantTitle.endDate }">--%>
-        <%--        </c:forEach>--%>
-    </div>
 </div>
 
 </div>
@@ -110,6 +127,15 @@
 </body>
 <script>
 
+    var url = "review/check";
+    var windowTargetName = "targetName";
+    var features = "scrollbars=yes,width=700,height=600,location=no, resizable=yes";
+
+
+    // 'request'라는 id를 가진 버튼 클릭 시 실행.
+    $('#request').click(function () {
+        window.open(url, windowTargetName, features);
+    });
 
 </script>
 </html>

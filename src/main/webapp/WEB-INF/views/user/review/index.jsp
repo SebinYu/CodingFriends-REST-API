@@ -6,9 +6,11 @@
 <>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="${R}res/common.css">
+
     <style>
         .profile {
-            width:70%; background: #ffffff; padding: 50px 50px 50px 50px; text-align:center; border: 1px solid rgba(128,128,128,0.35); border-radius: 20px; float:left;
+            width:65%; background: #ffffff; padding: 50px 50px 50px 50px; text-align:center; border: 1px solid rgba(128,128,128,0.35); border-radius: 20px; float:left;
             margin:10px
         }
         td{
@@ -62,21 +64,21 @@
 
 <div class="container" style="margin-top: 7px">
     <div style="clear:both"></div>
-    <div class="profile" style="width:25%;">
+    <div class="profile" style="width:28%;">
         <div class="container-p">
             <div class="box">
-                <h2 style="text-align: center; margin-bottom: 20px">내 프로필</h2>
+                <h2 style="text-align: center; margin-bottom: 20px">스터디 정보</h2>
                 <table>
                     <tr>
-                        <td>아이디</td>
+                        <td>스터디명</td>
                         <td><sec:authentication property="name"/></td>
                     </tr>
                     <tr>
-                        <td>이름</td>
+                        <td>기간</td>
                         <td><sec:authentication property="principal.name" /></td>
                     </tr>
                     <tr>
-                        <td>이메일</td>
+                        <td>조직장</td>
                         <td><sec:authentication property="principal.email" /></td>
                     </tr>
 
@@ -84,55 +86,36 @@
             </div>
         </div>
     </div>
+<%--    <div class="profile" style="width:28%; clear:both;">--%>
+<%--        <div class="list-group" style="margin-bottom: 30px;">--%>
+<%--            <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #91c5e0; border: #03dac6">--%>
+<%--                후기 작성완료--%>
+<%--            </a>--%>
+<%--            <a href="#" class="list-group-item list-group-item-action">유세빈</a>--%>
+<%--            <a href="#" class="list-group-item list-group-item-action">이유진</a>--%>
+
+<%--            </a>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 
 
 
-    <div class="profile">
-        <div class="list-group" style="margin-bottom: 30px">
+    <div class="profile" style="margin-top: 10px">
+        <div class="list-group" style="margin-bottom: 30px;">
             <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="background: #03dac6; border: #03dac6">
-                완료된 스터디 조원
-                <br>(후기 남기기)
+                조원 후기 남기기<br>(이미 후기가 등록된 사용자 경우, 추가 등록이 안됩니다.)
             </a>
-            <%--          <c:forEach var="nameList" items="${ names }">--%>
-            <%--            <a href="#" class="list-group-item list-group-item-action">${ nameList.name }유세빈</a>--%>
-            <%--          </c:forEach>--%>
-            <a href="#" class="list-group-item list-group-item-action">유세빈</a>
-            <a href="#" class="list-group-item list-group-item-action">이유진</a>
-
+            <c:forEach var="exCompanyName" items="${exCompanyNames}">
+                <a href="detail?StudygroupTitle=${StudygroupTitle}&&chosenName=${exCompanyName}" class="list-group-item list-group-item-action">${exCompanyName}</a>
+              </c:forEach>
             </a>
         </div>
-        <legend>점수 (5점 만점)</legend>
-
-        <form name="myform" id="myform" method="post" action="/reviewProcess">
-            <input type="hidden" name="studyGroupPartner" value=<sec:authentication property="name"/>>
-            <fieldset>
-                <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
-                <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
-                <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
-                <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
-                <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
-            </fieldset>
-            <div style="margin-top: 30px"></div>
-            <legend>상세 내용</legend>
-            <textarea type="text" name="ratingContent" class="form-control" style="height: 200px"
-                      required></textarea>
-            <button type="submit" class="btn btn-info" style="color: white; margin-top: 30px; width: 100%" name="cmd" value="submit">제출</button>
-
-        </form>
-
-
-
-
-
-
-
     </div>
 </div>
 
 </body>
 <script>
-
 
 </script>
 </html>

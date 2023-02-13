@@ -18,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         if (httpSession.getAttribute("member") == null) {
             log.warn("current user is not logged");
-            response.sendRedirect("/mypage/user/login");
+            response.sendRedirect("/login");
             return false;
         }
 

@@ -19,7 +19,7 @@
 
     .dashboard {
       background: #0dc9ef;
-      height: 100vh;
+      height: 130vh;
       width: 20%;
       float:left;
       text-align: left;

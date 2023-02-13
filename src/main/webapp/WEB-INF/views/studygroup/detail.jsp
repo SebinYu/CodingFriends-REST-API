@@ -32,19 +32,26 @@
 
 
     <div class = "container" style="margin-top: 100px; clear: both; text-decoration: none;">
+        <input type="hidden" value=${error}>
       <h1>${ studygroup.title }</h1>
       <div>${ studygroup.updateDate }</div>
       <div>
-          신청인원: ${ studygroup.currentNum }/${ studygroup.totalNum }
           <div style="float:right;">
               <a href="edit?studyGroup_id=${ studygroup.studyGroup_id }" style="text-decoration: none; margin-right: 5px">수정</a>
-              <a href="delete?studyGroup_id=${ studygroup.studyGroup_id }" style="text-decoration: none;">삭제</a>
+              <c:if test="${ error == 1 }">
+                  <a href="#" style="text-decoration: none;"></a><br>
+                  * 신청자/참여확정자가 있는 경우 삭제 불가
+              </c:if>
+              <c:if test="${ error == null }">
+                  <a href="delete?studyGroup_id=${ studygroup.studyGroup_id }" style="text-decoration: none;">삭제</a>
+              </c:if>
           </div>
           <div>
               기간: ${ studygroup.startDate } ~ ${ studygroup.endDate }
           </div>
-      </div>
 
+      </div>
+        <br>
       <hr><br>
       <div class="content" style="height: 200px">${ studygroup.content }</div>
       <br><br>
@@ -101,30 +108,28 @@
 <%--        참여자 명단--%>
         <div style="height: 20px"></div>
         <!-- Button trigger modal -->
-        <c:forEach var="apply" items="${ applyList }">
-            <button type="button" id ="request" class="btn btn-light" data-toggle="modal" data-target="#exampleModal" style="width: 10rem; margin: 10px">
-                ${ apply.name }
-            <br>⭐⭐⭐⭐
-                    <br><hr>${ apply.application }
+        <div style="margin-left: 20px; font-weight: bold; font-size: 20px;">참여 확정자 명단</div><br>
+        <c:forEach var="ViewReviewInfo" items="${ ViewReviewInfos }">
+            <button herf="/user/review/checkOutside?name=${ ViewReviewInfo.name }" id ="request" class="btn btn-" style="background:#78d2ff;color:white; width: 15rem; margin: 10px">
+                ${ ViewReviewInfo.name }
+                <br>참여도: ${ ViewReviewInfo.totalLectureScore }점
+                <br>
+                    <c:if test="${ ViewReviewInfo.totalReviewScore == 1 }">
+                        후기(5점): ${ViewReviewInfo.totalReviewScore}점 ⭐
+                    </c:if>
+                    <c:if test="${ ViewReviewInfo.totalReviewScore == 2 }">
+                        후기(5점): ${ViewReviewInfo.totalReviewScore}점 ⭐⭐
+                    </c:if>
+                    <c:if test="${ ViewReviewInfo.totalReviewScore == 3 }">
+                        후기(5점): ${ViewReviewInfo.totalReviewScore}점 ⭐⭐⭐
+                    </c:if>
+                    <c:if test="${ ViewReviewInfo.totalReviewScore == 4 }">
+                        후기(5점): ${ViewReviewInfo.totalReviewScore}점 ⭐⭐⭐⭐
+                    </c:if>
+                    <c:if test="${ ViewReviewInfo.totalReviewScore == 5 }">
+                        후기(5점): ${ViewReviewInfo.totalReviewScore}점 ⭐⭐⭐⭐⭐
+                    </c:if>
             </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-secondary" style="color: white">
-                        <h5 class="modal-title-second" id="exampleModalLabel">참여 포부</h5>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                            ${ apply.application }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         </c:forEach>
 
 
@@ -133,7 +138,6 @@
 
 <jsp:include page="/template/footer.jsp"></jsp:include>
         <script>
-
             // 'request'라는 id를 가진 버튼 클릭 시 실행.
             $('#request').click(function () {
                 $.ajax({
@@ -148,7 +152,6 @@
                     alert(data);
                 });
             });
-
         </script>
 </body>
 

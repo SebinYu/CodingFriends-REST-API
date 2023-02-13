@@ -18,14 +18,7 @@ public class Review {
     Double reviewScore;
     String reviewContents;
     Double lectureScore;
-    boolean objection;
+    Integer objection;
     LocalDateTime updateDate;
 
-//    @ManyToOne
-//    @JoinColumn(name = "studentId")
-//    user user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "studygroupId")
-//    RequestStudygroup studygroup;
 }
