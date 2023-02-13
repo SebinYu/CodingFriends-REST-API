@@ -8,6 +8,5 @@ public class Test {
     public List<String> studentId;
     public List<String> studygroupID;
     public String xWeekInput;
-
-
+    public Integer objectedReviewID;
 }

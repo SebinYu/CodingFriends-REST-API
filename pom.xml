@@ -11,7 +11,7 @@
 	<groupId>net.skhu</groupId>
 	<artifactId>codingBook</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>codingBook</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

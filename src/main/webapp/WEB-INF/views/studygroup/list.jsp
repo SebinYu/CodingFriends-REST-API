@@ -105,7 +105,7 @@
                     </h5>
                     <p class="card-text">
                         BY. ${ studygroup.writer }<br>
-                            <%--                        정원. ${ studygroup.currentNum }/${ studygroup.totalNum }--%>
+                            <%-- 정원. ${ studygroup.currentNum }/${ studygroup.totalNum }--%>
                         스터디 시작일. ${ studygroup.startDate }<br>
                         작성일. ${ studygroup.updateDate }
                     </p>

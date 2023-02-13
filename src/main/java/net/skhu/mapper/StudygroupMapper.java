@@ -21,6 +21,17 @@ public interface StudygroupMapper {
             " FROM studygroup")
     List<ResponseStudygroup> findAll();
 
+    @Select("SELECT apply_id" +
+            " FROM apply WHERE studygroupId = #{studygroupId}")
+    Integer[] findApplyer(BigInteger studygroupId);
+
+    @Select("SELECT userid" +
+            " FROM user WHERE name = #{name}")
+    String findID(String name);
+    @Select("SELECT writer" +
+            " FROM studygroup WHERE studyGroup_id = #{studyGroup_id}")
+    String findWriter(BigInteger studyGroup_id);
+
     @Select("SELECT studyGroup_id, title, content, writer, totalNum, startDate, endDate, updateDate " +
             "FROM studygroup where title LIKE CONCAT('%', #{keyword}, '%') AND learningMaterial_id LIKE CONCAT('%', #{learningMaterial_id}, '%')")
     List<ResponseStudygroup> findSearchedStudygroup(String keyword, String learningMaterial_id);

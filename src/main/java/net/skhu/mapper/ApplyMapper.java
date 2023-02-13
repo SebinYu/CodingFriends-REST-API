@@ -40,6 +40,44 @@ public interface ApplyMapper {
             " ORDER BY u.user_id")
     List<Map<String, ResponseApply>> findAcceptedAppliers(Integer studygroupID, String applyStatus);
 
+    @Select("SELECT u.user_id" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN review r ON a.userId = r.studentId                   " +
+            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
+            "                 JOIN participationrate p ON a.userId = p.studentId                   " +
+            "                 WHERE a.studygroupId = #{studyGroup_id} AND a.applyStatus = #{applyStatus}              " +
+            " ORDER BY u.user_id")
+    String[] findAcceptedApplierName(Integer studyGroup_id, String applyStatus);
+
+    @Select("SELECT u.name" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN review r ON a.userId = r.studentId                   " +
+            "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
+            "                 JOIN participationrate p ON a.userId = p.studentId                   " +
+            "                 WHERE a.studygroupId = #{studyGroup_id} AND a.applyStatus = #{applyStatus}              " +
+            " ORDER BY u.user_id")
+    String[] findAcceptedApplierNameString(Integer studyGroup_id, String applyStatus);
+
+    @Select("SELECT user_id" +
+            " FROM user WHERE name = #{name} ")
+    Integer studentId(String name);
+
+    @Select("SELECT r.reviewScore" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN review r ON a.userId = r.studentId                   " +
+            "                 JOIN participationrate p ON a.userId = p.studentId                   " +
+            "                 WHERE a.studygroupId = #{studygroupID} AND a.userId = #{studentId} " +
+            " ORDER BY u.user_id")
+    Integer[] reviewScore(Integer studygroupID,Integer studentId);
+
+    @Select("SELECT p.lectureScore" +
+            " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
+            "                 JOIN review r ON a.userId = r.studentId                   " +
+            "                 JOIN participationrate p ON a.userId = p.studentId                   " +
+            "                 WHERE a.studygroupId = #{studygroupID} AND a.userId = #{studentId} " +
+            " ORDER BY u.user_id")
+    Integer[] lectureScore(Integer studygroupID, Integer studentId);
+
     @Select("SELECT a.userId, s.title, s.endDate, u.name " +
             " FROM apply a JOIN user u ON a.userId = u.user_id                 " +
             "                 JOIN studygroup s ON a.studygroupId = s.studyGroup_id                   " +
@@ -79,6 +117,10 @@ public interface ApplyMapper {
     @Select("SELECT name" +
             " FROM user WHERE userid = #{loginID}")
     String findExCompanyName(String loginID);
+
+    @Select("SELECT user_id" +
+            " FROM user WHERE userid = #{loginID}")
+    String findID(String name);
 
     @Insert("INSERT apply (userId,studygroupId, title, application)"
             + " VALUES (#{userId},#{studygroupId},#{title},#{application})")

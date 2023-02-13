@@ -84,15 +84,34 @@
         <a href="#" class="list-group-item"  >
             <table>
                 <tr style="margin-bottom: 10px">
-                    <td>참여도 점수</td>
-                    <td><sec:authentication property="name"/></td>
+                    <td>참여도 점수: </td>
+                    <td>${lectureScoreAvg}</td>
                 </tr>
                 <tr style="margin-bottom: 10px">
                     <td><br></td>
                 </tr>
                 <tr>
-                    <td>스터디원 평가</td>
-                    <td><sec:authentication property="principal.name" />⭐⭐⭐⭐⭐</td>
+                    <td>스터디원 평가: </td>
+                    <td>
+                        <c:if test="${ reivewAvg == null }">
+                             후기 입력 전
+                        </c:if>
+                        <c:if test="${ reivewAvg == 1 }">
+                            ${reivewAvg}점 ⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 2 }">
+                            ${reivewAvg}점 ⭐⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 3 }">
+                            ${reivewAvg}점 ⭐⭐⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 4 }">
+                            ${reivewAvg}점 ⭐⭐⭐⭐
+                        </c:if>
+                        <c:if test="${ reivewAvg == 5 }">
+                            ${reivewAvg}점 ⭐⭐⭐⭐⭐
+                        </c:if>
+                        </td>
                 </tr>
             </table>
             </a>
@@ -110,7 +129,7 @@
 
     var url = "review/check";
     var windowTargetName = "targetName";
-    var features = "scrollbars=yes,width=400,height=600,location=no, resizable=yes";
+    var features = "scrollbars=yes,width=700,height=600,location=no, resizable=yes";
 
 
     // 'request'라는 id를 가진 버튼 클릭 시 실행.

@@ -88,9 +88,7 @@ public class LeaderController {
 
     // 지원자 관리페이지_지원 수락
     @RequestMapping(value = "/process", method = RequestMethod.POST, params = "cmd=save")
-    public String applicationAccepted(Model model,
-                                      HttpServletRequest request, Principal principal,
-                                      RedirectAttributes redirectAttributes,
+    public String applicationAccepted(HttpServletRequest request, Principal principal,
                                       ResponseParticipation participation, RequestApply apply) {
 
         String[] checkedStudentID = request.getParameterValues("idChecked");
@@ -122,7 +120,7 @@ public class LeaderController {
 
     // 지원자 관리페이지_지원 거절
     @RequestMapping(value = "/process", method = RequestMethod.POST, params = "cmd=delete")
-    public String applicationRejected(Model model, HttpServletRequest deleteRequest) {
+    public String applicationRejected(HttpServletRequest deleteRequest) {
         String[] idChecked = deleteRequest.getParameterValues("idChecked");
         for (int i = 0; i < idChecked.length; ++i) {
             applyMapper.delete(new BigInteger(idChecked[i]));
@@ -205,10 +203,12 @@ public class LeaderController {
     }
 
 
+
     // 지원자 관리페이지_주차별 참여이력
     @ResponseBody
-    @PostMapping(value = "/attendanceProcess")
-    public Object attendanceCheckPost(Model model, HttpServletRequest request, Principal principal, ResponseParticipation participation,
+    @PostMapping(value = "user/leader/attendance/detail")
+    public Object attendanceCheckPost(Model model, Principal principal, ResponseParticipation participation,
+                                      RedirectAttributes redirectAttributes,
                                       @RequestBody Test checkInfo) {
 
         String studyGroup_Leader = principal.getName();
@@ -268,7 +268,6 @@ public class LeaderController {
 
         }
 
-        Integer overlapError = 0;
 
         //중복 제거 알고리즘
 
@@ -287,9 +286,6 @@ public class LeaderController {
 
             if (WeekInput.equals(OverlapDeletedWeeks[i])) {
                 System.out.println("주차 중복에러");
-                overlapError = 1;
-                model.addAttribute("overlapError", overlapError);
-
                 for (int j = 0; j < participationIDs.size(); j++) {
                     participationMapper.delete(participationIDs.get(j));
                 }
@@ -297,7 +293,12 @@ public class LeaderController {
             }
 
         }
+
+
+
         return checkInfo;
+
     }
+
 
 }
