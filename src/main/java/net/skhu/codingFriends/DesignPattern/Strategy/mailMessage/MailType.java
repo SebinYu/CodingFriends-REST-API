@@ -18,7 +18,8 @@ import java.util.Arrays;
 public enum MailType {
     DEFALUT("", new SendToOneUser(), new Applied(), new AppliedText()),
     ACCEPT("accepted", new SendToOneUser(), new Accepted(), new AcceptedText()),
-    REJECT("rejected", new SendToOneUser(), new Rejected(), new RejectedText());
+    REJECT("rejected", new SendToOneUser(), new Rejected(), new RejectedText()),
+    BULKREQUEST("bulkRequest", new SendToOneUser(), new Rejected(), new RejectedText());
 
     private final String type;
     private SendToStrategy sendToStrategy;
