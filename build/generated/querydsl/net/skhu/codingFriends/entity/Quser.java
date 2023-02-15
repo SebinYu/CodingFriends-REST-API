@@ -33,6 +33,8 @@ public class Quser extends EntityPathBase<user> {
 
     public final StringPath password = createString("password");
 
+    public final DateTimePath<java.time.LocalDateTime> updateDate = createDateTime("updateDate", java.time.LocalDateTime.class);
+
     public final NumberPath<Integer> user_id = createNumber("user_id", Integer.class);
 
     public final StringPath username = createString("username");

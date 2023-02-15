@@ -16,7 +16,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JasyptConfig {
     @Value("${jasypt.encryptor.password}")
-    private static String KEY = "218905C7CD2C857E34E95E8FB59CODDE3DCBFB97";
+    private String KEY;
+
     private static final String ALGORITHM = "PBEWithMD5AndDES";
 
     @Bean("jasyptStringEncryptor")
