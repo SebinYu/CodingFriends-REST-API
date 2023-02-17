@@ -11,9 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +28,8 @@ public class BulkMailService {
     @Async
     @Scheduled(fixedRate = 10000) // 단위: ms
     public CompletableFuture<String> sendMailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
+        Executor executor = Executors.newFixedThreadPool(10);
+
         CompletableFuture<String> msFuture = CompletableFuture.supplyAsync(() -> {
             List<user> users = userRepository.findByAddressLike("서울");
 
@@ -45,7 +45,7 @@ public class BulkMailService {
                 emailSender.send(message);
             }
             return "이메일 전송 성공";
-        }).exceptionally(ex -> {
+        }, executor).exceptionally(ex -> {
             System.out.println(ex);
             return "전송 실패";
         });

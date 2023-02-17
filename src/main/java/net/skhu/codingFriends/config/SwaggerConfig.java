@@ -31,7 +31,8 @@
 //        return new ApiInfoBuilder()
 //                .title("CODINGFRIENDS")
 //                .description("설명 부분")
-//                .version("0.0.1-SNAPSHOT")
+//                .version("2.7.8-SNAPSHOT")
 //                .build();
 //    }
 //}
+//
