@@ -100,6 +100,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.redisson:redisson-spring-boot-starter:3.16.3'
+
+	//spring-retry
+	implementation("org.springframework.retry:spring-retry")
+	implementation("org.springframework:spring-aspects")
 }
 
 // querydsl 세팅 시작

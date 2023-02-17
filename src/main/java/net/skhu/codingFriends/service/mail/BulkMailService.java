@@ -6,6 +6,8 @@ import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class BulkMailService {
     //쿼리 적용 메일전송 메서드 (0)
     @Async
     @Scheduled(fixedRate = 10000) // 단위: ms
+    @Retryable(value = Exception.class, maxAttempts = 5, backoff = @Backoff(1000))
     public CompletableFuture<String> sendMailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
         Executor executor = Executors.newFixedThreadPool(10);
 
