@@ -1,14 +1,8 @@
 package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage;
 
 import lombok.Getter;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Accepted;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Applied;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Rejected;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.SubjectStrategy;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.AcceptedText;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.AppliedText;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.RejectedText;
-import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.TextStrategy;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.*;
+import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.*;
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to.SendToOneUser;
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to.SendToStrategy;
 
@@ -18,7 +12,8 @@ import java.util.Arrays;
 public enum MailType {
     DEFALUT("", new SendToOneUser(), new Applied(), new AppliedText()),
     ACCEPT("accepted", new SendToOneUser(), new Accepted(), new AcceptedText()),
-    REJECT("rejected", new SendToOneUser(), new Rejected(), new RejectedText());
+    REJECT("rejected", new SendToOneUser(), new Rejected(), new RejectedText()),
+    NOTICE("notice", new SendToOneUser(), new Notice(), new NoticeText());
 
     private final String type;
     private SendToStrategy sendToStrategy;

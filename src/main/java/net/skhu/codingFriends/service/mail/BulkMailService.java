@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 @RequiredArgsConstructor
 @Slf4j
 public class BulkMailService {
-
+    private final MailService mailService;
     private final JavaMailSender emailSender;
     private final UserRepository userRepository;
     //특정 쿼리조건 만족 사용자 -> 메일 보내기
@@ -39,13 +39,7 @@ public class BulkMailService {
             SimpleMailMessage message = new SimpleMailMessage();
 
             for (user oneUser : users) {
-                String to = oneUser.getEmail();
-                message.setTo(to);
-                message.setFrom("codingfriend7@gmail.com");
-                message.setSubject("서울 거주자 이벤트!");
-                message.setText("서울 거주자 안내 메일입니다.");
-
-                emailSender.send(message);
+                mailService.sendmailTo(oneUser,"notice", null);
             }
             return "이메일 전송 성공";
         }, executor).exceptionally(ex -> {
