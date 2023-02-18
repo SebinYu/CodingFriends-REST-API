@@ -14,16 +14,11 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class EventFacade {
     EventService eventService;
-    private final EventRepository eventRepository;
-    private final EventTicketRepository eventTicketRepository;
-    private final RedisLockRepository redisLockRepository;
+
     private final RedissonClient redissonClient;
 
-    public EventFacade(final EventService eventService, final EventRepository eventRepository, final EventTicketRepository eventTicketRepository, RedisLockRepository redisLockRepository, final RedissonClient redissonClient) {
+    public EventFacade(final EventService eventService, final RedissonClient redissonClient) {
         this.eventService = eventService;
-        this.eventRepository = eventRepository;
-        this.eventTicketRepository = eventTicketRepository;
-        this.redisLockRepository = redisLockRepository;
         this.redissonClient = redissonClient;
     }
     //Redisson 방식

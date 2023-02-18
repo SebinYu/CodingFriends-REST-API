@@ -35,21 +35,6 @@ public class MailService {
     private final JavaMailSender emailSender;
     private final StudygroupRepository studygroupRepository;
 
-//    @Transactional(readOnly = true)
-//    public MailResponseDTO sendmailToLeader(user user, Long studygroup_id) {
-//
-//        //이메일 보내기 전략방식
-//        MailInfo mailInfo = new MailInfo(new SendToOneUser(), new Applied(), new AppliedText());
-//        SimpleMailMessage fullMessage = sendMail(mailInfo, user, studygroup_id);
-//
-//        //json 리턴값
-//        MailResponseDTO mailResponseDTO = setMailResponseDTO(fullMessage);
-//
-//        return mailResponseDTO;
-//    }
-
-
-
     @Transactional(readOnly = true)
     public MailResponseDTO sendmailTo(user user, String mailType, Long studygroup_id) {
         MailType type = MailType.find(mailType);
@@ -64,7 +49,7 @@ public class MailService {
         return mailResponseDTO;
     }
 
-
+    @Transactional(readOnly = true)
     public SimpleMailMessage sendMail(MailInfo mailInfo,user user, Long studygroup_id){
         studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
@@ -84,6 +69,7 @@ public class MailService {
 
     }
 
+    @Transactional(readOnly = true)
     public MailResponseDTO setMailResponseDTO(SimpleMailMessage message){
         //message 객체 필드값 json형태 출력
         MailResponseDTO mailResponseDTO = new MailResponseDTO();

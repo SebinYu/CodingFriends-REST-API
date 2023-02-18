@@ -17,8 +17,7 @@ import static net.skhu.codingFriends.response.Response.success;
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
 //    @ApiOperation(value = "전체 회원 보기", notes = "전체 회원을 조회한다.")
     @ResponseStatus(HttpStatus.OK)
