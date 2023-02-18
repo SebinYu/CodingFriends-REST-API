@@ -25,8 +25,6 @@ public class studygroup implements Serializable {
     String content;
     int learningMaterial_id;
     String writer;
-    Double x_map;
-    Double y_map;
     int totalNum;
     int currentNum;
 

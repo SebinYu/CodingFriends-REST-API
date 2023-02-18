@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 public class test {
     private final EventFacade eventFacade;
 
-    public void createEventTicketTest(Long eventId) {
+    public void createEventTicketTest(Long eventId, user user) {
 
         ExecutorService executorService = Executors.newFixedThreadPool(100);
         CountDownLatch countDownLatch = new CountDownLatch(100);
@@ -32,7 +32,7 @@ public class test {
             executorService.submit(() -> {
                 try {
                     try {
-                        eventFacade.createEventTicketBroker(eventId);
+                        eventFacade.createEventTicketBroker(eventId, user);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
