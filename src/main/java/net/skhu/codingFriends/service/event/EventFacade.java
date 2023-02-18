@@ -2,6 +2,7 @@ package net.skhu.codingFriends.service.event;
 
 import net.skhu.codingFriends.entity.event.event;
 import net.skhu.codingFriends.entity.event.eventTicket;
+import net.skhu.codingFriends.entity.user;
 import net.skhu.codingFriends.repository.event.EventRepository;
 import net.skhu.codingFriends.repository.event.EventTicketRepository;
 import net.skhu.codingFriends.repository.event.RedisLockRepository;
@@ -22,10 +23,9 @@ public class EventFacade {
         this.redissonClient = redissonClient;
     }
     //Redisson 방식
-    public void createEventTicketBroker(final Long eventId) throws InterruptedException {
+    public void createEventTicketBroker(final Long eventId, user user) throws InterruptedException {
         RLock lock = redissonClient.getLock(String.valueOf(eventId));
 //        RLock lock = Redisson.create().getLock(String.valueOf(eventId));
-
 
         try {
             boolean available = lock.tryLock(10, 1, TimeUnit.SECONDS);
@@ -34,8 +34,7 @@ public class EventFacade {
                 System.out.println("redisson getLock timeout");
                 throw new IllegalArgumentException();
             }
-
-            eventService.createEventTicketForFacade(eventId);
+            eventService.createEventTicketForFacade(eventId, user);
             /* 비즈니스 로직 */
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
