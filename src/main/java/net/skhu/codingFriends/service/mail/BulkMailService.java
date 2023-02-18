@@ -22,11 +22,7 @@ public class BulkMailService {
     private final MailService mailService;
     private final JavaMailSender emailSender;
     private final UserRepository userRepository;
-    //특정 쿼리조건 만족 사용자 -> 메일 보내기
-    //메일은 대용량 데이터 관리 → @Scheduled/@Async 적용
 
-    // api 만들기 (0)
-    //쿼리 적용 메일전송 메서드 (0)
     @Async
     @Scheduled(fixedRate = 10000) // 단위: ms
     @Retryable(value = Exception.class, maxAttempts = 5, backoff = @Backoff(1000))
@@ -50,6 +46,4 @@ public class BulkMailService {
         return null;
     }
 }
-
-    // @Scheduled/@Async 적용 (0)
 
