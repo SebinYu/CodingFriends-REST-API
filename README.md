@@ -88,9 +88,8 @@
 - 예외처리 유지보수를 편리하게 하기 위해 @ControllerAdvice - @ExceptionHandler 사용
 - JWT 기반 로그인 구현
 - 엔티티 내부 구현을 캡슐화하기 위해 Response/ Request DTO 분리
-- API Response 가독성을 높이고자 Response를 Header, Body, Error  로 분리
-- Git Flow
-  - https://techblog.woowahan.com/2553/
+- API Response 가독성을 높이고자 Response를 Header, Body, Error로 분리
+- Git-Flow를 이용하여 Master 개발 결과에 영향 주지 않는 독립적인 개발환경 구축
   <br><br><br>
 
 # 📖 비즈니스 목표
