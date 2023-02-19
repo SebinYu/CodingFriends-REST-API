@@ -1,5 +1,8 @@
 - [x] 리드미 작성
-- [ ] 에러해결과정 정리
+- [ ] 중점사항: 나머지 사례 등록
+- [ ] 중점사항: 링크 연결
+  - [ ] 간단한 코드 제시만 필요한 경우 - 클래스 이동링크 연결
+  - [ ] 적용내역 및 정리 내역은 노션 링크 제공
 - [ ] 배포 링크 등록
 
 
@@ -38,19 +41,56 @@
 - Database: MySQL 8.0, MyBatis, Redis
 - DevOps: AWS - EC2, S3, RDS, IAM, CodeDeploy
 - CI/CD: Git Action
-- Tools: IntelliJ, Ngrinder, Ubuntu, Vim, Git, Notion
+- Tools: IntelliJ, Git ( + Git Flow), Pinpoint, Ngrinder, VisualVM, Ubuntu, Vim, Notion
   <br><br><br>
 
 # 🔥 프로젝트 중점사항 🔥
 ### 요약
-- 성능향상 ( 쿼리튜닝 - 인덱스 , 비동기 방식 )
-- 대규모 트래픽 대처 (Redis 캐시, DB Replication )
-- 추후 기능추가 및 확장 가능성고려 (Enum, 전략 패턴, 기능단위 메서드 개발)
-- 데이터베이스: (MySQL, JPA, Querydsl, 인덱스 설계)
-- 예외처리: (동시성 이슈 - Redis 분산락, @ControllerAdvice - @ExceptionHandler, Querydsl을 통한 런타임에러 미연방지)
-- 보안이슈: (회원 비밀번호 암호화/ 로그상 비밀번호 확인 제어)
+- 이메일 발송 기능을 추후 **기능추가 및 확장을 고려**하여 개발
+  - 전략 패턴을 활용하여 확장에 유연하도록 구현
+  - enum class 을 활용하여 이메일 유형 관리
+- 응답이 필요없는 이메일 발송 처리 성능 개선을 위해 **비동기 방식 활용**
+  - 예외처리를 고려하여 @Scheduled/ @Async/ Java CompleteFuture 조합으로 개발
+  - common pool을 사용하지 않도록 thread pool 설정
+- 가장 많이 조회되는 스터디 목록의 재조회 성능을 높이고자, 캐시를 활용하여 데이터 **검색 속도** **50% 개선** (6초 → 3초)
+  - **Redis 캐시** 적용하여  Disk-Based DB 접근횟수 감소시킴
+- 선착순 이벤트 신청 시 발생하는 **동시성 문제 해결**
+  - 분산 환경에서 원자성(atomic)을 보장하기 위해 **Redis 분산 락** 적용
+    - 부하 분산을 위한 서버 다중화 상황을 가정
+      (실제 동작 서버는 1개)
+- master - slave 구조로 **DB replication**
+  - mysql replication을 통해 slave 디비에 실시간 데이터 복제
+  - master db에서는 (insert , update , delete) slave db에는 (select) 역할 분담
+- 대량 이메일 전송 시 필요한 이메일 주소 조회시 **인덱스**를 활용하여 조회 성능 개선
+  - 자주 조회되며 cardinality 수치가 높은 이메일 주소 칼럼을 기준
+  - mysql profiling을 통해 DB 조회업무 **검색 속도 40% 개선** 검증
+    (0.003초 → 0.0007초/ 컬럼 600개 기준)
+```
+- 서비스 클래스에 대한 **단위 테스트** 진행
+  - db - status(A) .. (B)
+  - 어떤 기준(ex. null , 코드 커버리지)
+    1. 
+- GC, CPU, 스레드 성능 지표 확인을 위해 **모니터링 툴** 도입
+  - Pinpoint, NGrinder, VisualVM
+  - 사례
+    1. redis 캐시
+    2. 동시성 문제 - 분산락 redis 캐시
+    3. 이메일 비동기 처리
+    4. 인덱스
+- 유지보수 하기 좋도록 기능단위 **메서드 추출**을 하여 개발
+    - 협업시 필요한 부분만 빠르게 확인하여 수정이 용이함
+    - 사례
+    1. 
+    2.
+```  
+- CI/CD 설정과정에서 많은 리소스 발생을 줄이고자 GIT ACTION 적용
+- 런타임 에러를 미연에 방지하기 위해 Querydsl 적용
+- 예외처리 유지보수를 편리하게 하기 위해 @ControllerAdvice - @ExceptionHandler 사용
+- JWT 기반 로그인 구현
+- 엔티티 내부 구현을 캡슐화하기 위해 Response/ Request DTO 분리
+- API Response 가독성을 높이고자 Response를 Header, Body, Error  로 분리
 - Git Flow
-- 성능 테스트: (Pinpoint, VisualVM, Ngrinder )
+  - https://techblog.woowahan.com/2553/
   <br><br><br>
 
 # 📖 비즈니스 목표
