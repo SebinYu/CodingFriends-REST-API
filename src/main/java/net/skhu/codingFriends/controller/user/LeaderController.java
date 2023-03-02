@@ -112,36 +112,4 @@ public class LeaderController {
         return success(leaderService.postAttendance(participationVO),"/user/leader/attendance/detail");
     }
 
-    // http://localhost:8081/user/leader/attendance/detail
-    // 입력 값 예시
-
-//    {
-//        "participationDTOList": [
-//        {
-//            "participationRate_id": 461,
-//                "studentId": 12,
-//                "studygroupId": 99,
-//                "studyGroup_Leader": "세빈",
-//                "week": 0,
-//                "weeklyAttendance": "참여",
-//                "weeklyHomework": "미정",
-//                "lectureScore": null,
-//                "updateDate": null
-//        }
-//            ,
-//        {
-//            "participationRate_id": 461,
-//                "studentId": 15,
-//                "studygroupId": 99,
-//                "studyGroup_Leader": "타이름",
-//                "week": 0,
-//                "weeklyAttendance": "미정",
-//                "weeklyHomework": "미정",
-//                "lectureScore": null,
-//                "updateDate": null
-//        }
-//    ]
-//    }
-
-
 }

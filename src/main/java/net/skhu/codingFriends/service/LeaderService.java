@@ -76,8 +76,6 @@ public class LeaderService {
 
                     participationrate.setWeeklyAttendance(MyStatus.Undefined.value());
                     participationrate.setWeeklyHomework(MyStatus.Undefined.value());
-                    participationrate.setUpdateDate(LocalDateTime.now());
-
                     participationRepository.save(participationrate);
 
                     //신청상태 - "등록"으로 변경
