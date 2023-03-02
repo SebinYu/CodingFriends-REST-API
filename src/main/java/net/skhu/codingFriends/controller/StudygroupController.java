@@ -46,14 +46,6 @@ public class StudygroupController {
     }
 
 
-  //  @ApiOperation(value = "게시글 작성 페이지 조회", notes = "게시글 작성 페이지 조회한다.")
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("create/{id}")
-    public Long createGet(@PathVariable("id") Long studyGroup_id) {
-
-        return studyGroup_id;
-    }
-
   //  @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("create")
