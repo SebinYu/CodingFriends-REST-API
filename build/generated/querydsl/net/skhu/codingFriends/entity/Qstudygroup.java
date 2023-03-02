@@ -44,10 +44,6 @@ public class Qstudygroup extends EntityPathBase<studygroup> {
 
     public final StringPath writer = createString("writer");
 
-    public final NumberPath<Double> x_map = createNumber("x_map", Double.class);
-
-    public final NumberPath<Double> y_map = createNumber("y_map", Double.class);
-
     public Qstudygroup(String variable) {
         this(studygroup.class, forVariable(variable), INITS);
     }

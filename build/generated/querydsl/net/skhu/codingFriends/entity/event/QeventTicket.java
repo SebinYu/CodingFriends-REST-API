@@ -26,6 +26,8 @@ public class QeventTicket extends EntityPathBase<eventTicket> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final net.skhu.codingFriends.entity.Quser user;
+
     public QeventTicket(String variable) {
         this(eventTicket.class, forVariable(variable), INITS);
     }
@@ -45,6 +47,7 @@ public class QeventTicket extends EntityPathBase<eventTicket> {
     public QeventTicket(Class<? extends eventTicket> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.event = inits.isInitialized("event") ? new Qevent(forProperty("event")) : null;
+        this.user = inits.isInitialized("user") ? new net.skhu.codingFriends.entity.Quser(forProperty("user")) : null;
     }
 
 }
