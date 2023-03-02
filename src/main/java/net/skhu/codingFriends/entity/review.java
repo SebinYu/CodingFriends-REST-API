@@ -2,6 +2,7 @@ package net.skhu.codingFriends.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -18,6 +19,8 @@ public class review {
     Double reviewScore;
     String reviewContents;
     Integer objection;
+
+    @UpdateTimestamp
     LocalDateTime updateDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

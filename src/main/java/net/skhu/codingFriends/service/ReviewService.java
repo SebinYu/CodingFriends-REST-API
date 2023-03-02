@@ -2,6 +2,7 @@ package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.VO.ReviewInputVO;
+import net.skhu.codingFriends.dto.RequestDTO.ReviewRequsetDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.ParticipationResponseDTO;
 import net.skhu.codingFriends.entity.participationrate;
 import net.skhu.codingFriends.entity.review;
@@ -62,17 +63,17 @@ public class ReviewService {
 
 
     @Transactional
-    public review postReview(Long studygroup_id, user user, Long User_id, review review) {
-        studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
+    public review postReview(ReviewRequsetDTO reviewRequsetDTO, user user ) {
+        studygroup studygroupTemp = studygroupRepository.findById(reviewRequsetDTO.getStudygroupId()).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
 
-        Optional<user> userTemp = userRepository.findById(Math.toIntExact(User_id));
+        Optional<user> userTemp = userRepository.findById(reviewRequsetDTO.getStudentId().intValue());
 
         review reviewTemp = new review();
         reviewTemp.setStudyGroupPartner(user.getName());
-        reviewTemp.setReviewScore(review.getReviewScore());
-        reviewTemp.setReviewContents(review.getReviewContents());
+        reviewTemp.setReviewScore(reviewRequsetDTO.getReviewScore());
+        reviewTemp.setReviewContents(reviewRequsetDTO.getReviewContents());
         reviewTemp.setObjection(0);
         //상대방
         reviewTemp.setUser(userTemp.get());

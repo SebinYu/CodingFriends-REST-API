@@ -2,6 +2,7 @@ package net.skhu.codingFriends.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -20,6 +21,8 @@ public class participationrate {
     String weeklyAttendance;
     String weeklyHomework;
     Double lectureScore;
+
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
