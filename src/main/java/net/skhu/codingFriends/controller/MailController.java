@@ -10,6 +10,9 @@ import net.skhu.codingFriends.service.mail.MailService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import static net.skhu.codingFriends.response.Response.success;
 
 
@@ -47,12 +50,7 @@ public class MailController {
 
  //   @ApiOperation(value = "다수 인원에게 이벤트 안내 메일 전송", notes = "다수 인원에게 이벤트 안내 메일 전송한다.")
     @GetMapping("/toBulkUsers/noticeEvent")
-    public String mailToNoticeEventBulkUsers() {
-        try{
-            bulkMailService.sendMailToNoticeEventBulkUsers();
-            return "이벤트 안내 성공";
-        }catch (Exception e){
-            return "이벤트 안내 에러 발생";
-        }
+    public CompletableFuture<String> mailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
+            return bulkMailService.sendMailToNoticeEventBulkUsers();
     }
 }

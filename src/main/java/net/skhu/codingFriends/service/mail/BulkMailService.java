@@ -24,18 +24,16 @@ public class BulkMailService {
     private final UserRepository userRepository;
 
     @Async
-    @Scheduled(fixedRate = 10000) // 단위: ms
+    @Scheduled(fixedRate = (1000 * 60 * 60 * 24)) // 같은 시간 다음날 동일하게 진행
     @Retryable(value = Exception.class, maxAttempts = 5, backoff = @Backoff(1000))
     public CompletableFuture<String> sendMailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
-        Executor executor = Executors.newFixedThreadPool(10);
+        Executor executor = Executors.newFixedThreadPool(3);
 
         CompletableFuture<String> msFuture = CompletableFuture.supplyAsync(() -> {
             List<user> users = userRepository.findByAddressLike("서울");
 
-            SimpleMailMessage message = new SimpleMailMessage();
-
             for (user oneUser : users) {
-                mailService.sendmailTo(oneUser,"notice", null);
+                mailService.sendmailTo(oneUser,"notice", 71L);
             }
             return "이메일 전송 성공";
         }, executor).exceptionally(ex -> {
