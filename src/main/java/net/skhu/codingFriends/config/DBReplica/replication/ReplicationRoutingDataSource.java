@@ -1,5 +1,6 @@
-package net.skhu.codingFriends.config.DBReplica;
+package net.skhu.codingFriends.config.DBReplica.replication;
 
+import net.skhu.codingFriends.config.DBReplica.common.DataSourceType;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 

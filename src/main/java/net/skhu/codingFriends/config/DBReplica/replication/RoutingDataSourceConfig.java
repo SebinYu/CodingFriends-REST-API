@@ -1,5 +1,7 @@
-package net.skhu.codingFriends.config.DBReplica;
+package net.skhu.codingFriends.config.DBReplica.replication;
 
+import net.skhu.codingFriends.config.DBReplica.common.DataSourceType;
+import net.skhu.codingFriends.config.DBReplica.replication.ReplicationRoutingDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
