@@ -16,8 +16,8 @@
 
 # 📖 개요
 ### 제안배경
-- 온라인 스터디 도중 스터디원의 갑작스런 연락 중단을 경험
-- 이에 문제인식을 느끼고 모임을 끝까지 마칠 수 있는 스터디 모임 플랫폼 제작 <br>
+- 익명 온라인 환경에서 신뢰할 수 있는 스터디원 찾기에 어려움을 느낌
+- 이에 문제인식을 느끼고 스터디원의 과거 성실도 확인이 가능한 스터디 모임 플랫폼 제작 <br>
   - 스터디 모임 종료후 → 모든 스터디원 참여 점수 공개(별점 및 리뷰글 기반)
   - 플랫폼 이름 = Coding Friends
     <br><br>
@@ -45,20 +45,20 @@
   <br><br><br>
 
 # 🔥 프로젝트 중점사항 🔥
-### 요약
+🔥🔥링크 클릭 시, 노션 페이지(예외처리/기술사용 과정 정리) or 소스코드 페이지로 이동🔥🔥
 - 이메일 발송 기능을 추후 **기능추가 및 확장을 고려**하여 개발
-  - 전략 패턴을 활용하여 확장에 유연하도록 구현
-  - enum class 을 활용하여 이메일 유형 관리
-- 응답이 필요없는 이메일 발송 처리 성능 개선을 위해 **비동기 방식 활용**
+  - [전략 패턴을 활용하여 확장에 유연하도록 구현](https://legendary-industry-40c.notion.site/64c135b0013843a6b41839e1788c4020)
+  - [enum class 을 활용하여 이메일 유형 관리](https://legendary-industry-40c.notion.site/Enum-class-2d272d5542b640d6be834267d454b5fd)
+- [응답이 필요없는 이메일 발송 처리 성능 개선을 위해 **비동기 방식 활용**](https://legendary-industry-40c.notion.site/f287b5df067248e9bcda6f4c7c0a1688)
   - 예외처리를 고려하여 @Scheduled/ @Async/ Java CompleteFuture 조합으로 개발
   - common pool을 사용하지 않도록 thread pool 설정
-- 가장 많이 조회되는 스터디 목록의 재조회 성능을 높이고자, 캐시를 활용하여 데이터 **검색 속도** **50% 개선** (6초 → 3초)
+- [반복적으로 보여지는 게시글 캐싱 기능 추가 **재검색 속도** **400% 개선** (859 ms → 22 ms)](https://legendary-industry-40c.notion.site/40-Redis-Cache-d65db3a2bae24b61a85f19640e808d1f)
   - **Redis 캐시** 적용하여  Disk-Based DB 접근횟수 감소시킴
-- 선착순 이벤트 신청 시 발생하는 **동시성 문제 해결**
+- [선착순 이벤트 신청 시 발생하는 **동시성 문제 해결**](https://legendary-industry-40c.notion.site/Redis-267db134a5924d639cc71ebd0e38bae5)
   - 분산 환경에서 원자성(atomic)을 보장하기 위해 **Redis 분산 락** 적용
     - 부하 분산을 위한 서버 다중화 상황을 가정
       (실제 동작 서버는 1개)
-- master - slave 구조로 **DB replication**
+- [master - slave 구조로 **DB replication**]()
   - mysql replication을 통해 slave 디비에 실시간 데이터 복제
   - master db에서는 (insert , update , delete) slave db에는 (select) 역할 분담
 - 대량 이메일 전송 시 필요한 이메일 주소 조회시 **인덱스**를 활용하여 조회 성능 개선
