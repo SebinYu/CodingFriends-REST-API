@@ -1,7 +1,7 @@
 package net.skhu.codingFriends.config.DBReplica;
 
-import net.skhu.codingFriends.config.DBReplica.DataSourceType;
-import net.skhu.codingFriends.config.DBReplica.ReplicationRoutingDataSource;
+import net.skhu.codingFriends.config.DBReplica.common.DataSourceType;
+import net.skhu.codingFriends.config.DBReplica.replication.ReplicationRoutingDataSource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

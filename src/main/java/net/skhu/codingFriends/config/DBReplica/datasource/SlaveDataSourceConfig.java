@@ -1,4 +1,4 @@
-package net.skhu.codingFriends.config.DBReplica;
+package net.skhu.codingFriends.config.DBReplica.datasource;
 
 
 import com.zaxxer.hikari.HikariDataSource;

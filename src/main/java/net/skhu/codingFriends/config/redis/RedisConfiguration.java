@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-//@EnableCaching
 public class RedisConfiguration {
 
     @Value("${spring.redis.host}")
@@ -35,11 +34,6 @@ public class RedisConfiguration {
 
     @Value("${spring.redis.port}")
     private int port;
-//    @Bean
-//    ConfigureRedisAction configureRedisAction() {
-//        return ConfigureRedisAction.NO_OP;
-//    }
-
 
 
     @Bean //RedisConnectionFactory라는 객체에 Redis 접속 정보를 입력해 캐싱 기능을 명시한 곳에 사용할 수 있도록 설정 정보를 담은 객체이다.
@@ -72,16 +66,4 @@ public class RedisConfiguration {
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory).cacheDefaults(configuration)
                 .withInitialCacheConfigurations(cacheConfigurations).build();
     }
-
-//    @Bean
-//    public RedissonClient redissonClient() {
-//        Config redisConfig = new Config();
-//        redisConfig.useSingleServer()
-//                .setAddress("redis://54.180.41.105:6379")
-//                .setConnectionMinimumIdleSize(5)
-//                .setConnectionPoolSize(5);
-//        return Redisson.create(redisConfig);
-//    }
-
-
 }
