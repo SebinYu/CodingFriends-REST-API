@@ -24,6 +24,7 @@ public class MailController {
     private final MailService mailService;
     private final BulkMailService bulkMailService;
 
+    //authentication을 통한 사용자 정보 불러오기 자주 사용 -> 메서드 분리
     public user findUserInfo(Authentication authentication){
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         user user = principalDetails.getUser();
