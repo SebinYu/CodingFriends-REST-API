@@ -40,5 +40,21 @@ public class UserController {
         return success(userService.register(registerRequsetDto),"/auth");
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/auth/test")
+    public void registerTest() {
+
+        for(int i = 0; i < 300; i++){
+            RegisterRequsetDto registerRequsetDto = new RegisterRequsetDto();
+            registerRequsetDto.setName("세빈");
+            registerRequsetDto.setUsername("sebinyu" + i);
+            registerRequsetDto.setPasswd1("1234");
+            registerRequsetDto.setPasswd2("1234");
+            registerRequsetDto.setAddress("서울");
+            registerRequsetDto.setAddress_detail("상세주소");
+            registerRequsetDto.setEmail(i + "@gmail.com");
+            userService.register(registerRequsetDto);
+        }
+    }
 
 }

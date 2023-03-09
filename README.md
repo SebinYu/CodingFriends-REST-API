@@ -45,51 +45,52 @@
   <br><br><br>
 
 # 🔥 프로젝트 중점사항 🔥
-🔥🔥링크 클릭 시, 노션 페이지(예외처리/기술사용 과정 정리) or 소스코드 페이지로 이동🔥🔥
+🔥🔥링크 클릭 시, 노션 정리본(예외처리 등..) or 관련 깃 커밋으로 이동🔥🔥
 - 이메일 발송 기능을 추후 **기능추가 및 확장을 고려**하여 개발
-  - [전략 패턴을 활용하여 확장에 유연하도록 구현](https://legendary-industry-40c.notion.site/64c135b0013843a6b41839e1788c4020)
-  - [enum class 을 활용하여 이메일 유형 관리](https://legendary-industry-40c.notion.site/Enum-class-2d272d5542b640d6be834267d454b5fd)
-- [응답이 필요없는 이메일 발송 처리 성능 개선을 위해 **비동기 방식 활용**](https://legendary-industry-40c.notion.site/f287b5df067248e9bcda6f4c7c0a1688)
+  - [전략 패턴을 활용하여 확장에 유연하도록 구현](https://legendary-industry-40c.notion.site/50035bebe8ee4b35837856f585eb3375)
+  - [enum class 을 활용하여 이메일 유형 관리](https://legendary-industry-40c.notion.site/Enum-class-900eff62400e498580ca4a41592d933c)
+- [응답이 필요없는 이메일 발송 처리 성능 개선을 위해 **비동기 방식 활용**](https://legendary-industry-40c.notion.site/1923a8b5e1794c2387bf2d239effe484)
   - 예외처리를 고려하여 @Scheduled/ @Async/ Java CompleteFuture 조합으로 개발
   - common pool을 사용하지 않도록 thread pool 설정
-- [반복적으로 보여지는 게시글 캐싱 기능 추가 **재검색 속도** **400% 개선** (859 ms → 22 ms)](https://legendary-industry-40c.notion.site/40-Redis-Cache-d65db3a2bae24b61a85f19640e808d1f)
+- [반복적으로 보여지는 게시글 캐싱 기능 추가 **재검색 속도** **400% 개선** (859 ms → 22 ms)](https://legendary-industry-40c.notion.site/40-Redis-Cache-a40332cfe8ff4a0d8b468141fff8c898)
   - **Redis 캐시** 적용하여  Disk-Based DB 접근횟수 감소시킴
-- [선착순 이벤트 신청 시 발생하는 **동시성 문제 해결**](https://legendary-industry-40c.notion.site/Redis-267db134a5924d639cc71ebd0e38bae5)
+- [선착순 이벤트 신청 시 발생하는 **동시성 문제 해결**](https://legendary-industry-40c.notion.site/Redis-2b1b9dff3e8549ac930ffa0ac2ed3fd7)
   - 분산 환경에서 원자성(atomic)을 보장하기 위해 **Redis 분산 락** 적용
     - 부하 분산을 위한 서버 다중화 상황을 가정
       (실제 동작 서버는 1개)
-- [master - slave 구조로 **DB replication**]()
-  - mysql replication을 통해 slave 디비에 실시간 데이터 복제
-  - master db에서는 (insert , update , delete) slave db에는 (select) 역할 분담
-- 대량 이메일 전송 시 필요한 이메일 주소 조회시 **인덱스**를 활용하여 조회 성능 개선
-  - 자주 조회되며 cardinality 수치가 높은 이메일 주소 칼럼을 기준
-  - mysql profiling을 통해 DB 조회업무 **검색 속도 40% 개선** 검증
-    (0.003초 → 0.0007초/ 컬럼 600개 기준)
+- [데이터베이스 부하 분산을 위해 **DB replication**](https://legendary-industry-40c.notion.site/DB-Replication-f23e689871004568872fd29d3de333ef)
+  - Slave DB에 실시간 데이터 복제
+  - Master DB에서는 (insert , update , delete) Slave DB에는 (select) 역할 분담
+- [**인덱스 설계**가 필요한 컬럼의 **조회 속도 400% 개선**](https://legendary-industry-40c.notion.site/c886f5e8bff143b4a1071d96f86d6f77)
+  - 컬럼선택: 자주 조회되며 cardinality 수치가 높은 이메일 주소 선택 
+  - mysql profiling을 통해 DB 조회업무 **검색 속도 400% 개선** 검증 <br>
+    (약 0.1182초 → 약 0.0003초/ 컬럼 300개 기준)
 ```
 - 서비스 클래스에 대한 **단위 테스트** 진행
   - db - status(A) .. (B)
   - 어떤 기준(ex. null , 코드 커버리지)
     1. 
+```
 - GC, CPU, 스레드 성능 지표 확인을 위해 **모니터링 툴** 도입
-  - Pinpoint, NGrinder, VisualVM
+  - Pinpoint, NGrinder
   - 사례
     1. redis 캐시
     2. 동시성 문제 - 분산락 redis 캐시
     3. 이메일 비동기 처리
-    4. 인덱스
+
 - 유지보수 하기 좋도록 기능단위 **메서드 추출**을 하여 개발
-    - 협업시 필요한 부분만 빠르게 확인하여 수정이 용이함
+    - 협업시 필요한 부분만 빠르게 확인하여 수정이 용이
     - 사례
-    1. 
-    2.
-```  
-- CI/CD 설정과정에서 많은 리소스 발생을 줄이고자 GIT ACTION 적용
-- 런타임 에러를 미연에 방지하기 위해 Querydsl 적용
-- 예외처리 유지보수를 편리하게 하기 위해 @ControllerAdvice - @ExceptionHandler 사용
-- JWT 기반 로그인 구현
-- 엔티티 내부 구현을 캡슐화하기 위해 Response/ Request DTO 분리
-- API Response 가독성을 높이고자 Response를 Header, Body, Error로 분리
-- Git-Flow를 이용하여 Master 개발 결과에 영향 주지 않는 독립적인 개발환경 구축
+    1. [조직장의 스터디모임 조회를 위한 컨드롤러 메서드 분리](https://github.com/SebinYu/CodingFriends-REST-API/blob/master/src/main/java/net/skhu/codingFriends/controller/user/LeaderController.java)
+    2. [authentication을 통한 사용자 정보 불러오기 메서드 분리](https://github.com/SebinYu/CodingFriends-REST-API/blob/master/src/main/java/net/skhu/codingFriends/controller/MailController.java)
+  
+- [CI/CD 설정과정에서 많은 리소스 발생을 줄이고자 GIT ACTION 적용](https://legendary-industry-40c.notion.site/CI-CD-GIT-ACTION-72f744900016473cb59991a0ae62aaf1)
+- [런타임 에러를 미연에 방지하기 위해 Querydsl 적용](https://legendary-industry-40c.notion.site/JPA-Querydsl-e473ce4e43234212b23570fe23c49611)
+- [예외처리 유지보수를 편리하게 하기 위해 @ControllerAdvice - @ExceptionHandler 사용](https://github.com/SebinYu/CodingFriends-REST-API/blob/master/src/main/java/net/skhu/codingFriends/advice/ExceptionAdvice.java)
+- [JWT 기반 로그인 구현](https://legendary-industry-40c.notion.site/JWT-5c126a565ed545b4bb3ca17413b8d7c7)
+- [엔티티 내부 구현을 캡슐화하기 위해 Response/ Request DTO 분리](https://github.com/SebinYu/CodingFriends-REST-API/tree/master/src/main/java/net/skhu/codingFriends/dto)
+- [API Response 가독성을 높이고자 Response를 success,failure/ result data 등으로 분리](https://github.com/SebinYu/CodingFriends-REST-API/tree/master/src/main/java/net/skhu/codingFriends/response)
+- [Git-Flow를 이용하여 Master 개발 결과에 영향 주지 않는 독립적인 개발환경 구축](https://github.com/SebinYu/CodingFriends-REST-API/branches)
   <br><br><br>
 
 # 📖 비즈니스 목표

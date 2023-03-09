@@ -27,7 +27,7 @@ public class LeaderController {
     private final LeaderService leaderService;
     private final test test;
 
-    //조직장의 스터디모임 조회 기능 자주사용 -> 함수화
+    //조직장의 스터디모임 조회를 위한 컨드롤러 메서드 자주사용 -> 메서드 분리
         private Response MyStudygroup (Authentication authentication){
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             user user = principalDetails.getUser();
