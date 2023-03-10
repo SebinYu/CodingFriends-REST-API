@@ -1,11 +1,3 @@
-- [x] 리드미 작성
-- [ ] 중점사항: 나머지 사례 등록
-- [ ] 중점사항: 링크 연결
-  - [ ] 간단한 코드 제시만 필요한 경우 - 클래스 이동링크 연결
-  - [ ] 적용내역 및 정리 내역은 노션 링크 제공
-- [ ] 배포 링크 등록
-
-
 <div align=center>
 	<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&customColorList=9&height=200&width=100%&section=header&text=Coding%20Friends!&fontSize=90" />
 </div>
@@ -22,15 +14,17 @@
   - 플랫폼 이름 = Coding Friends
     <br><br>
 - 해당 프로젝트는 기존 개발한 스터디 모임 플랫폼에서 서버를 분리 → [기능추가 및 리팩토링한 **REST API 서버**]
-  - 기존 스터디 모임 플랫폼: https://github.com/SebinYu/CodingFriends-WEB
-    <br><br>
+  - 기존 스터디 모집 프로젝트
+    - 리포지토리: https://github.com/SebinYu/CodingFriends-WEB
+      <br><br>
 ### [REST API 서버] 프로젝트 목표
 - 스터디 모집 및 진행 → 진행 종료 후: 스터디원 참여 점수 공개(별점 및 리뷰글) API를 제공합니다.
 - 기능과 더불어 해당 프로젝트는 3가지 핵심 가치를 반영합니다.
   - 성능향상
   - 대규모 트래픽 대처
   - 추후 기능추가 및 확장 가능성
-    <br><br><br>
+- 배포 링크: http://54.180.41.105:8082/studygroup/list
+  <br><br><br>
 
 # 📖 서버 구조도
 ![devOps.png](img/devOps.png)
@@ -65,18 +59,11 @@
   - 컬럼선택: 자주 조회되며 cardinality 수치가 높은 이메일 주소 선택 
   - mysql profiling을 통해 DB 조회업무 **검색 속도 400% 개선** 검증 <br>
     (약 0.1182초 → 약 0.0003초/ 컬럼 300개 기준)
-```
-- 서비스 클래스에 대한 **단위 테스트** 진행
-  - db - status(A) .. (B)
-  - 어떤 기준(ex. null , 코드 커버리지)
-    1. 
-```
-- GC, CPU, 스레드 성능 지표 확인을 위해 **모니터링 툴** 도입
+- [성능 지표 확인을 위해 **모니터링 툴** 도입](https://legendary-industry-40c.notion.site/APM-PINPOINT-9152a3a0838749f88ed1b309bd3d1861)
   - Pinpoint, NGrinder
   - 사례
     1. redis 캐시
-    2. 동시성 문제 - 분산락 redis 캐시
-    3. 이메일 비동기 처리
+    2. 이메일 비동기 처리 / thread pool
 
 - 유지보수 하기 좋도록 기능단위 **메서드 추출**을 하여 개발
     - 협업시 필요한 부분만 빠르게 확인하여 수정이 용이
@@ -91,7 +78,8 @@
 - [엔티티 내부 구현을 캡슐화하기 위해 Response/ Request DTO 분리](https://github.com/SebinYu/CodingFriends-REST-API/tree/master/src/main/java/net/skhu/codingFriends/dto)
 - [API Response 가독성을 높이고자 Response를 success,failure/ result data 등으로 분리](https://github.com/SebinYu/CodingFriends-REST-API/tree/master/src/main/java/net/skhu/codingFriends/response)
 - [Git-Flow를 이용하여 Master 개발 결과에 영향 주지 않는 독립적인 개발환경 구축](https://github.com/SebinYu/CodingFriends-REST-API/branches)
-  <br><br><br>
+- 진행중: JUnit5 **단위 테스트** 
+<br><br><br>
 
 # 📖 비즈니스 목표
 스터디원이 모임 종료후 → 후기가 남는 것을 의식하여 모임을 끝까지 마칠 수 있는 스터디 모임 플랫폼 제작

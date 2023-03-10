@@ -27,7 +27,7 @@ public class BulkMailService {
     @Scheduled(fixedRate = (1000 * 60 * 60 * 24)) // 같은 시간 다음날 동일하게 진행
     @Retryable(value = Exception.class, maxAttempts = 5, backoff = @Backoff(1000))
     public CompletableFuture<String> sendMailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
-//        Executor executor = Executors.newFixedThreadPool(6);
+        Executor executor = Executors.newFixedThreadPool(6);
 
         CompletableFuture<String> msFuture = CompletableFuture.supplyAsync(() -> {
             List<user> users = userRepository.findByAddressLike("서울");
@@ -36,7 +36,7 @@ public class BulkMailService {
                 mailService.sendmailTo(oneUser,"notice", 71L);
             }
             return "이메일 전송 성공";
-        }).exceptionally(ex -> {
+        }, executor).exceptionally(ex -> {
             System.out.println(ex);
             return "전송 실패";
         });
