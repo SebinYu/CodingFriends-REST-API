@@ -1,5 +1,7 @@
 package net.skhu.codingFriends.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.config.redis.RedisConfiguration;
@@ -18,6 +20,7 @@ import java.net.URI;
 
 import static net.skhu.codingFriends.response.Response.success;
 
+@Tag(name = "선착순 이벤트", description = "선착순 이벤트 관련 api 입니다.")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/events")
@@ -26,6 +29,7 @@ public class EventController {
     private final EventService eventService;
     private final test test;
 
+    @Operation(summary = "선착순 이벤트 생성", description = "선착순 이벤트 생성한다.")
     @PostMapping("/createEvent")
     public ResponseEntity<EventResponseDTO> createEvent(@RequestBody EventRequestDTO request) {
         Long ticketLimit = request.getTicketLimit();
@@ -36,6 +40,7 @@ public class EventController {
                 .body(response);
     }
 
+    @Operation(summary = "선착순 이벤트 신청", description = "선착순 이벤트 신청한다.")
     @PostMapping("/{eventId}/tickets")
     public Response createEventTicket(@PathVariable final Long eventId, Authentication authentication) throws InterruptedException {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -46,11 +51,11 @@ public class EventController {
     }
 
 
-    @PostMapping("/{eventId}/ticketsTest")
-    public void ticketsTest(@PathVariable final Long eventId, Authentication authentication) {
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
-
-        test.createEventTicketTest(eventId, user);
-    }
+//    @PostMapping("/{eventId}/ticketsTest")
+//    public void ticketsTest(@PathVariable final Long eventId, Authentication authentication) {
+//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//        user user = principalDetails.getUser();
+//
+//        test.createEventTicketTest(eventId, user);
+//    }
 }

@@ -1,5 +1,7 @@
 package net.skhu.codingFriends.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.entity.studygroup;
 import net.skhu.codingFriends.service.OrderService;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "스터디 모집일자 순서로 게시글 조회", description = "스터디 모집일자 순서로 게시글 조회 관련 api 입니다.")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/studygroup")
@@ -17,14 +20,13 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    //http://localhost:8081/studygroup/updateDate
-    //스터디 모집글 업로드 날짜 순 리스트 출력
+    @Operation(summary= "스터디 모집글 업로드 날짜 순 리스트 조회", description = "스터디 모집글 업로드 날짜 순 리스트를 조회한다.")
     @GetMapping("updateDate")
     public List<studygroup> updateDate(){
         return orderService.updateDate();
     }
 
-    //http://localhost:8081/studygroup/startDate
+    @Operation(summary= "스터디 시작일 순 리스트 조회", description = "스터디 시작일 순 리스트를 조회한다.")
     @GetMapping("startDate")
     //스터디 시작일 순 리스트 출력
     public List<studygroup> startDate(){
