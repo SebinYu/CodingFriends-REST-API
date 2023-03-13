@@ -1,6 +1,8 @@
 package net.skhu.codingFriends.controller;//package net.skhu.controller;
 
 //import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.entity.user;
@@ -15,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 import static net.skhu.codingFriends.response.Response.success;
 
-
+@Tag(name = "단일 or 대용량 이메일 알림전송", description = "단일 or 대용량 이메일 알림전송 관련 api 입니다.")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mail")
@@ -31,25 +33,25 @@ public class MailController {
         return user;
     }
 
-   // @ApiOperation(value = "조직장에게 신청자 알림 메일 전송", notes = "조직장에게 신청자 알림 이메일 전송한다.")
+    @Operation(summary = "조직장에게 신청자 알림 메일 전송", description = "조직장에게 신청자 알림 이메일 전송한다.")
     @PostMapping("/toLeader/{Studygroup_id}")
     public Response mailToLeader(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
         return success(mailService.sendmailTo(findUserInfo(authentication), "", Studygroup_id),"/mail/toLeader/"+ Studygroup_id);
     }
 
-   // @ApiOperation(value = "신청자에게 스터디 신청 수락 메일 전송", notes = "신청자에게 스터디 신청 수락 메일 전송한다.")
+    @Operation(summary = "신청자에게 스터디 신청 수락 메일 전송", description = "신청자에게 스터디 신청 수락 메일 전송한다.")
     @PostMapping("/toApplier/accepted/{Studygroup_id}")
     public Response mailToAcceptedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
         return success(mailService.sendmailTo(findUserInfo(authentication), "accepted", Studygroup_id),"/mail/toApplier/accepted/"+ Studygroup_id);
     }
 
- //   @ApiOperation(value = "신청자에게 스터디 신청 거절 메일 전송", notes = "신청자에게 스터디 신청 거절 메일 전송한다.")
+    @Operation(summary = "신청자에게 스터디 신청 거절 메일 전송", description = "신청자에게 스터디 신청 거절 메일 전송한다.")
     @PostMapping("/toApplier/rejected/{Studygroup_id}")
     public Response mailToRejectedApplier(Authentication authentication, @PathVariable("Studygroup_id") Long Studygroup_id ) {
         return success(mailService.sendmailTo(findUserInfo(authentication), "rejected", Studygroup_id),"/mail/toApplier/rejected/"+ Studygroup_id);
     }
 
- //   @ApiOperation(value = "다수 인원에게 이벤트 안내 메일 전송", notes = "다수 인원에게 이벤트 안내 메일 전송한다.")
+    @Operation(summary = "다수 인원에게 이벤트 안내 메일 전송", description = "다수 인원에게 이벤트 안내 메일 전송한다.")
     @GetMapping("/toBulkUsers/noticeEvent")
     public CompletableFuture<String> mailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
             return bulkMailService.sendMailToNoticeEventBulkUsers();

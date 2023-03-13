@@ -1,6 +1,10 @@
 package net.skhu.codingFriends.controller;
 
-//import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
@@ -22,6 +26,7 @@ import java.util.List;
 
 import static net.skhu.codingFriends.response.Response.success;
 
+@Tag(name = "스터디 공지 게시판", description = "스터디 공지 게시판 관련 api 입니다.")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/studygroup")
@@ -30,7 +35,7 @@ public class StudygroupController {
     private final StudygroupService studygroupService;
 
 
-   // @ApiOperation(value = "전체 게시글 보기", notes = "전체 게시글 조회한다.")
+    @Operation(summary= "전체 게시글 보기", description = "전체 게시글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("list")
     public Response getlist() {
@@ -38,7 +43,7 @@ public class StudygroupController {
     }
 
 
- //   @ApiOperation(value = "개별 게시글 보기", notes = "개별 게시글 조회한다.")
+    @Operation(summary = "개별 게시글 보기", description = "개별 게시글 조회한다. 테스트를 원할시 ({id}: 56 )을 입력해주세요.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{id}")
     public Response detailGet(@PathVariable("id") Long studyGroup_id){
@@ -46,7 +51,7 @@ public class StudygroupController {
     }
 
 
-  //  @ApiOperation(value = "게시글 작성", notes = "게시글 작성한다.")
+    @Operation(summary = "게시글 작성", description = "게시글 작성한다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("create")
     public Response createPost(@RequestBody StudygroupRequsetDto studygroupRequsetDto, Authentication authentication) {
@@ -56,14 +61,14 @@ public class StudygroupController {
     }
 
 
- //   @ApiOperation(value = "게시글 수정 페이지 조회", notes = "게시글 수정 페이지 조회한다.")
+    @Operation(summary = "게시글 수정 페이지 조회", description = "게시글 수정 페이지 조회한다. 테스트를 원할시 ({id}: 56 )을 입력해주세요.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("edit/{id}")
     public Response updateGet(@PathVariable("id") Long studyGroup_id){
         return success(studygroupService.getStudygroup(BigInteger.valueOf(studyGroup_id)),"/studygroup/edit/{id}");
     }
 
-    //@ApiOperation(value = "게시글 수정", notes = "게시글 수정한다.")
+    @Operation(summary = "게시글 수정", description = "게시글 수정한다. 테스트를 원할시 ({id}: 56 )을 입력해주세요.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "edit/{id}")
     public Response updatePut(@RequestBody StudygroupRequsetDto studygroupRequsetDto,
@@ -80,7 +85,7 @@ public class StudygroupController {
         }
     }
 
- //   @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제한다.")
+    @Operation(summary = "게시글 삭제", description = "게시글 삭제한다. ")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete/{id}")
     public Response delete(@PathVariable("id") Long studygroup_id, Authentication authentication) {
@@ -95,14 +100,14 @@ public class StudygroupController {
         }
     }
 
- //   @ApiOperation(value = "키워드로 게시글 검색", notes = "키워드로 게시글 검색한다.")
+    @Operation(summary = "키워드로 게시글 검색", description = "키워드로 게시글 검색한다.  테스트를 원할시 ({keyword}: 파이썬 )을 입력해주세요.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("search-With-Keyword/{keyword}")
     public List<studygroup> searchWithKeyword(@PathVariable("keyword") String keyword){
         return studygroupService.searchWithKeyword(keyword);
     }
 
-  //  @ApiOperation(value = "키워드/학습자료로 게시글 검색", notes = "키워드로 게시글 검색한다.")
+    @Operation(summary = "키워드/학습자료로 게시글 검색", description = "키워드/학습자료 번호로 게시글 검색한다. 테스트를 원할시 ({keyword}: 파이썬, {learningMaterial_id}: 1 )을 입력해주세요.\"")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("search-With-LearningMaterial_idAndKeyword/{learningMaterial_id}/{keyword}")
     public List<studygroup> searchWithLearningMaterial_idAndKeyword(
@@ -112,7 +117,7 @@ public class StudygroupController {
         return studygroupService.searchWithLearningMaterial_idAndKeyword(Math.toIntExact(learningMaterial_id), keyword);
     }
 
-  //  @ApiOperation(value = "스터디 참여신청", notes = "스터디 참여신청하기")
+    @Operation(summary = "스터디 참여신청", description = "스터디 참여신청한다. 테스트를 원할시 ({id}: 56 )을 입력해주세요." )
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("apply/{studyGroup_id}")
     public Response apply(@RequestBody ApplyRequsetDto applyRequsetDto,
