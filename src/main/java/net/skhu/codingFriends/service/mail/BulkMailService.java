@@ -24,7 +24,8 @@ public class BulkMailService {
     private final UserRepository userRepository;
 
     @Async
-    @Scheduled(fixedRate = (1000 * 60 * 60 * 24)) // 같은 시간 다음날 동일하게 진행
+//    @Scheduled(fixedRate = (1000 * 60 * 60 * 24)) // 같은 시간 다음날 동일하게 진행
+    // RDS 비용 문제로 인해 @Scheduled 기능은 주석처리하였습니다.
     @Retryable(value = Exception.class, maxAttempts = 5, backoff = @Backoff(1000))
     public CompletableFuture<String> sendMailToNoticeEventBulkUsers() throws ExecutionException, InterruptedException {
         Executor executor = Executors.newFixedThreadPool(6);
