@@ -1,12 +1,11 @@
 package net.skhu.codingFriends.repository.participation;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.skhu.codingFriends.entity.participationrate;
-import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.Studygroup;
+import net.skhu.codingFriends.entity.Participationrate;
 import org.springframework.stereotype.Repository;
 
-import static net.skhu.codingFriends.entity.Qapply.apply;
-import static net.skhu.codingFriends.entity.Qparticipationrate.participationrate;
+import static net.skhu.codingFriends.entity.QParticipationrate.participationrate;
 import java.util.List;
 
 @Repository
@@ -19,7 +18,7 @@ public class ParticipationCustomRepositoryImpl implements ParticipationCustomRep
     }
 
     @Override
-    public List<participationrate> findByStudygroup(studygroup studygroupTemp) {
+    public List<Participationrate> findByStudygroup(Studygroup studygroupTemp) {
         return jPAQueryFactory
                 .selectFrom(participationrate)
                 .where(participationrate.studygroup.eq(studygroupTemp))
@@ -27,7 +26,7 @@ public class ParticipationCustomRepositoryImpl implements ParticipationCustomRep
     }
 
     @Override
-    public List<net.skhu.codingFriends.entity.participationrate> findByStudygroupAndStatus(studygroup studygroupTemp) {
+    public List<Participationrate> findByStudygroupAndStatus(Studygroup studygroupTemp) {
         return jPAQueryFactory
                 .selectFrom(participationrate)
                 .where(participationrate.studygroup.eq(studygroupTemp), participationrate.weeklyAttendance.eq("미정"))

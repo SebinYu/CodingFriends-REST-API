@@ -3,7 +3,7 @@ package net.skhu.codingFriends.dto.ResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.skhu.codingFriends.entity.apply;
+import net.skhu.codingFriends.entity.Apply;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class ApplyResponseDto {
     private String name;
     private LocalDateTime updateDate;
 
-    public static ApplyResponseDto toDto(apply apply) {
+    public static ApplyResponseDto toDto(Apply apply) {
         return new ApplyResponseDto(
                 apply.getApply_id(),
                 apply.getUser().getUser_id(),

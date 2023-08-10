@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class studygroup implements Serializable {
+@Table(name="studygroup")
+public class Studygroup implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -39,5 +40,5 @@ public class studygroup implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID")
     @JsonIgnore
-    user user;
+    User user;
 }

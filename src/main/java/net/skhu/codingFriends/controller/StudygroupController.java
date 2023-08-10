@@ -2,21 +2,17 @@ package net.skhu.codingFriends.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
 import net.skhu.codingFriends.dto.RequestDTO.ApplyRequsetDto;
 import net.skhu.codingFriends.dto.RequestDTO.StudygroupRequsetDto;
-import net.skhu.codingFriends.entity.studygroup;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
+import net.skhu.codingFriends.entity.Studygroup;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyDeletableException;
 import net.skhu.codingFriends.exception.studygroup.SelfOnlyModifiableException;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.StudygroupService;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +52,7 @@ public class StudygroupController {
     @PostMapping("create")
     public Response createPost(@RequestBody StudygroupRequsetDto studygroupRequsetDto, Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
+        User user = principalDetails.getUser();
         return success(studygroupService.write(studygroupRequsetDto, user),"/studygroup/create");
     }
 
@@ -75,7 +71,7 @@ public class StudygroupController {
                                  @PathVariable("id") Long studygroup_id,
                                  Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
+        User user = principalDetails.getUser();
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저의 글이 맞다면
             return success(studygroupService.update(Math.toIntExact(studygroup_id), studygroupRequsetDto),"/studygroup/edit/{id}");
@@ -90,7 +86,7 @@ public class StudygroupController {
     @DeleteMapping("delete/{id}")
     public Response delete(@PathVariable("id") Long studygroup_id, Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
+        User user = principalDetails.getUser();
         if (user.getName().equals(studygroupService.getStudygroup(BigInteger.valueOf(studygroup_id)).getWriter())) {
             // 로그인된 유저가 글 작성자와 같다면
             studygroupService.deleteByStudyGroup_id(Math.toIntExact(studygroup_id)); // 이 메소드는 반환값이 없으므로 따로 삭제 수행해주고, 리턴에는 null을 넣어줌
@@ -103,14 +99,14 @@ public class StudygroupController {
     @Operation(summary = "키워드로 게시글 검색", description = "키워드로 게시글 검색한다.  테스트를 원할시 ({keyword}: 파이썬 )을 입력해주세요.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("search-With-Keyword/{keyword}")
-    public List<studygroup> searchWithKeyword(@PathVariable("keyword") String keyword){
+    public List<Studygroup> searchWithKeyword(@PathVariable("keyword") String keyword){
         return studygroupService.searchWithKeyword(keyword);
     }
 
     @Operation(summary = "키워드/학습자료로 게시글 검색", description = "키워드/학습자료 번호로 게시글 검색한다. 테스트를 원할시 ({keyword}: 파이썬, {learningMaterial_id}: 1 )을 입력해주세요.\"")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("search-With-LearningMaterial_idAndKeyword/{learningMaterial_id}/{keyword}")
-    public List<studygroup> searchWithLearningMaterial_idAndKeyword(
+    public List<Studygroup> searchWithLearningMaterial_idAndKeyword(
             @PathVariable("learningMaterial_id") Long learningMaterial_id,
             @PathVariable("keyword") String keyword){
 
@@ -125,7 +121,7 @@ public class StudygroupController {
                           Authentication authentication) {
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
+        User user = principalDetails.getUser();
         return success(studygroupService.apply(applyRequsetDto, studyGroup_id, user),"/studygroup/apply/{id}");
     }
 

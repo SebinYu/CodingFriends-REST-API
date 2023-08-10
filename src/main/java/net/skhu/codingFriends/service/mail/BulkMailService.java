@@ -2,14 +2,12 @@ package net.skhu.codingFriends.service.mail;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.repository.UserRepository;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,9 +29,9 @@ public class BulkMailService {
         Executor executor = Executors.newFixedThreadPool(6);
 
         CompletableFuture<String> msFuture = CompletableFuture.supplyAsync(() -> {
-            List<user> users = userRepository.findByAddressLike("서울");
+            List<User> users = userRepository.findByAddressLike("서울");
 
-            for (user oneUser : users) {
+            for (User oneUser : users) {
                 mailService.sendmailTo(oneUser,"notice", 71L);
             }
             return "이메일 전송 성공";

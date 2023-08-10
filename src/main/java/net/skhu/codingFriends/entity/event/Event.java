@@ -7,7 +7,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class event {
+@Table(name="event")
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +18,7 @@ public class event {
 
 
     @OneToMany(mappedBy = "event")
-    private List<eventTicket> eventTickets;
+    private List<EventTicket> eventTickets;
 
     public boolean isClosed() {
         return eventTickets.size() >= ticketLimit;

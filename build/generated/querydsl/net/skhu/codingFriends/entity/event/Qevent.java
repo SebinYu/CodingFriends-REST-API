@@ -11,31 +11,31 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * Qevent is a Querydsl query type for event
+ * QEvent is a Querydsl query type for Event
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class Qevent extends EntityPathBase<event> {
+public class QEvent extends EntityPathBase<Event> {
 
-    private static final long serialVersionUID = -681270122L;
+    private static final long serialVersionUID = -710822794L;
 
-    public static final Qevent event = new Qevent("event");
+    public static final QEvent event = new QEvent("event");
 
-    public final ListPath<eventTicket, QeventTicket> eventTickets = this.<eventTicket, QeventTicket>createList("eventTickets", eventTicket.class, QeventTicket.class, PathInits.DIRECT2);
+    public final ListPath<EventTicket, QEventTicket> eventTickets = this.<EventTicket, QEventTicket>createList("eventTickets", EventTicket.class, QEventTicket.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Long> ticketLimit = createNumber("ticketLimit", Long.class);
 
-    public Qevent(String variable) {
-        super(event.class, forVariable(variable));
+    public QEvent(String variable) {
+        super(Event.class, forVariable(variable));
     }
 
-    public Qevent(Path<? extends event> path) {
+    public QEvent(Path<? extends Event> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public Qevent(PathMetadata metadata) {
-        super(event.class, metadata);
+    public QEvent(PathMetadata metadata) {
+        super(Event.class, metadata);
     }
 
 }

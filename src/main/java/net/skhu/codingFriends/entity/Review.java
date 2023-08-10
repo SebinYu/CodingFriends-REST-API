@@ -10,28 +10,28 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class participationrate {
-
+@Table(name="review")
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    BigInteger participationRate_id;
+    BigInteger review_id;
 
-    String studyGroup_Leader;
-    Integer week;
-    String weeklyAttendance;
-    String weeklyHomework;
-    Double lectureScore;
+    String studyGroupPartner;
+    Double reviewScore;
+    String reviewContents;
+    Integer objection;
 
     @UpdateTimestamp
-    private LocalDateTime updateDate;
+    LocalDateTime updateDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId")
     @JsonIgnore
-    user user;
+    User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studygroupId")
     @JsonIgnore
-    studygroup studygroup;
+    Studygroup studygroup;
+
 }

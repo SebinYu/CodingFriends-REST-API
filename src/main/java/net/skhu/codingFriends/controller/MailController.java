@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.mail.BulkMailService;
 import net.skhu.codingFriends.service.mail.MailService;
@@ -27,9 +27,9 @@ public class MailController {
     private final BulkMailService bulkMailService;
 
     //authentication을 통한 사용자 정보 불러오기 자주 사용 -> 메서드 분리
-    public user findUserInfo(Authentication authentication){
+    public User findUserInfo(Authentication authentication){
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
+        User user = principalDetails.getUser();
         return user;
     }
 

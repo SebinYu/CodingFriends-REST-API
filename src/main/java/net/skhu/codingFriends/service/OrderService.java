@@ -1,11 +1,11 @@
 package net.skhu.codingFriends.service;
 
-import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.Studygroup;
 
 import java.util.List;
 
 public interface OrderService {
-    List<studygroup> updateDate();
+    List<Studygroup> updateDate();
 
-    List<studygroup> startDate();
+    List<Studygroup> startDate();
 }

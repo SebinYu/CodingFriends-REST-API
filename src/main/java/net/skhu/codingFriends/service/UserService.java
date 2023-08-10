@@ -2,7 +2,7 @@ package net.skhu.codingFriends.service;
 
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.dto.RequestDTO.RegisterRequsetDto;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.exception.user.PasswordVerificationException;
 import net.skhu.codingFriends.exception.MemberNotFoundException;
 import net.skhu.codingFriends.repository.UserRepository;
@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,8 +21,8 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public user register(RegisterRequsetDto registerRequsetDto){
-        user user = new user();
+    public User register(RegisterRequsetDto registerRequsetDto){
+        User user = new User();
         user.setUsername(registerRequsetDto.getUsername());
         if (!registerRequsetDto.getPasswd1().equals(registerRequsetDto.getPasswd2())) {
             throw new PasswordVerificationException();
@@ -42,12 +41,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<user> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public user findUser(int id) {
+    public User findUser(int id) {
         return userRepository.findById(id).orElseThrow(()-> {
             return new MemberNotFoundException();
         });
