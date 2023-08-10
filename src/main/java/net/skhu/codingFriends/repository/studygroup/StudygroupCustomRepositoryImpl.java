@@ -1,9 +1,9 @@
 package net.skhu.codingFriends.repository.studygroup;
 
-import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
+import static net.skhu.codingFriends.entity.QStudygroup.studygroup;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.skhu.codingFriends.entity.studygroup;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.Studygroup;
+import net.skhu.codingFriends.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class StudygroupCustomRepositoryImpl implements StudygroupCustomRepositor
     }
 
     @Override
-    public List<studygroup> findByTitleContaining(String keyword) {
+    public List<Studygroup> findByTitleContaining(String keyword) {
         return jPAQueryFactory
                 .selectFrom(studygroup)
                 .where(studygroup.title.contains(keyword))
@@ -26,19 +26,19 @@ public class StudygroupCustomRepositoryImpl implements StudygroupCustomRepositor
     }
 
     @Override
-    public List<studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword) {
+    public List<Studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword) {
         return null;
     }
 
     @Override
-    public List<net.skhu.codingFriends.entity.studygroup> findByUserID(user user1) {
+    public List<Studygroup> findByUserID(User user1) {
         return jPAQueryFactory
                 .selectFrom(studygroup)
                 .where(studygroup.user.eq(user1))
                 .fetch();
     }
 
-    public long updateCurrentNum(studygroup updatedStudygroup) {
+    public long updateCurrentNum(Studygroup updatedStudygroup) {
         return jPAQueryFactory
                 .update(studygroup)
                 .set(studygroup.currentNum, updatedStudygroup.getCurrentNum())

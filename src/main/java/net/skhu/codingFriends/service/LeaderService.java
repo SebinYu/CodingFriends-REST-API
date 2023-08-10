@@ -6,10 +6,10 @@ import net.skhu.codingFriends.VO.ParticipationVO;
 import net.skhu.codingFriends.dto.RequestDTO.ParticipationRequsetDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.ApplyResponseDto;
 import net.skhu.codingFriends.dto.ResponseDTO.ParticipationResponseDTO;
-import net.skhu.codingFriends.entity.apply;
-import net.skhu.codingFriends.entity.participationrate;
-import net.skhu.codingFriends.entity.studygroup;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.Apply;
+import net.skhu.codingFriends.entity.Participationrate;
+import net.skhu.codingFriends.entity.Studygroup;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.enums.MyStatus;
 import net.skhu.codingFriends.exception.ApplyInfoNotFoundException;
 import net.skhu.codingFriends.exception.ParticipationFullException;
@@ -19,7 +19,6 @@ import net.skhu.codingFriends.repository.UserRepository;
 import net.skhu.codingFriends.repository.apply.ApplyRepository;
 import net.skhu.codingFriends.repository.participation.ParticipationRepository;
 import net.skhu.codingFriends.repository.studygroup.StudygroupRepository;
-import org.apache.el.parser.Node;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +26,6 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,17 +36,17 @@ public class LeaderService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<apply> getApplications(user user) {
+    public List<Apply> getApplications(User user) {
         return applyRepository.findByUser(user);
     }
     @Transactional(readOnly = true)
-    public List<studygroup> getStudygroups(user user) {
+    public List<Studygroup> getStudygroups(User user) {
         return studygroupRepository.findByUserID(user);
     }
 
 
     @Transactional
-    public List<ParticipationResponseDTO> accept(ApplyIdVO applyIdVO, user user) {
+    public List<ParticipationResponseDTO> accept(ApplyIdVO applyIdVO, User user) {
         int ApplyIdlength = applyIdVO.getApply_ids().length;
         List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
 
@@ -58,10 +54,10 @@ public class LeaderService {
             BigInteger[] applyIDs = applyIdVO.getApply_ids();
             BigInteger applyID = applyIDs[i];
 
-            net.skhu.codingFriends.entity.participationrate participationrate =  new participationrate();
-            List<apply> applyInfo = applyRepository.findByApplierID(applyID);
+            Participationrate participationrate =  new Participationrate();
+            List<Apply> applyInfo = applyRepository.findByApplierID(applyID);
             if(applyInfo.size() != 0){
-                studygroup studygroup = applyInfo.get(0).getStudygroup();
+                Studygroup studygroup = applyInfo.get(0).getStudygroup();
 
                 int totalNum = studygroup.getTotalNum();
                 int currentNum = studygroup.getCurrentNum();
@@ -79,7 +75,7 @@ public class LeaderService {
                     participationRepository.save(participationrate);
 
                     //신청상태 - "등록"으로 변경
-                    apply applyTemp = new apply();
+                    Apply applyTemp = new Apply();
                     applyTemp.setApply_id(applyInfo.get(0).getApply_id());
                     applyTemp.setApplyStatus(MyStatus.Accepted.value());
                     applyRepository.updateApplyStatus(applyTemp);
@@ -107,7 +103,7 @@ public class LeaderService {
             BigInteger[] applyIDs = applyIdVO.getApply_ids();
             BigInteger applyID = applyIDs[i];
 
-            List<apply> applyTemp =  applyRepository.findByApplierID(applyID);
+            List<Apply> applyTemp =  applyRepository.findByApplierID(applyID);
             declindedApplyList.add(ApplyResponseDto.toDto(applyTemp.get(0)));
 
             applyRepository.deleteById(applyID);
@@ -117,19 +113,19 @@ public class LeaderService {
 
     @Transactional(readOnly = true)
     public List<ApplyResponseDto> getParticipants(Long studygroup_id) {
-        studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
+        Studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
-        List<apply> applyTemp = applyRepository.findByStudygroup(studygroupTemp);
+        List<Apply> applyTemp = applyRepository.findByStudygroup(studygroupTemp);
         List<ApplyResponseDto> applyResponseDtos = new ArrayList<>();
         applyTemp.forEach(s -> applyResponseDtos.add(ApplyResponseDto.toDto(s)));
         return applyResponseDtos;
     }
 
 
-    public participationrate setParticipationrateTemp(ParticipationRequsetDTO participationRequsetDTOTemp){
+    public Participationrate setParticipationrateTemp(ParticipationRequsetDTO participationRequsetDTOTemp){
 
-            participationrate participationrateTemp = new participationrate();
+            Participationrate participationrateTemp = new Participationrate();
 
             //참여도 점수 계산
             Double lectureScore = 0.0;
@@ -164,14 +160,14 @@ public class LeaderService {
 
 
             Integer userID = participationRequsetDTOTemp.getStudentId();
-            user userTemp = userRepository.findById(userID).orElseThrow(() -> {
+            User userTemp = userRepository.findById(userID).orElseThrow(() -> {
                 return new StudygroupIdNotFound();
             });
             participationrateTemp.setUser(userTemp);
 
 
             BigInteger studygroupID = participationRequsetDTOTemp.getStudygroupId();
-            studygroup studygroupTemp = studygroupRepository.findById(studygroupID).orElseThrow(() -> {
+            Studygroup studygroupTemp = studygroupRepository.findById(studygroupID).orElseThrow(() -> {
                 return new StudygroupIdNotFound();
             });
             participationrateTemp.setStudygroup(studygroupTemp);
@@ -190,7 +186,7 @@ public class LeaderService {
         for(int i = 0; i < participationRequsetDTOS.length; i++){
             ParticipationRequsetDTO participationRequsetDTOTemp = participationRequsetDTOS[i];
 
-            participationrate participationrateTemp = setParticipationrateTemp(participationRequsetDTOTemp);
+            Participationrate participationrateTemp = setParticipationrateTemp(participationRequsetDTOTemp);
 
             participationRepository.save(participationrateTemp);
 
@@ -201,10 +197,10 @@ public class LeaderService {
 
     @Transactional(readOnly = true)
     public List<ParticipationResponseDTO> getAttendance(Long studygroup_id) {
-        studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
+        Studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
-        List<participationrate> participationTemp = participationRepository.findByStudygroup(studygroupTemp);
+        List<Participationrate> participationTemp = participationRepository.findByStudygroup(studygroupTemp);
         List<ParticipationResponseDTO> participationResponseDTOs = new ArrayList<>();
         participationTemp.forEach(s -> participationResponseDTOs.add(ParticipationResponseDTO.toDto(s)));
         return participationResponseDTOs;

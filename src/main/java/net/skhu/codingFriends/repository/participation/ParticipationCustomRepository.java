@@ -1,12 +1,12 @@
 package net.skhu.codingFriends.repository.participation;
 
-import net.skhu.codingFriends.entity.participationrate;
-import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.Studygroup;
+import net.skhu.codingFriends.entity.Participationrate;
 
 import java.util.List;
 
 public interface ParticipationCustomRepository {
-    List<participationrate> findByStudygroup(studygroup studygroupTemp);
+    List<Participationrate> findByStudygroup(Studygroup studygroupTemp);
 
-    List<participationrate> findByStudygroupAndStatus(studygroup studygroupTemp);
+    List<Participationrate> findByStudygroupAndStatus(Studygroup studygroupTemp);
 }

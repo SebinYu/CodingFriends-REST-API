@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * Qstudygroup is a Querydsl query type for studygroup
+ * QStudygroup is a Querydsl query type for Studygroup
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class Qstudygroup extends EntityPathBase<studygroup> {
+public class QStudygroup extends EntityPathBase<Studygroup> {
 
-    private static final long serialVersionUID = -41523706L;
+    private static final long serialVersionUID = 1951941158L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final Qstudygroup studygroup = new Qstudygroup("studygroup");
+    public static final QStudygroup studygroup = new QStudygroup("studygroup");
 
     public final StringPath content = createString("content");
 
@@ -40,29 +40,29 @@ public class Qstudygroup extends EntityPathBase<studygroup> {
 
     public final DateTimePath<java.time.LocalDateTime> updateDate = createDateTime("updateDate", java.time.LocalDateTime.class);
 
-    public final Quser user;
+    public final QUser user;
 
     public final StringPath writer = createString("writer");
 
-    public Qstudygroup(String variable) {
-        this(studygroup.class, forVariable(variable), INITS);
+    public QStudygroup(String variable) {
+        this(Studygroup.class, forVariable(variable), INITS);
     }
 
-    public Qstudygroup(Path<? extends studygroup> path) {
+    public QStudygroup(Path<? extends Studygroup> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public Qstudygroup(PathMetadata metadata) {
+    public QStudygroup(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public Qstudygroup(PathMetadata metadata, PathInits inits) {
-        this(studygroup.class, metadata, inits);
+    public QStudygroup(PathMetadata metadata, PathInits inits) {
+        this(Studygroup.class, metadata, inits);
     }
 
-    public Qstudygroup(Class<? extends studygroup> type, PathMetadata metadata, PathInits inits) {
+    public QStudygroup(Class<? extends Studygroup> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new Quser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

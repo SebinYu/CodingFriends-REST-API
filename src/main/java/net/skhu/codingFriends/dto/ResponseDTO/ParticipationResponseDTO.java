@@ -3,7 +3,7 @@ package net.skhu.codingFriends.dto.ResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.skhu.codingFriends.entity.participationrate;
+import net.skhu.codingFriends.entity.Participationrate;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -23,7 +23,7 @@ public class ParticipationResponseDTO {
     Double lectureScore;
     private LocalDateTime updateDate;
 
-    public static ParticipationResponseDTO toDto(participationrate participationrate) {
+    public static ParticipationResponseDTO toDto(Participationrate participationrate) {
         return new ParticipationResponseDTO(
                 participationrate.getParticipationRate_id(),
                 participationrate.getUser().getUser_id(),

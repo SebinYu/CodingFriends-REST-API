@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * Qapply is a Querydsl query type for apply
+ * QApply is a Querydsl query type for Apply
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class Qapply extends EntityPathBase<apply> {
+public class QApply extends EntityPathBase<Apply> {
 
-    private static final long serialVersionUID = 125251006L;
+    private static final long serialVersionUID = 95698334L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final Qapply apply = new Qapply("apply");
+    public static final QApply apply = new QApply("apply");
 
     public final StringPath application = createString("application");
 
@@ -30,34 +30,34 @@ public class Qapply extends EntityPathBase<apply> {
 
     public final StringPath name = createString("name");
 
-    public final Qstudygroup studygroup;
+    public final QStudygroup studygroup;
 
     public final StringPath title = createString("title");
 
     public final DateTimePath<java.time.LocalDateTime> updateDate = createDateTime("updateDate", java.time.LocalDateTime.class);
 
-    public final Quser user;
+    public final QUser user;
 
-    public Qapply(String variable) {
-        this(apply.class, forVariable(variable), INITS);
+    public QApply(String variable) {
+        this(Apply.class, forVariable(variable), INITS);
     }
 
-    public Qapply(Path<? extends apply> path) {
+    public QApply(Path<? extends Apply> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public Qapply(PathMetadata metadata) {
+    public QApply(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public Qapply(PathMetadata metadata, PathInits inits) {
-        this(apply.class, metadata, inits);
+    public QApply(PathMetadata metadata, PathInits inits) {
+        this(Apply.class, metadata, inits);
     }
 
-    public Qapply(Class<? extends apply> type, PathMetadata metadata, PathInits inits) {
+    public QApply(Class<? extends Apply> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.studygroup = inits.isInitialized("studygroup") ? new Qstudygroup(forProperty("studygroup"), inits.get("studygroup")) : null;
-        this.user = inits.isInitialized("user") ? new Quser(forProperty("user")) : null;
+        this.studygroup = inits.isInitialized("studygroup") ? new QStudygroup(forProperty("studygroup"), inits.get("studygroup")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

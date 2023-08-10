@@ -1,11 +1,6 @@
 package net.skhu.codingFriends.service.event;
 
-import net.skhu.codingFriends.entity.event.event;
-import net.skhu.codingFriends.entity.event.eventTicket;
-import net.skhu.codingFriends.entity.user;
-import net.skhu.codingFriends.repository.event.EventRepository;
-import net.skhu.codingFriends.repository.event.EventTicketRepository;
-import net.skhu.codingFriends.repository.event.RedisLockRepository;
+import net.skhu.codingFriends.entity.User;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
@@ -23,7 +18,7 @@ public class EventFacade {
         this.redissonClient = redissonClient;
     }
     //Redisson 방식
-    public void createEventTicketBroker(final Long eventId, user user) throws InterruptedException {
+    public void createEventTicketBroker(final Long eventId, User user) throws InterruptedException {
         RLock lock = redissonClient.getLock(String.valueOf(eventId));
 //        RLock lock = Redisson.create().getLock(String.valueOf(eventId));
 

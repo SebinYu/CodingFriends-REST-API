@@ -1,12 +1,12 @@
 package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text;
 
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 
 public class AppliedText implements TextStrategy {
 
 
     @Override
-    public String text(user user, String studyTitle) {
+    public String text(User user, String studyTitle) {
 
         return "안녕하세요, 스터디원 연결 서비스 코딩프렌즈입니다. " + System.lineSeparator() +
                 "지난번 공지하신 ["+ studyTitle +"] 스터디에 [" + user.getName() + "]님이 참여신청하였습니다."+ System.lineSeparator() +

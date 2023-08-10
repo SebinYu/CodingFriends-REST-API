@@ -4,11 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.skhu.codingFriends.config.auth.PrincipalDetails;
-import net.skhu.codingFriends.config.redis.RedisConfiguration;
 import net.skhu.codingFriends.dto.RequestDTO.EventRequestDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.EventResponseDTO;
-import net.skhu.codingFriends.dto.ResponseDTO.EventTicketResponseDTO;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.event.EventService;
 import net.skhu.codingFriends.service.test;
@@ -44,9 +42,9 @@ public class EventController {
     @PostMapping("/{eventId}/tickets")
     public Response createEventTicket(@PathVariable final Long eventId, Authentication authentication) throws InterruptedException {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        user user = principalDetails.getUser();
+        User user = principalDetails.getUser();
 
-//        EventTicketResponseDTO response = eventService.createEventTicket(eventId, user);
+//        EventTicketResponseDTO response = eventService.createEventTicket(eventId, User);
         return success(eventService.createEventTicketForFacade(eventId, user),"/studygroup/create");
     }
 
@@ -54,8 +52,8 @@ public class EventController {
 //    @PostMapping("/{eventId}/ticketsTest")
 //    public void ticketsTest(@PathVariable final Long eventId, Authentication authentication) {
 //        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        user user = principalDetails.getUser();
+//        User User = principalDetails.getUser();
 //
-//        test.createEventTicketTest(eventId, user);
+//        test.createEventTicketTest(eventId, User);
 //    }
 }

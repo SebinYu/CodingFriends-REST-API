@@ -1,7 +1,7 @@
 package net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text;
 
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 
 public interface TextStrategy {
-    String text(user user, String studygroup_id);
+    String text(User user, String studygroup_id);
 }

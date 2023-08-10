@@ -2,18 +2,16 @@ package net.skhu.codingFriends.service.event;
 
 import net.skhu.codingFriends.dto.ResponseDTO.EventResponseDTO;
 import net.skhu.codingFriends.dto.ResponseDTO.EventTicketResponseDTO;
-import net.skhu.codingFriends.entity.event.event;
-import net.skhu.codingFriends.entity.event.eventTicket;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.event.Event;
+import net.skhu.codingFriends.entity.event.EventTicket;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.repository.event.RedisLockRepository;
 import net.skhu.codingFriends.repository.event.EventRepository;
 import net.skhu.codingFriends.repository.event.EventTicketRepository;
-import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -35,9 +33,9 @@ public class EventService {
 
     @Transactional
     public EventResponseDTO createEvent(final Long ticketLimit) {
-        event event = new event();
+        Event event = new Event();
         event.setTicketLimit(ticketLimit);
-        event savedEvent = eventRepository.save(event);
+        Event savedEvent = eventRepository.save(event);
         EventResponseDTO eventResponseDTO = new EventResponseDTO();
         eventResponseDTO.setId(savedEvent.getId());
         eventResponseDTO.setTicketLimit(savedEvent.getTicketLimit());
@@ -46,21 +44,21 @@ public class EventService {
 
     //스핀 락 방식
     @Transactional
-    public EventTicketResponseDTO createEventTicket(final Long eventId, user user) throws InterruptedException {
+    public EventTicketResponseDTO createEventTicket(final Long eventId, User user) throws InterruptedException {
         while (!redisLockRepository.lock(eventId)) {
             Thread.sleep(100);
         } // 락을 획득하기 위해 대기
 
         try {
-            event event = eventRepository.findById(eventId).orElseThrow();
+            Event event = eventRepository.findById(eventId).orElseThrow();
             if (event.isClosed()) {
                 throw new RuntimeException("마감 되었습니다.");
             }
 
-            eventTicket eventTicket = new eventTicket();
+            EventTicket eventTicket = new EventTicket();
             eventTicket.setEvent(event);
             eventTicket.setUser(user);
-            eventTicket savedEventTicket = eventTicketRepository.save(eventTicket);
+            EventTicket savedEventTicket = eventTicketRepository.save(eventTicket);
 
             EventTicketResponseDTO eventTicketResponseDTO = new EventTicketResponseDTO();
             eventTicketResponseDTO.setId(savedEventTicket.getId());
@@ -76,17 +74,17 @@ public class EventService {
 
 
     @Transactional
-    public EventTicketResponseDTO createEventTicketForFacade(final Long eventId, user user) {
-        event event = eventRepository.findById(eventId).orElseThrow();
+    public EventTicketResponseDTO createEventTicketForFacade(final Long eventId, User user) {
+        Event event = eventRepository.findById(eventId).orElseThrow();
         if (event.isClosed()) {
             throw new RuntimeException("마감 되었습니다.");
         }
-        eventTicket eventTicket = new eventTicket();
+        EventTicket eventTicket = new EventTicket();
         eventTicket.setEvent(event);
         eventTicket.setUser(user);
 
         eventTicketRepository.save(eventTicket);
-        eventTicket savedEventTicket = eventTicketRepository.save(eventTicket);
+        EventTicket savedEventTicket = eventTicketRepository.save(eventTicket);
 
         EventTicketResponseDTO eventTicketResponseDTO = new EventTicketResponseDTO();
         eventTicketResponseDTO.setId(savedEventTicket.getId());

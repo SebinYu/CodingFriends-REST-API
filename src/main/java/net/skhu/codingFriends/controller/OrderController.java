@@ -3,9 +3,8 @@ package net.skhu.codingFriends.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.Studygroup;
 import net.skhu.codingFriends.service.OrderService;
-import net.skhu.codingFriends.service.StudygroupService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +21,14 @@ public class OrderController {
 
     @Operation(summary= "스터디 모집글 업로드 날짜 순 리스트 조회", description = "스터디 모집글 업로드 날짜 순 리스트를 조회한다.")
     @GetMapping("updateDate")
-    public List<studygroup> updateDate(){
+    public List<Studygroup> updateDate(){
         return orderService.updateDate();
     }
 
     @Operation(summary= "스터디 시작일 순 리스트 조회", description = "스터디 시작일 순 리스트를 조회한다.")
     @GetMapping("startDate")
     //스터디 시작일 순 리스트 출력
-    public List<studygroup> startDate(){
+    public List<Studygroup> startDate(){
         return orderService.startDate();
     }
 

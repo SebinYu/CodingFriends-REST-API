@@ -3,7 +3,7 @@ package net.skhu.codingFriends.dto.ResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.skhu.codingFriends.entity.studygroup;
+import net.skhu.codingFriends.entity.Studygroup;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -27,7 +27,7 @@ public class StudygroupResponseDto implements Serializable {
     LocalDate startDate;
     LocalDate endDate;
 
-    public static StudygroupResponseDto toDto(studygroup studygroup) {
+    public static StudygroupResponseDto toDto(Studygroup studygroup) {
         return new StudygroupResponseDto(
                 studygroup.getStudyGroup_id(),
                 studygroup.getTitle(),

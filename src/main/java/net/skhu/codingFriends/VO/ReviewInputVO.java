@@ -1,12 +1,12 @@
 package net.skhu.codingFriends.VO;
 
 import lombok.Data;
-import net.skhu.codingFriends.entity.studygroup;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.Studygroup;
+import net.skhu.codingFriends.entity.User;
 
 @Data
 public class ReviewInputVO {
-    studygroup studygroup;
-    net.skhu.codingFriends.entity.user user;
+    Studygroup studygroup;
+    User user;
 
 }

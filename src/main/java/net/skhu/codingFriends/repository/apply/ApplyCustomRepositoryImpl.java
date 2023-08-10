@@ -1,19 +1,18 @@
 package net.skhu.codingFriends.repository.apply;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import static net.skhu.codingFriends.entity.Qstudygroup.studygroup;
+import static net.skhu.codingFriends.entity.QStudygroup.studygroup;
 
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.Apply;
+import net.skhu.codingFriends.entity.Studygroup;
+import net.skhu.codingFriends.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 
-import java.time.LocalDate;
-import java.util.Collections;
-
 import java.util.List;
 
-import static net.skhu.codingFriends.entity.Qapply.apply;
+import static net.skhu.codingFriends.entity.QApply.apply;
 
 @Repository
 public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
@@ -25,7 +24,7 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
     }
 
     @Override
-    public List<net.skhu.codingFriends.entity.apply> findByApplierID(BigInteger id) {
+    public List<Apply> findByApplierID(BigInteger id) {
         return jPAQueryFactory
                 .selectFrom(apply)
                 .where(apply.apply_id.eq(id))
@@ -33,7 +32,7 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
     }
 
     @Override
-    public long updateApplyStatus(net.skhu.codingFriends.entity.apply applyTemp) {
+    public long updateApplyStatus(Apply applyTemp) {
         return jPAQueryFactory
                 .update(apply)
                 .set(apply.applyStatus, applyTemp.getApplyStatus())
@@ -42,7 +41,7 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
     }
 
     @Override
-    public List<net.skhu.codingFriends.entity.apply> findByStudygroup(net.skhu.codingFriends.entity.studygroup studygroup) {
+    public List<Apply> findByStudygroup(Studygroup studygroup) {
         return jPAQueryFactory
                 .selectFrom(apply)
                 .where(apply.studygroup.eq(studygroup), apply.applyStatus.eq("등록"))
@@ -50,7 +49,7 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
     }
 
     @Override
-    public List<net.skhu.codingFriends.entity.apply> findByUser(user user1) {
+    public List<Apply> findByUser(User user1) {
         return jPAQueryFactory
                 .selectFrom(apply)
                 .join(apply.studygroup, studygroup)

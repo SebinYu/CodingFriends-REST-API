@@ -1,7 +1,7 @@
 package net.skhu.codingFriends.config.auth;
 
 import lombok.Data;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,9 +11,9 @@ import java.util.Collection;
 @Data
 public class PrincipalDetails implements UserDetails {
 
-    private net.skhu.codingFriends.entity.user user;
+    private User user;
 
-    public PrincipalDetails(user user) {
+    public PrincipalDetails(User user) {
         this.user = user;
     }
 

@@ -1,14 +1,12 @@
 package net.skhu.codingFriends.dto.ResponseDTO;
 
 import lombok.Data;
-import net.skhu.codingFriends.entity.event.event;
-import net.skhu.codingFriends.entity.user;
-
-import javax.persistence.*;
+import net.skhu.codingFriends.entity.User;
+import net.skhu.codingFriends.entity.event.Event;
 
 @Data
 public class EventTicketResponseDTO {
     private Long id;
-    user user;
-    private net.skhu.codingFriends.entity.event.event event;
+    User user;
+    private Event event;
 }

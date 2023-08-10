@@ -1,7 +1,7 @@
 package net.skhu.codingFriends.config.auth;
 
 import lombok.RequiredArgsConstructor;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user userEntity = userRepository.findByUsername(username);
+        User userEntity = userRepository.findByUsername(username);
         return new PrincipalDetails(userEntity);
     }
 }

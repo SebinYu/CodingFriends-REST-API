@@ -1,13 +1,14 @@
 package net.skhu.codingFriends.entity.event;
 
 import lombok.Data;
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-public class eventTicket {
+@Table(name="eventTicket")
+public class EventTicket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +16,9 @@ public class eventTicket {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID")
-    user user;
+    User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
-    private event event;
+    private Event event;
 }

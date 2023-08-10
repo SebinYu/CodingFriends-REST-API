@@ -4,7 +4,7 @@ import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.subject.Subject
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.text.TextStrategy;
 import net.skhu.codingFriends.DesignPattern.Strategy.mailMessage.to.SendToStrategy;
 
-import net.skhu.codingFriends.entity.user;
+import net.skhu.codingFriends.entity.User;
 
 public class MailInfo {
     private SendToStrategy sendToStrategy;
@@ -20,7 +20,7 @@ public class MailInfo {
 
     }
 
-    public String[] to(user user, Long studygroup_id){
+    public String[] to(User user, Long studygroup_id){
         return sendToStrategy.to(user, studygroup_id);
     }
 
@@ -28,7 +28,7 @@ public class MailInfo {
         return subjectStrategy.subject();
     }
 
-    public String text(user user, String studyTitle){
+    public String text(User user, String studyTitle){
         return textStrategy.text( user, studyTitle);
     }
 

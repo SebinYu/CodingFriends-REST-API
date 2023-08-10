@@ -11,43 +11,43 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QeventTicket is a Querydsl query type for eventTicket
+ * QEventTicket is a Querydsl query type for EventTicket
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QeventTicket extends EntityPathBase<eventTicket> {
+public class QEventTicket extends EntityPathBase<EventTicket> {
 
-    private static final long serialVersionUID = -829574334L;
+    private static final long serialVersionUID = 838294306L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QeventTicket eventTicket = new QeventTicket("eventTicket");
+    public static final QEventTicket eventTicket = new QEventTicket("eventTicket");
 
-    public final Qevent event;
+    public final QEvent event;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final net.skhu.codingFriends.entity.Quser user;
+    public final net.skhu.codingFriends.entity.QUser user;
 
-    public QeventTicket(String variable) {
-        this(eventTicket.class, forVariable(variable), INITS);
+    public QEventTicket(String variable) {
+        this(EventTicket.class, forVariable(variable), INITS);
     }
 
-    public QeventTicket(Path<? extends eventTicket> path) {
+    public QEventTicket(Path<? extends EventTicket> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QeventTicket(PathMetadata metadata) {
+    public QEventTicket(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QeventTicket(PathMetadata metadata, PathInits inits) {
-        this(eventTicket.class, metadata, inits);
+    public QEventTicket(PathMetadata metadata, PathInits inits) {
+        this(EventTicket.class, metadata, inits);
     }
 
-    public QeventTicket(Class<? extends eventTicket> type, PathMetadata metadata, PathInits inits) {
+    public QEventTicket(Class<? extends EventTicket> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.event = inits.isInitialized("event") ? new Qevent(forProperty("event")) : null;
-        this.user = inits.isInitialized("user") ? new net.skhu.codingFriends.entity.Quser(forProperty("user")) : null;
+        this.event = inits.isInitialized("event") ? new QEvent(forProperty("event")) : null;
+        this.user = inits.isInitialized("user") ? new net.skhu.codingFriends.entity.QUser(forProperty("user")) : null;
     }
 
 }
