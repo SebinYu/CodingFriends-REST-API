@@ -1,11 +1,77 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+# # This workflow uses actions that are not certified by GitHub.
+# # They are provided by a third-party and are governed by
+# # separate terms of service, privacy policy, and support
+# # documentation.
+# # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Spring Boot & Gradle CI/CD
+# name: Spring Boot & Gradle CI/CD
+
+# on:
+#   push:
+#     branches: [ "master" ]
+#   pull_request:
+#     branches: [ "master" ]
+
+# # 해당 yml 내에서 사용할 key - value
+# env:
+#   S3_BUCKET_NAME: kbsat-cicd-bucket
+#   PROJECT_NAME: codingFriends
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+        
+#       - name: Setup Java JDK 11
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 11
+
+#       - name: Grant execute permission for gradlew
+#         run: chmod +x ./gradlew
+#         shell: bash
+        
+#       - name: Build with Gradle
+#         run : ./gradlew clean build --exclude-task test
+#         shell: bash
+
+#       - name: Make zip file
+#         run: zip -r ./$GITHUB_SHA.zip .
+#         shell: bash
+
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ secrets.AWS_REGION }}
+          
+#       # script files 복사
+#       - name: Copy script
+#         run: cp ./scripts/*.sh ./deploy
+      
+#       # S3에 업로드
+#       - name: Upload to S3
+#         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+  
+#       # Deploy
+#       - name: Deploy
+#         run: |
+#           aws deploy create-deployment \
+#           --application-name cicdtest-project \
+#           --deployment-config-name CodeDeployDefault.AllAtOnce \
+#           --deployment-group-name cicd-test-prod \
+#           --file-exists-behavior OVERWRITE \
+#           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip \
+#           --region ap-northeast-2 \
+
+
+
+
+name: Build and Deploy to EC2
 
 on:
   push:
@@ -13,19 +79,13 @@ on:
   pull_request:
     branches: [ "master" ]
 
-# 해당 yml 내에서 사용할 key - value
-env:
-  S3_BUCKET_NAME: kbsat-cicd-bucket
-  PROJECT_NAME: codingFriends
-
 jobs:
-  build:
-    runs-on: ubuntu-18.04
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        
-      - name: Setup Java JDK 11
+      - uses: actions/checkout@v2
+      
+      - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 11
@@ -33,37 +93,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash
-        
-      - name: Build with Gradle
-        run : ./gradlew clean build --exclude-task test
-        shell: bash
 
-      - name: Make zip file
-        run: zip -r ./$GITHUB_SHA.zip .
-        shell: bash
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          
-      # script files 복사
-      - name: Copy script
-        run: cp ./scripts/*.sh ./deploy
-      
-      # S3에 업로드
-      - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
-  
-      # Deploy
-      - name: Deploy
-        run: |
-          aws deploy create-deployment \
-          --application-name cicdtest-project \
-          --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name cicd-test-prod \
-          --file-exists-behavior OVERWRITE \
-          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip \
-          --region ap-northeast-2 \
+      - name: Build and Test
+        run: ./gradlew build test
