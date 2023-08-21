@@ -31,7 +31,7 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<ParticipationResponseDTO> getEXStudygroupFriend(Long studygroup_id, User myUserInfo) {
+    public List<ParticipationResponseDTO> getPreviousParticipantList(Long studygroup_id, User myUserInfo) {
         Studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
@@ -50,7 +50,7 @@ public class ReviewService {
 
 
     @Transactional(readOnly = true)
-    public ReviewInputVO getReviewInputInfo(Long studygroup_id, Long User_id) {
+    public ReviewInputVO getPreviousParticipant(Long studygroup_id, Long User_id) {
         Studygroup studygroupTemp = studygroupRepository.findById(BigInteger.valueOf(studygroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
@@ -86,13 +86,13 @@ public class ReviewService {
 
 
     @Transactional(readOnly = true)
-    public List<Review> getMyReviews(User user) {
+    public List<Review> getReview(User user) {
         return reviewRepository.findByUser(user);
     }
 
 
     @Transactional
-    public String postObjection(Long review_id, User user1) {
+    public String postReviewObjection(Long review_id, User user1) {
         List<Review> reviews = reviewRepository.findByUser(user1);
         Integer totalNum = 0;
         String response = "";

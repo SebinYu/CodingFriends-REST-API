@@ -14,17 +14,17 @@ import java.util.List;
 
 public interface StudygroupService {
 
-    List<StudygroupResponseDto> getStudygroups();
+    List<StudygroupResponseDto> getStudygrouplist();
     StudygroupResponseDto getStudygroup(BigInteger studyGroup_id);
-    StudygroupResponseDto write(StudygroupRequsetDto studygroupRequsetDto, User user);
+    StudygroupResponseDto createStudygroup(StudygroupRequsetDto studygroupRequsetDto, User user);
 
-    StudygroupResponseDto update(Integer id, StudygroupRequsetDto studygroupRequsetDto);
-    void deleteByStudyGroup_id(int id);
+    StudygroupResponseDto updateStudygroup(Integer id, StudygroupRequsetDto studygroupRequsetDto);
+    void deleteStudygroupById(int id);
 
 
-    List<Studygroup> searchWithKeyword(String keyword);
+    List<Studygroup> searchStudygroupWithKeyword(String keyword);
 
-    List<Studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword);
+    List<Studygroup> searchStudygroupWithLearningMaterialIdAndKeyword(Integer learningMaterial_id, String keyword);
     List<Learningmaterial> findAllLearningMaterial();
-    ApplyResponseDto apply(ApplyRequsetDto applyRequsetDto, Long studyGroup_id, User user);
+    ApplyResponseDto applyStudygroup(ApplyRequsetDto applyRequsetDto, Long studyGroup_id, User user);
 }

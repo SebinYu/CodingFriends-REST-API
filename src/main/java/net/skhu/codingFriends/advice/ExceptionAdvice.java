@@ -80,7 +80,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(ApplyInfoNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response applyInfoNotFoundException() {
-        return Response.failure(404, "요청된 apply 정보를 찾을 수 없습니다.", null);
+        return Response.failure(404, "요청된 applyStudygroup 정보를 찾을 수 없습니다.", null);
     }
 
     // 400 응답

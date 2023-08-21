@@ -44,7 +44,7 @@ public class EventService {
 
     //스핀 락 방식
     @Transactional
-    public EventTicketResponseDTO createEventTicket(final Long eventId, User user) throws InterruptedException {
+    public EventTicketResponseDTO createEventTicketForFacade(final Long eventId, User user) throws InterruptedException {
         while (!redisLockRepository.lock(eventId)) {
             Thread.sleep(100);
         } // 락을 획득하기 위해 대기
@@ -70,30 +70,5 @@ public class EventService {
             // 락 해제
         }
     }
-
-
-
-    @Transactional
-    public EventTicketResponseDTO createEventTicketForFacade(final Long eventId, User user) {
-        Event event = eventRepository.findById(eventId).orElseThrow();
-        if (event.isClosed()) {
-            throw new RuntimeException("마감 되었습니다.");
-        }
-        EventTicket eventTicket = new EventTicket();
-        eventTicket.setEvent(event);
-        eventTicket.setUser(user);
-
-        eventTicketRepository.save(eventTicket);
-        EventTicket savedEventTicket = eventTicketRepository.save(eventTicket);
-
-        EventTicketResponseDTO eventTicketResponseDTO = new EventTicketResponseDTO();
-        eventTicketResponseDTO.setId(savedEventTicket.getId());
-        eventTicketResponseDTO.setUser(savedEventTicket.getUser());
-        eventTicketResponseDTO.setEvent(savedEventTicket.getEvent());
-
-        return eventTicketResponseDTO;
-    }
-
-
 
 }

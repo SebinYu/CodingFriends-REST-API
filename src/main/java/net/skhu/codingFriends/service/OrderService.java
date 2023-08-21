@@ -5,7 +5,7 @@ import net.skhu.codingFriends.entity.Studygroup;
 import java.util.List;
 
 public interface OrderService {
-    List<Studygroup> updateDate();
+    List<Studygroup> getStudygroupDependOnUpdateDate();
 
-    List<Studygroup> startDate();
+    List<Studygroup> getStudygroupDependOnStartDate();
 }

@@ -17,13 +17,13 @@ public class OrderServiceImpl implements OrderService {
     public OrderRepository orderRepository;
 
     @Transactional(readOnly = true)
-    public List<Studygroup> updateDate(){
-        return orderRepository.findAll(Sort.by(Sort.Direction.DESC, "updateDate")) ;
+    public List<Studygroup> getStudygroupDependOnUpdateDate(){
+        return orderRepository.findAll(Sort.by(Sort.Direction.DESC, "getStudygroupDependOnUpdateDate")) ;
     }
 
     @Transactional(readOnly = true)
-    public List<Studygroup> startDate() {
-        return orderRepository.findAll(Sort.by(Sort.Direction.ASC, "startDate")) ;
+    public List<Studygroup> getStudygroupDependOnStartDate() {
+        return orderRepository.findAll(Sort.by(Sort.Direction.ASC, "sortDependOnStartDate")) ;
     }
 
 }

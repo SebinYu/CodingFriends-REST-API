@@ -46,7 +46,7 @@ public class LeaderService {
 
 
     @Transactional
-    public List<ParticipationResponseDTO> accept(ApplyIdVO applyIdVO, User user) {
+    public List<ParticipationResponseDTO> acceptApplication(ApplyIdVO applyIdVO, User user) {
         int ApplyIdlength = applyIdVO.getApply_ids().length;
         List<ParticipationResponseDTO> participationrateList = new ArrayList<>();
 
@@ -95,7 +95,7 @@ public class LeaderService {
     }
 
     @Transactional
-    public List<ApplyResponseDto> decline(ApplyIdVO applyIdVO) {
+    public List<ApplyResponseDto> declineApplication(ApplyIdVO applyIdVO) {
         int ApplyIdlength = applyIdVO.getApply_ids().length;
         List<ApplyResponseDto> declindedApplyList = new ArrayList<>();
 

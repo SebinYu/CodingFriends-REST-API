@@ -9,7 +9,7 @@ import net.skhu.codingFriends.dto.ResponseDTO.EventResponseDTO;
 import net.skhu.codingFriends.entity.User;
 import net.skhu.codingFriends.response.Response;
 import net.skhu.codingFriends.service.event.EventService;
-import net.skhu.codingFriends.service.test;
+import net.skhu.codingFriends.service.EventTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ import static net.skhu.codingFriends.response.Response.success;
 public class EventController {
 
     private final EventService eventService;
-    private final test test;
+    private final EventTest test;
 
     @Operation(summary = "선착순 이벤트 생성", description = "선착순 이벤트 생성한다.")
     @PostMapping("/createEvent")
@@ -44,16 +44,7 @@ public class EventController {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         User user = principalDetails.getUser();
 
-//        EventTicketResponseDTO response = eventService.createEventTicket(eventId, User);
         return success(eventService.createEventTicketForFacade(eventId, user),"/studygroup/create");
     }
 
-
-//    @PostMapping("/{eventId}/ticketsTest")
-//    public void ticketsTest(@PathVariable final Long eventId, Authentication authentication) {
-//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        User User = principalDetails.getUser();
-//
-//        test.createEventTicketTest(eventId, User);
-//    }
 }

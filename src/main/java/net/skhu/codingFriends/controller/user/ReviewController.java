@@ -26,26 +26,26 @@ public class ReviewController {
     @Operation(summary = "이전 스터디원 조회", description = "이전 스터디원 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("index/{Studygroup_id}")
-    public Response reviewList(@PathVariable("Studygroup_id") Long Studygroup_id, Authentication authentication) {
+    public Response getPreviousParticipantList(@PathVariable("Studygroup_id") Long Studygroup_id, Authentication authentication) {
         //내 이름 제외 스터디 참여자 조회
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         User user = principalDetails.getUser();
-        return success(reviewService.getEXStudygroupFriend(Studygroup_id, user),"/User/review/index/{Studygroup_id}");
+        return success(reviewService.getPreviousParticipantList(Studygroup_id, user),"/User/review/index/{Studygroup_id}");
     }
 
     @Operation(summary = "스터디원 후기 등록페이지 조회", description = "스터디원 후기 등록페이지 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("detail/{Studygroup_id}/{User_id}")
-    public Response reviewInputGet(@PathVariable("Studygroup_id") Long Studygroup_id,
+    public Response getPreviousParticipant(@PathVariable("Studygroup_id") Long Studygroup_id,
                                    @PathVariable("User_id") Long User_id) {
 
-        return success(reviewService.getReviewInputInfo(Studygroup_id, User_id),"/User/review/detail/{Studygroup_id}/{User_id}");
+        return success(reviewService.getPreviousParticipant(Studygroup_id, User_id),"/User/review/detail/{Studygroup_id}/{User_id}");
     }
 
     @Operation(summary = "스터디원 후기 등록", description = "스터디원 후기 등록한다.")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("input")
-    public Response reviewInputPost(@RequestBody ReviewRequsetDTO reviewRequsetDTO,
+    public Response reviewPreviousParticipant(@RequestBody ReviewRequsetDTO reviewRequsetDTO,
                                    Authentication authentication) {
         //내 이름 제외 스터디 참여자 조회
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -56,19 +56,19 @@ public class ReviewController {
     @Operation(summary = "내 성실도 점수 및 후기글 조회", description = "내 성실도 점수 및 후기글 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("myReviews")
-    public Response myReviews(Authentication authentication) {
+    public Response getReview(Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         User user = principalDetails.getUser();
-        return success(reviewService.getMyReviews(user),"/User/review/myReviews");
+        return success(reviewService.getReview(user),"/User/review/myReviews");
     }
 
     @Operation(summary = "내 성실도 이의제기", description = "내 후기 중 적절하게 평가되지 못한 후기를 이의제기한다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("objection/{review_id}")
-    public Response putObjection(@PathVariable("review_id") Long review_id,
+    public Response postReviewObjection(@PathVariable("review_id") Long review_id,
                                  Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         User user = principalDetails.getUser();
-        return success(reviewService.postObjection(review_id, user),"/User/review/objection/{review_id}");
+        return success(reviewService.postReviewObjection(review_id, user),"/User/review/objection/{review_id}");
     }
 }
