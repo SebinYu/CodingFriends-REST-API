@@ -21,15 +21,15 @@ public class OrderController {
 
     @Operation(summary= "스터디 모집글 업로드 날짜 순 리스트 조회", description = "스터디 모집글 업로드 날짜 순 리스트를 조회한다.")
     @GetMapping("updateDate")
-    public List<Studygroup> updateDate(){
-        return orderService.updateDate();
+    public List<Studygroup> getStudygroupDependOnUpdateDate(){
+        return orderService.getStudygroupDependOnUpdateDate();
     }
 
     @Operation(summary= "스터디 시작일 순 리스트 조회", description = "스터디 시작일 순 리스트를 조회한다.")
     @GetMapping("startDate")
     //스터디 시작일 순 리스트 출력
-    public List<Studygroup> startDate(){
-        return orderService.startDate();
+    public List<Studygroup> getStudygroupDependOnStartDate(){
+        return orderService.getStudygroupDependOnStartDate();
     }
 
 }

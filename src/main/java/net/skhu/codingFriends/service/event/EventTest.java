@@ -11,10 +11,11 @@ import java.util.concurrent.Executors;
 
 @Service
 @RequiredArgsConstructor
-public class test {
+public class EventTest {
     private final EventFacade eventFacade;
 
-    public void createEventTicketTest(Long eventId, User user) {
+    // 현재 테스트 완료하여, 주석처리 - 이후 테스트를 고려하여 보존
+    /** public void createEventTicketTest(Long eventId, User user) {
 
         ExecutorService executorService = Executors.newFixedThreadPool(100);
         CountDownLatch countDownLatch = new CountDownLatch(100);
@@ -35,5 +36,6 @@ public class test {
         }
 
     }
+     */
 
 }

@@ -38,7 +38,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     // 전체 게시물 조회
     @Transactional(readOnly = true)
     @Cacheable(value = CacheKey.SELECT, cacheManager = "cacheManager")
-    public List<StudygroupResponseDto> getStudygroups() {
+    public List<StudygroupResponseDto> getStudygrouplist() {
         List<Studygroup> studygroups = studygroupRepository.findAll();
         List<StudygroupResponseDto> studygroupResponseDto = new ArrayList<>();
         studygroups.forEach(s -> studygroupResponseDto.add(StudygroupResponseDto.toDto(s)));
@@ -59,7 +59,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     // 게시물 작성
     @CacheEvict(value = CacheKey.SELECT, cacheManager = "cacheManager")
     @Transactional
-    public StudygroupResponseDto write(StudygroupRequsetDto studygroupRequsetDto, User user) {
+    public StudygroupResponseDto createStudygroup(StudygroupRequsetDto studygroupRequsetDto, User user) {
         Studygroup studygroup = new Studygroup();
         studygroup.setTitle(studygroupRequsetDto.getTitle());
         studygroup.setContent(studygroupRequsetDto.getContent());
@@ -79,7 +79,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     // 게시물 수정
     @CacheEvict(value = CacheKey.SELECT, cacheManager = "cacheManager")
     @Transactional
-    public StudygroupResponseDto update(Integer studyGroup_id, StudygroupRequsetDto studygroupRequsetDto) {
+    public StudygroupResponseDto updateStudygroup(Integer studyGroup_id, StudygroupRequsetDto studygroupRequsetDto) {
         Studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
@@ -98,7 +98,7 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     @CacheEvict(value = CacheKey.SELECT, cacheManager = "cacheManager")
     @Transactional
-    public void deleteByStudyGroup_id(int id){
+    public void deleteStudygroupById(int id){
         Studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
@@ -107,13 +107,13 @@ public class StudygroupServiceImpl implements StudygroupService {
 
     //키워드로 검색
     @Transactional(readOnly = true)
-    public List<Studygroup> searchWithKeyword(String keyword){
+    public List<Studygroup> searchStudygroupWithKeyword(String keyword){
         return studygroupRepository.findByTitleContaining(keyword);
     }
 
     //키워드, 학습자료로 검색
     @Transactional(readOnly = true)
-    public List<Studygroup> searchWithLearningMaterial_idAndKeyword(Integer learningMaterial_id, String keyword){
+    public List<Studygroup> searchStudygroupWithLearningMaterialIdAndKeyword(Integer learningMaterial_id, String keyword){
         return studygroupRepository.searchWithLearningMaterial_idAndKeyword(learningMaterial_id, keyword);
     }
 
@@ -124,7 +124,7 @@ public class StudygroupServiceImpl implements StudygroupService {
     }
 
     @Transactional
-    public ApplyResponseDto apply(ApplyRequsetDto ApplyRequsetDto, Long studyGroup_id, User user) {
+    public ApplyResponseDto applyStudygroup(ApplyRequsetDto ApplyRequsetDto, Long studyGroup_id, User user) {
         Studygroup studygroup = studygroupRepository.findById(BigInteger.valueOf(studyGroup_id)).orElseThrow(() -> {
             return new StudygroupIdNotFound();
         });
